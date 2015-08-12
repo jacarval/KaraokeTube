@@ -1,0 +1,8 @@
+{
+  "name": "youtube-with-friends",
+  "version": "0.0.1",
+  "description": "fun with the youtube api",
+  "dependencies": {
+    "socket.io": "^1.3.6"
+  }
+}
