@@ -1,1 +1,0 @@
-React.render( <VideoSelector /> , document.getElementById("modify-app"));
