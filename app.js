@@ -10,12 +10,6 @@ app.get('/', function(req, res){
 
 });
 
-app.get('/modify', function(req, res){
-
-  res.sendFile(__dirname + '/modify.html');
-
-});
-
 app.use(express.static(__dirname + '/public'));
 
 http.listen(process.env.PORT || 3000, function(){
