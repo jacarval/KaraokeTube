@@ -12,10 +12,6 @@ app.get('/', function(req, res){
 
 app.use(express.static(__dirname + '/public'));
 
-http.listen(process.env.PORT || 3000, function(){
-  console.log('listening on *:3000');
-});
-
 io.on('connection', function(socket){
 
 	socket.on("client:playlist:add", function(videoInfoObject){
@@ -27,3 +23,7 @@ io.on('connection', function(socket){
 function broadcastAddVideoToPlaylist(socket, videoInfoObject){
 	socket.broadcast.emit("server:playlist:add", videoInfoObject);
 }
+
+http.listen(process.env.PORT || 3000, function(){
+  console.log('listening on *:3000');
+});
