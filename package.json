@@ -20,11 +20,23 @@
     "watchify": "^3.3.1",
     "vinyl-buffer": "^1.0.0",
     "gulp-watch": "^4.3.4"
-    },
+  },
   "scripts": {
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "jamal carvalho",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jacarval/karaoke-tube.git"
+  },
+  "keywords": [
+    "karaoke",
+    "fun"
+  ],
+  "bugs": {
+    "url": "https://github.com/jacarval/karaoke-tube/issues"
+  },
+  "homepage": "https://github.com/jacarval/karaoke-tube#readme"
 }
