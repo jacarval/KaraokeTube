@@ -1,5 +1,10 @@
 var Fluxxor = require("fluxxor");
-var constants = require("./constants.js");
+
+var constants = {
+	ADD_VIDEO: "ADD_VIDEO",
+	REMOVE_VIDEO: "REMOVE_VIDEO",
+	CLEAR_VIDEOS: "CLEAR_VIDEOS"
+};
 
 var VideoStore = Fluxxor.createStore({
 

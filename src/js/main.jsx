@@ -35,7 +35,7 @@ var Application = React.createClass({
 	},
 
 	getInitialState: function() {
-		return {currentUser: '', searchData: [], currentVideo: {selectedBy: "Rick", title: "Never Gonna Give You Up", videoId: "dQw4w9WgXcQ"}};
+		return {showVideo: true, currentUser: '', searchData: [], currentVideo: {selectedBy: "Rick", title: "Never Gonna Give You Up", videoId: "dQw4w9WgXcQ"}};
 	},
 
 	getStateFromFlux: function() {
@@ -56,13 +56,13 @@ var Application = React.createClass({
 
 	addVideoToQueue: function(videoObject) {
 		videoObject.selectedBy = this.state.currentUser;
-		console.log(videoObject);
 		this.getFlux().actions.addVideo(videoObject);
 		this.setState({searchData: []});
 	},
 
 	playVideo: function(videoObject) {
 		this.setState({currentVideo: videoObject});
+		this.setState({searchData: []});
 	},
 
 	removeVideoFromQueue: function(videoObject) {
@@ -86,23 +86,37 @@ var Application = React.createClass({
 		this.getFlux().actions.clearVideos();
 	},
 
+	toggleVideoPlayer: function() {
+		if (this.state.showVideo) {
+			this.setState({showVideo: false});
+		}
+		else {
+			this.setState({showVideo: true});
+		}
+	},
+
 	render: function() {
 		return (
 			<body>
 				<NavBar 
 					onSearchSubmit={this.handleSearchSubmit}
 					onSearchInput={function(data){console.log(data)}}
-					searchPlaceholder="search"
 					onSearchResultClick={this.addVideoToQueue}
 					onSearchResultPlayCick={this.playVideo}
 					searchData={this.state.searchData}
 					selectedVideos={this.state.selectedVideos}
 					onQueuedVideoPlay={this.playVideoAndRemoveFromQueue}
 					onEmptyTheQueueClick={this.emptyQueue}
+					toggleVideoPlayer={this.toggleVideoPlayer}
+					isVideoPlayerActive={this.state.showVideo}
 				/>
 				<Content 
 					currentVideo={this.state.currentVideo}
 					onVideoEnd={this.playNextVideo} 
+					showVideo={this.state.showVideo}
+					selectedVideos={this.state.selectedVideos}
+					onPlayClick={this.playVideoAndRemoveFromQueue}
+					onRemoveClick={this.removeVideoFromQueue}
 				/>
 				<Footer 
 					selectedVideos={this.state.selectedVideos}
@@ -115,12 +129,66 @@ var Application = React.createClass({
 
 var Content = React.createClass({
 	render: function() {
+		if (this.props.showVideo) {
+			return (
+				<div className="container">
+					<VideoPlayer
+						currentVideo={this.props.currentVideo}
+						onVideoEnd={this.props.onVideoEnd}
+					/>
+				</div>
+			);
+		}
+		else {
+			return (
+				<div className="container">
+					<VideoList 
+						selectedVideos={this.props.selectedVideos}
+						onPlayClick={this.props.onPlayClick}
+						onRemoveClick={this.props.onRemoveClick}
+					/>
+				</div>
+			);
+		}
+	}
+});
+
+var VideoList = React.createClass({
+	createRemoveClickHandler: function(id) {
+		var self = this;
+	  	return function(e) {
+	    	self.props.onRemoveClick(id);
+	  	};
+	},
+
+	createPlayClickHandler: function(id) {
+		var self = this;
+	  	return function(e) {
+	    	self.props.onPlayClick(id);
+		};
+	},
+
+	render: function() {
+		var videos = this.props.selectedVideos;
+		var self = this;
+		var dataNodes = Object.keys(videos).map(function(storeId) {
+			return(
+				<li key={storeId} className="list-group-item">
+					{'['+videos[storeId].selectedBy+'] - '+videos[storeId].title}
+					<span href="#" className="badge" onClick={self.createRemoveClickHandler(videos[storeId])}>
+						<span className="glyphicon glyphicon-remove"></span>
+					</span>
+					<span href="#" className="badge" onClick={self.createPlayClickHandler(videos[storeId])}>
+						<span className="glyphicon glyphicon-play"></span>
+					</span>
+				</li>
+			);
+		});
 		return (
-			<div className="container">
-				<VideoPlayer
-					currentVideo={this.props.currentVideo}
-					onVideoEnd={this.props.onVideoEnd}
-				/>
+			<div className="video-queue-list">
+				<ul className="list-group">
+					{dataNodes}
+				</ul>
 			</div>
 		);
 	}
@@ -179,8 +247,9 @@ var NavBar = React.createClass({
 		        </div>
 		        <div id="navbar" className="collapse navbar-collapse">
 		          <ul className="nav navbar-nav">
+		          	<li className={this.props.isVideoPlayerActive ? "active" : ""} onClick={this.props.toggleVideoPlayer}><a href="#">VideoPlayer</a></li>
 		            <li className="dropdown">
-		              <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Queue<span className="caret"></span></a>
+		              <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span className="glyphicon glyphicon-th-list"></span><span className="caret"></span></a>
 		              <ul className="dropdown-menu">
 		                <li><a href="#" onClick={this.props.onEmptyTheQueueClick}>Empty the Queue</a></li>
 		                <li role="separator" className="divider"></li>
@@ -190,7 +259,6 @@ var NavBar = React.createClass({
 		            </li>
 		          </ul>
 		          <SearchBox 
-		          	placeholder={this.props.searchPlaceholder} 
 		          	onSubmit={this.props.onSearchSubmit}
 		          	onInput={this.props.onSearchInput}
 		          />
@@ -262,25 +330,6 @@ var SearchBox = React.createClass({
 					</div>
 				</div>
 			</form>
-
-
-			// <form id="send" className="navbar-form" role ="search" onSubmit={this.handleSubmit}>
-			// 	<div className="form-group" style={{display:"inline"}}>
-			// 		<div className="input-group" style={{display:"table"}}>
-			// 			<input 
-			// 				type="text"
-			// 				className="form-control" 
-			// 				autoComplete="off"
-			// 				placeholder={this.props.placeholder}
-			// 				ref="searchInput"
-			// 				onChange={this.handleChange}
-			// 			/>
-			// 			<span type="submit" className="input-group-addon" style={{width:"1%"}}>
-			// 				<span className="glyphicon glyphicon-search"></span>
-			// 			</span>
-			// 		</div>
-			// 	</div>
-			// </form>
 		);
 	}
 });
@@ -305,18 +354,18 @@ var SearchResults = React.createClass({
 		var dataNodes = this.props.data.map(function(item) {
 			return(
 				<li key={item.videoId}>
-					<div onClick={self.createQueueClickHandler(item)}>
-						<a href="#"><img src={item.thumbnailUrl} /></a>
-						<p>{item.title}</p>
-					</div>
-					<div className="btn-group" role="group">
-						<button className="btn btn-info">
-		            		<span className="glyphicon glyphicon-play" onClick={self.createPlayClickHandler(item)}></span>
-		            	</button>
-		            	<button className="btn btn-info">
-		            		<span className="glyphicon glyphicon-plus" onClick={self.createQueueClickHandler(item)}></span>
-		            	</button>
+					<div>
+						<a href="#"><img src={item.thumbnailUrl} onClick={self.createQueueClickHandler(item)} /></a>
+						<div className="btn-group-vertical" role="group">
+							<span className="btn btn-info" onClick={self.createPlayClickHandler(item)}>
+			            		<span className="glyphicon glyphicon-play" ></span>
+			            	</span>
+			            	<span className="btn btn-info" onClick={self.createQueueClickHandler(item)}>
+			            		<span className="glyphicon glyphicon-plus" ></span>
+			            	</span>
+			            </div>
 		            </div>
+					<a href="#"><small className="text-muted" onClick={self.createQueueClickHandler(item)}> {item.title} </small></a>
 				</li>
 			);
 		});
@@ -326,7 +375,6 @@ var SearchResults = React.createClass({
 					{dataNodes}
 				</ul>
 			</div>
-			
 		);
 	}
 });
