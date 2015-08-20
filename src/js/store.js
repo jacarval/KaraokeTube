@@ -3,7 +3,10 @@ var Fluxxor = require("fluxxor");
 var constants = {
 	ADD_VIDEO: "ADD_VIDEO",
 	REMOVE_VIDEO: "REMOVE_VIDEO",
-	CLEAR_VIDEOS: "CLEAR_VIDEOS"
+	CLEAR_VIDEOS: "CLEAR_VIDEOS",
+	SADD_VIDEO: "SADD_VIDEO",
+	SREMOVE_VIDEO: "SREMOVE_VIDEO",
+	SCLEAR_VIDEOS: "SCLEAR_VIDEOS"
 };
 
 var VideoStore = Fluxxor.createStore({
@@ -15,7 +18,10 @@ var VideoStore = Fluxxor.createStore({
 		this.bindActions(		
 			constants.ADD_VIDEO, this.onAddVideo,
 			constants.REMOVE_VIDEO, this.onRemoveVideo,
-			constants.CLEAR_VIDEOS, this.onClearVideos
+			constants.CLEAR_VIDEOS, this.onClearVideos,
+			constants.SADD_VIDEO, this.onServerAddVideo,
+			constants.SREMOVE_VIDEO, this.onServerRemoveVideo,
+			constants.SCLEAR_VIDEOS, this.onServerClearVideos
 		);
 	},
 
@@ -35,6 +41,14 @@ var VideoStore = Fluxxor.createStore({
 		this.emit("change");
 	},
 
+	onServerAddVideo: function(payload) {
+
+		this.onAddVideo(payload);
+
+		socket.emit("client:playlist:add", payload);
+	},
+
+
 	onRemoveVideo: function(payload) {
 
 		var storeId = payload.storeId;
@@ -42,6 +56,13 @@ var VideoStore = Fluxxor.createStore({
 		delete this.videos[storeId];
 
 		this.emit("change");
+	},
+
+	onServerRemoveVideo: function(payload) {
+
+		this.onRemoveVideo(payload);
+
+		socket.emit("client:playlist:remove", payload);
 	},
 
 	onClearVideos: function() {
@@ -54,6 +75,13 @@ var VideoStore = Fluxxor.createStore({
 		});
 
 		this.emit("change");
+	},
+
+	onServerClearVideos: function() {
+
+		this.onClearVideos();
+
+		socket.emit("client:playlist:clear");
 	},
 
 	getState: function() {

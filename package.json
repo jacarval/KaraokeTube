@@ -4,11 +4,12 @@
   "description": "web app for karaoke fun",
   "main": "app.js",
   "dependencies": {
+    "express": "^4.10.2",
     "fluxxor": "^1.7.1",
-    "react-youtube": "^4.0.0",
-    "socket.io": "^1.3.6",
+    "pg": "4.4.1",
     "react": "^0.13.3",
-    "express": "^4.10.2"
+    "react-youtube": "^4.0.0",
+    "socket.io": "^1.3.6"
   },
   "devDependencies": {
     "babelify": "^6.1.3",

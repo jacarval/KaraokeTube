@@ -24392,7 +24392,10 @@ var Fluxxor = require("fluxxor");
 var constants = {
   ADD_VIDEO: "ADD_VIDEO",
   REMOVE_VIDEO: "REMOVE_VIDEO",
-  CLEAR_VIDEOS: "CLEAR_VIDEOS"
+  CLEAR_VIDEOS: "CLEAR_VIDEOS",
+  SADD_VIDEO: "SADD_VIDEO",
+  SREMOVE_VIDEO: "SREMOVE_VIDEO",
+  SCLEAR_VIDEOS: "SCLEAR_VIDEOS"
 };
 
 var actions = {
@@ -24400,12 +24403,24 @@ var actions = {
     this.dispatch(constants.ADD_VIDEO, videoInfoObject);
   },
 
-  removeVideo: function removeVideo(storeId) {
-    this.dispatch(constants.REMOVE_VIDEO, { storeId: storeId });
+  removeVideo: function removeVideo(videoInfoObject) {
+    this.dispatch(constants.REMOVE_VIDEO, videoInfoObject);
   },
 
   clearVideos: function clearVideos() {
     this.dispatch(constants.CLEAR_VIDEOS);
+  },
+
+  sAddVideo: function sAddVideo(videoInfoObject) {
+    this.dispatch(constants.SADD_VIDEO, videoInfoObject);
+  },
+
+  sRemoveVideo: function sRemoveVideo(videoInfoObject) {
+    this.dispatch(constants.SREMOVE_VIDEO, videoInfoObject);
+  },
+
+  sClearVideos: function sClearVideos() {
+    this.dispatch(constants.SCLEAR_VIDEOS);
   }
 };
 
@@ -24421,10 +24436,11 @@ var VideoStore = require("./store.js");
 var YouTube = require("react-youtube");
 var actions = require("./actions.js");
 var requestSearchResults = require("./misc.js");
+var socket = io();
+
+window.socket = socket;
 
 window.React = React;
-
-var socket = io();
 
 var stores = { VideoStore: new VideoStore() };
 
@@ -24446,13 +24462,39 @@ var Application = React.createClass({
 
 	mixins: [FluxMixin, StoreWatchMixin("VideoStore")],
 
+	tempVideoFix: {},
+
+	componentDidMount: function componentDidMount() {
+		var self = this;
+		socket.on("server:playlist:initialize", function (video) {
+			self.getFlux().actions.addVideo(video);
+		});
+
+		socket.on("server:playlist:add", function (video) {
+			self.getFlux().actions.addVideo(video);
+		});
+
+		socket.on("server:playlist:remove", function (video) {
+			this.tempVideoFix[video.videoId] = false;
+			self.getFlux().actions.removeVideo(video);
+		});
+
+		socket.on("server:playlist:clear", function () {
+			self.getFlux().actions.clearVideos();
+		});
+	},
+
 	handleSearchSubmit: function handleSearchSubmit(songName, userName) {
+		this.setState({ searchData: [] });
+		if (!songName || !userName) {
+			return;
+		}
 		this.getSearchResultsFromYouTube(songName);
 		this.setState({ currentUser: userName });
 	},
 
 	getInitialState: function getInitialState() {
-		return { showVideo: true, currentUser: '', searchData: [], currentVideo: { selectedBy: "Rick", title: "Never Gonna Give You Up", videoId: "dQw4w9WgXcQ" } };
+		return { showVideo: false, currentUser: '', searchData: [], currentVideo: { selectedBy: "Rick", title: "Never Gonna Give You Up", videoId: "dQw4w9WgXcQ" } };
 	},
 
 	getStateFromFlux: function getStateFromFlux() {
@@ -24494,9 +24536,16 @@ var Application = React.createClass({
 	},
 
 	addVideoToQueue: function addVideoToQueue(videoObject) {
-		videoObject.selectedBy = this.state.currentUser;
-		this.getFlux().actions.addVideo(videoObject);
-		this.setState({ searchData: [] });
+		if (this.tempVideoFix[videoObject.videoId]) {
+			alert("This video is already queued.");
+			return;
+		} else {
+			console.log(this.tempVideoFix[videoObject.videoId]);
+			this.tempVideoFix[videoObject.videoId] = true;
+			videoObject.selectedBy = this.state.currentUser;
+			this.getFlux().actions.sAddVideo(videoObject);
+			this.setState({ searchData: [] });
+		}
 	},
 
 	playVideo: function playVideo(videoObject) {
@@ -24505,7 +24554,8 @@ var Application = React.createClass({
 	},
 
 	removeVideoFromQueue: function removeVideoFromQueue(videoObject) {
-		this.getFlux().actions.removeVideo(videoObject.storeId);
+		this.tempVideoFix[videoObject.videoId] = false;
+		this.getFlux().actions.sRemoveVideo(videoObject);
 	},
 
 	playVideoAndRemoveFromQueue: function playVideoAndRemoveFromQueue(videoObject) {
@@ -24522,7 +24572,7 @@ var Application = React.createClass({
 	},
 
 	emptyQueue: function emptyQueue() {
-		this.getFlux().actions.clearVideos();
+		this.getFlux().actions.sClearVideos();
 	},
 
 	toggleVideoPlayer: function toggleVideoPlayer() {
@@ -24783,9 +24833,9 @@ var SearchBox = React.createClass({
 		e.preventDefault();
 		var songName = React.findDOMNode(this.refs.searchInput).value.trim();
 		var userName = React.findDOMNode(this.refs.nameInput).value.trim();
-		if (!songName || !userName) {
-			return;
-		}
+		// if (!songName || !userName) {
+		// 	return;
+		// }
 		this.props.onSubmit(songName, userName);
 		React.findDOMNode(this.refs.searchInput).value = '';
 		React.findDOMNode(this.refs.nameInput).value = '';
@@ -25040,7 +25090,10 @@ var Fluxxor = require("fluxxor");
 var constants = {
 	ADD_VIDEO: "ADD_VIDEO",
 	REMOVE_VIDEO: "REMOVE_VIDEO",
-	CLEAR_VIDEOS: "CLEAR_VIDEOS"
+	CLEAR_VIDEOS: "CLEAR_VIDEOS",
+	SADD_VIDEO: "SADD_VIDEO",
+	SREMOVE_VIDEO: "SREMOVE_VIDEO",
+	SCLEAR_VIDEOS: "SCLEAR_VIDEOS"
 };
 
 var VideoStore = Fluxxor.createStore({
@@ -25049,7 +25102,7 @@ var VideoStore = Fluxxor.createStore({
 
 		this.storeId = 0;
 		this.videos = {};
-		this.bindActions(constants.ADD_VIDEO, this.onAddVideo, constants.REMOVE_VIDEO, this.onRemoveVideo, constants.CLEAR_VIDEOS, this.onClearVideos);
+		this.bindActions(constants.ADD_VIDEO, this.onAddVideo, constants.REMOVE_VIDEO, this.onRemoveVideo, constants.CLEAR_VIDEOS, this.onClearVideos, constants.SADD_VIDEO, this.onServerAddVideo, constants.SREMOVE_VIDEO, this.onServerRemoveVideo, constants.SCLEAR_VIDEOS, this.onServerClearVideos);
 	},
 
 	onAddVideo: function onAddVideo(payload) {
@@ -25068,6 +25121,13 @@ var VideoStore = Fluxxor.createStore({
 		this.emit("change");
 	},
 
+	onServerAddVideo: function onServerAddVideo(payload) {
+
+		this.onAddVideo(payload);
+
+		socket.emit("client:playlist:add", payload);
+	},
+
 	onRemoveVideo: function onRemoveVideo(payload) {
 
 		var storeId = payload.storeId;
@@ -25075,6 +25135,13 @@ var VideoStore = Fluxxor.createStore({
 		delete this.videos[storeId];
 
 		this.emit("change");
+	},
+
+	onServerRemoveVideo: function onServerRemoveVideo(payload) {
+
+		this.onRemoveVideo(payload);
+
+		socket.emit("client:playlist:remove", payload);
 	},
 
 	onClearVideos: function onClearVideos() {
@@ -25087,6 +25154,13 @@ var VideoStore = Fluxxor.createStore({
 		});
 
 		this.emit("change");
+	},
+
+	onServerClearVideos: function onServerClearVideos() {
+
+		this.onClearVideos();
+
+		socket.emit("client:playlist:clear");
 	},
 
 	getState: function getState() {
