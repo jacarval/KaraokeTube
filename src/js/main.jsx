@@ -35,6 +35,7 @@ var Application = React.createClass({
 	componentDidMount: function(){
 		var self = this;
 		socket.on("server:playlist:initialize", function(video){
+			self.tempVideoFix[video.videoId] = true;
 			self.getFlux().actions.addVideo(video);
 		});
 
@@ -43,7 +44,7 @@ var Application = React.createClass({
 		});
 
 		socket.on("server:playlist:remove", function(video){
-			this.tempVideoFix[video.videoId] = false;
+			self.tempVideoFix[video.videoId] = false;
 			self.getFlux().actions.removeVideo(video);
 		});
 
@@ -87,7 +88,6 @@ var Application = React.createClass({
 			return;
 		}
 		else {
-			console.log(this.tempVideoFix[videoObject.videoId]);
 			this.tempVideoFix[videoObject.videoId] = true;
 			videoObject.selectedBy = this.state.currentUser;
 			this.getFlux().actions.sAddVideo(videoObject);

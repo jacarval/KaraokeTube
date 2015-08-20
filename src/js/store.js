@@ -50,6 +50,7 @@ var VideoStore = Fluxxor.createStore({
 
 
 	onRemoveVideo: function(payload) {
+		console.log("removing video");
 
 		var storeId = payload.storeId;
 
