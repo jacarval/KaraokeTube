@@ -96,6 +96,7 @@ var Application = React.createClass({
 	},
 
 	playVideo: function(videoObject) {
+		this.setState({showVideo: true});
 		this.setState({currentVideo: videoObject});
 		this.setState({searchData: []});
 	},
