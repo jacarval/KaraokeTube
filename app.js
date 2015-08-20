@@ -5,9 +5,9 @@ var Flux = require('fluxxor');
 var pg = require('pg');
 var io = require('socket.io')(http);
 
-DATABASE_URL = process.env.DATABASE_URL;
+DATABASE_URL = process.env.VIDEOS_DB_URL;
 
-console.log(process.env.DATABASE_URL);
+console.log(process.env.VIDEOS_DB_URL);
 
 app.use(express.static(__dirname + '/public'));
 
