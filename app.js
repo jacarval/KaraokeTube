@@ -23,6 +23,10 @@ io.on('connection', function(socket){
 
 	pg.connect(DATABASE_URL, function(err, client) {
 		if (err) throw err;
+
+		client.query("CREATE TABLE IF NOT EXISTS videos(storeId serial PRIMARY KEY, videoId VARCHAR(15), title VARCHAR(100), thumbUrl VARCHAR(100), selectedBy VARCHAR(20))");
+
+
 		client
 		.query('Select * from videos')
 		.on('row', function(row) {
@@ -78,8 +82,6 @@ function clearVideosFromDB(videoId) {
 function querydb(queryString, values, cb) {
 	pg.connect(DATABASE_URL, function(err, client) {
 		if (err) throw err;
-
-		client.query("CREATE TABLE IF NOT EXISTS videos(storeId serial PRIMARY KEY, videoId VARCHAR(15), title VARCHAR(100), thumbUrl VARCHAR(100), selectedBy VARCHAR(20))");
 
 		console.log('making a query');
 
