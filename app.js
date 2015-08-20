@@ -7,6 +7,8 @@ var io = require('socket.io')(http);
 
 DATABASE_URL = process.env.DATABASE_URL;
 
+console.log(process.env.DATABASE_URL);
+
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res){
