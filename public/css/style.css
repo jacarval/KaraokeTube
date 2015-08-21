@@ -76,6 +76,10 @@ code {
     white-space:normal;
 }
 
+.jumbotron {
+  margin-top: 120px;
+}
+
 /*.container-fluid {
   padding: 20px;
   height: 100%;

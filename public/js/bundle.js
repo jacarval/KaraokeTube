@@ -24621,27 +24621,42 @@ var Application = React.createClass({
 var Content = React.createClass({
 	displayName: "Content",
 
-	render: function render() {
+	renderConditionalContent: function renderConditionalContent() {
 		if (this.props.showVideo) {
-			return React.createElement(
-				"div",
-				{ className: "container" },
-				React.createElement(VideoPlayer, {
-					currentVideo: this.props.currentVideo,
-					onVideoEnd: this.props.onVideoEnd
-				})
-			);
+			return React.createElement(VideoPlayer, {
+				currentVideo: this.props.currentVideo,
+				onVideoEnd: this.props.onVideoEnd
+			});
+		} else if (Object.keys(this.props.selectedVideos).length) {
+			return React.createElement(VideoList, {
+				selectedVideos: this.props.selectedVideos,
+				onPlayClick: this.props.onPlayClick,
+				onRemoveClick: this.props.onRemoveClick
+			});
 		} else {
 			return React.createElement(
 				"div",
-				{ className: "container" },
-				React.createElement(VideoList, {
-					selectedVideos: this.props.selectedVideos,
-					onPlayClick: this.props.onPlayClick,
-					onRemoveClick: this.props.onRemoveClick
-				})
+				{ className: "jumbotron" },
+				React.createElement(
+					"h1",
+					null,
+					"Welcome to KaraokeTube"
+				),
+				React.createElement(
+					"p",
+					null,
+					"Add some songs to the queue..."
+				)
 			);
 		}
+	},
+
+	render: function render() {
+		return React.createElement(
+			"div",
+			{ className: "container" },
+			this.renderConditionalContent()
+		);
 	}
 });
 

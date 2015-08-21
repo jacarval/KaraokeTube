@@ -165,28 +165,40 @@ var Application = React.createClass({
 });
 
 var Content = React.createClass({
-	render: function() {
+	renderConditionalContent: function() {
 		if (this.props.showVideo) {
 			return (
-				<div className="container">
-					<VideoPlayer
-						currentVideo={this.props.currentVideo}
-						onVideoEnd={this.props.onVideoEnd}
-					/>
-				</div>
+				<VideoPlayer
+					currentVideo={this.props.currentVideo}
+					onVideoEnd={this.props.onVideoEnd}
+				/>
+			);
+		}
+		else if (Object.keys(this.props.selectedVideos).length){
+			return (
+				<VideoList 
+					selectedVideos={this.props.selectedVideos}
+					onPlayClick={this.props.onPlayClick}
+					onRemoveClick={this.props.onRemoveClick}
+				/>
 			);
 		}
 		else {
-			return (
-				<div className="container">
-					<VideoList 
-						selectedVideos={this.props.selectedVideos}
-						onPlayClick={this.props.onPlayClick}
-						onRemoveClick={this.props.onRemoveClick}
-					/>
+			return (	
+				<div className="jumbotron">
+				  <h1>Welcome to KaraokeTube</h1>
+				  <p>Add some songs to the queue...</p>
 				</div>
-			);
+			)
 		}
+	},
+
+	render: function() {
+		return(
+			<div className="container">
+				{this.renderConditionalContent()}
+			</div>
+		);
 	}
 });
 
