@@ -7,8 +7,6 @@ var io = require('socket.io')(http);
 
 DATABASE_URL = process.env.VIDEOS_DB_URL;
 
-console.log(process.env.VIDEOS_DB_URL);
-
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res){
@@ -82,10 +80,6 @@ function clearVideosFromDB(videoId) {
 function querydb(queryString, values, cb) {
 	pg.connect(DATABASE_URL, function(err, client) {
 		if (err) throw err;
-
-		console.log('making a query');
-
-		console.log(queryString, values);
 
 		client
 		.query(queryString, values)
