@@ -25075,7 +25075,7 @@ var Footer = React.createClass({
 });
 
 React.render(React.createElement(Application, { flux: flux }), document.body);
-/*<span className="glyphicon glyphicon-remove" onclick={function() {return alert()}}></span>*/ /*<!--/.nav-collapse -->*/
+/*<!--/.nav-collapse -->*/
 
 },{"./actions.js":260,"./misc.js":262,"./store.js":263,"fluxxor":1,"react":259,"react-youtube":98}],262:[function(require,module,exports){
 'use strict';

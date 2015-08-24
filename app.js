@@ -15,6 +15,13 @@ app.get('/', function(req, res){
 
 });
 
+app.get('/modify', function(req, res){
+
+  res.sendFile(__dirname + '/modify.html');
+
+});
+
+
 io.on('connection', function(socket){
 
 	socket.join(socket.id);	

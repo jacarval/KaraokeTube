@@ -274,7 +274,6 @@ var NavBar = React.createClass({
 						{videos[storeId].title}
 
 					</a>
-					{/*<span className="glyphicon glyphicon-remove" onclick={function() {return alert()}}></span>*/}
 				</li>
 			);
 		});
