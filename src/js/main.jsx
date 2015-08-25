@@ -51,6 +51,10 @@ var Application = React.createClass({
 		socket.on("server:playlist:clear", function(){
 			self.getFlux().actions.clearVideos();
 		});
+
+		socket.on("server:currentvideo:update", function(video){
+			self.setState({currentVideo: video});
+		});
 	},
 
 	handleSearchSubmit: function(songName, userName) {
@@ -99,6 +103,7 @@ var Application = React.createClass({
 		this.setState({showVideo: true});
 		this.setState({currentVideo: videoObject});
 		this.setState({searchData: []});
+		socket.emit('client:currentvideo:update', videoObject);
 	},
 
 	removeVideoFromQueue: function(videoObject) {

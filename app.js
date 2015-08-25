@@ -61,6 +61,10 @@ io.on('connection', function(socket){
 		socket.broadcast.emit("server:playlist:clear");
 		clearVideosFromDB();
 	});
+
+	socket.on("client:currentvideo:update", function(video) {
+		socket.broadcast.emit("server:currentvideo:update", video);
+	});
 	
 });
 
