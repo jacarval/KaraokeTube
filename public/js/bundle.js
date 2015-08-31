@@ -25172,7 +25172,7 @@ React.render(React.createElement(Application, { flux: flux }), document.body);
 var requestSearchResults = function requestSearchResults(querystring, callback) {
 	var xhr = new XMLHttpRequest();
 	var url = 'https://www.googleapis.com/youtube/v3/search';
-	var params = '?part=snippet&q=' + querystring + " karaoke&type=video&maxResults=50&regionCode=US&key=AIzaSyAjZ9Y2YeyNJSk8Ko7T2iY-qTD-8QOUGBE";
+	var params = '?part=snippet&q=' + querystring + " lyrics&type=video&maxResults=50&regionCode=US&key=AIzaSyAjZ9Y2YeyNJSk8Ko7T2iY-qTD-8QOUGBE";
 	xhr.open('GET', encodeURI(url + params));
 	xhr.onload = function () {
 		if (xhr.status === 200) {
