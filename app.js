@@ -16,13 +16,6 @@ app.get('/', function(req, res){
 
 });
 
-app.get('/modify', function(req, res){
-
-  res.sendFile(__dirname + '/modify.html');
-
-});
-
-
 io.on('connection', function(socket){
 
 	socket.join(socket.id);	
@@ -68,10 +61,6 @@ io.on('connection', function(socket){
 	});
 	
 });
-
-function initializeVideoList(socket, videoList){
-	io.sockets.in(socket.id).emit('server:playlist:initialize', videoList);
-}
 
 function getAllVideosFromDB(callback) {
 	querydb("SELECT * FROM videos", null, callback);

@@ -5437,7 +5437,7 @@ module.exports = CSSPropertyOperations;
 
 }).call(this,require('_process'))
 
-},{"./CSSProperty":107,"./ExecutionEnvironment":124,"./camelizeStyleName":212,"./dangerousStyleValue":217,"./hyphenateStyleName":237,"./memoizeStringOnly":247,"./warning":258,"_process":264}],109:[function(require,module,exports){
+},{"./CSSProperty":107,"./ExecutionEnvironment":124,"./camelizeStyleName":212,"./dangerousStyleValue":217,"./hyphenateStyleName":237,"./memoizeStringOnly":247,"./warning":258,"_process":271}],109:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -5538,7 +5538,7 @@ module.exports = CallbackQueue;
 
 }).call(this,require('_process'))
 
-},{"./Object.assign":130,"./PooledClass":131,"./invariant":239,"_process":264}],110:[function(require,module,exports){
+},{"./Object.assign":130,"./PooledClass":131,"./invariant":239,"_process":271}],110:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -6084,7 +6084,7 @@ module.exports = DOMChildrenOperations;
 
 }).call(this,require('_process'))
 
-},{"./Danger":115,"./ReactMultiChildUpdateTypes":176,"./invariant":239,"./setTextContent":253,"_process":264}],113:[function(require,module,exports){
+},{"./Danger":115,"./ReactMultiChildUpdateTypes":176,"./invariant":239,"./setTextContent":253,"_process":271}],113:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -6384,7 +6384,7 @@ module.exports = DOMProperty;
 
 }).call(this,require('_process'))
 
-},{"./invariant":239,"_process":264}],114:[function(require,module,exports){
+},{"./invariant":239,"_process":271}],114:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -6577,7 +6577,7 @@ module.exports = DOMPropertyOperations;
 
 }).call(this,require('_process'))
 
-},{"./DOMProperty":113,"./quoteAttributeValueForBrowser":251,"./warning":258,"_process":264}],115:[function(require,module,exports){
+},{"./DOMProperty":113,"./quoteAttributeValueForBrowser":251,"./warning":258,"_process":271}],115:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -6765,7 +6765,7 @@ module.exports = Danger;
 
 }).call(this,require('_process'))
 
-},{"./ExecutionEnvironment":124,"./createNodesFromMarkup":216,"./emptyFunction":218,"./getMarkupWrap":231,"./invariant":239,"_process":264}],116:[function(require,module,exports){
+},{"./ExecutionEnvironment":124,"./createNodesFromMarkup":216,"./emptyFunction":218,"./getMarkupWrap":231,"./invariant":239,"_process":271}],116:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -7107,7 +7107,7 @@ module.exports = EventListener;
 
 }).call(this,require('_process'))
 
-},{"./emptyFunction":218,"_process":264}],120:[function(require,module,exports){
+},{"./emptyFunction":218,"_process":271}],120:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -7386,7 +7386,7 @@ module.exports = EventPluginHub;
 
 }).call(this,require('_process'))
 
-},{"./EventPluginRegistry":121,"./EventPluginUtils":122,"./accumulateInto":209,"./forEachAccumulated":224,"./invariant":239,"_process":264}],121:[function(require,module,exports){
+},{"./EventPluginRegistry":121,"./EventPluginUtils":122,"./accumulateInto":209,"./forEachAccumulated":224,"./invariant":239,"_process":271}],121:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -7667,7 +7667,7 @@ module.exports = EventPluginRegistry;
 
 }).call(this,require('_process'))
 
-},{"./invariant":239,"_process":264}],122:[function(require,module,exports){
+},{"./invariant":239,"_process":271}],122:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -7889,7 +7889,7 @@ module.exports = EventPluginUtils;
 
 }).call(this,require('_process'))
 
-},{"./EventConstants":118,"./invariant":239,"_process":264}],123:[function(require,module,exports){
+},{"./EventConstants":118,"./invariant":239,"_process":271}],123:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -8032,7 +8032,7 @@ module.exports = EventPropagators;
 
 }).call(this,require('_process'))
 
-},{"./EventConstants":118,"./EventPluginHub":120,"./accumulateInto":209,"./forEachAccumulated":224,"_process":264}],124:[function(require,module,exports){
+},{"./EventConstants":118,"./EventPluginHub":120,"./accumulateInto":209,"./forEachAccumulated":224,"_process":271}],124:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -8535,7 +8535,7 @@ module.exports = LinkedValueUtils;
 
 }).call(this,require('_process'))
 
-},{"./ReactPropTypes":182,"./invariant":239,"_process":264}],128:[function(require,module,exports){
+},{"./ReactPropTypes":182,"./invariant":239,"_process":271}],128:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -8593,7 +8593,7 @@ module.exports = LocalEventTrapMixin;
 
 }).call(this,require('_process'))
 
-},{"./ReactBrowserEventEmitter":134,"./accumulateInto":209,"./forEachAccumulated":224,"./invariant":239,"_process":264}],129:[function(require,module,exports){
+},{"./ReactBrowserEventEmitter":134,"./accumulateInto":209,"./forEachAccumulated":224,"./invariant":239,"_process":271}],129:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -8817,7 +8817,7 @@ module.exports = PooledClass;
 
 }).call(this,require('_process'))
 
-},{"./invariant":239,"_process":264}],132:[function(require,module,exports){
+},{"./invariant":239,"_process":271}],132:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -8970,7 +8970,7 @@ module.exports = React;
 
 }).call(this,require('_process'))
 
-},{"./EventPluginUtils":122,"./ExecutionEnvironment":124,"./Object.assign":130,"./ReactChildren":136,"./ReactClass":137,"./ReactComponent":138,"./ReactContext":142,"./ReactCurrentOwner":143,"./ReactDOM":144,"./ReactDOMTextComponent":155,"./ReactDefaultInjection":158,"./ReactElement":161,"./ReactElementValidator":162,"./ReactInstanceHandles":170,"./ReactMount":174,"./ReactPerf":179,"./ReactPropTypes":182,"./ReactReconciler":185,"./ReactServerRendering":188,"./findDOMNode":221,"./onlyChild":248,"_process":264}],133:[function(require,module,exports){
+},{"./EventPluginUtils":122,"./ExecutionEnvironment":124,"./Object.assign":130,"./ReactChildren":136,"./ReactClass":137,"./ReactComponent":138,"./ReactContext":142,"./ReactCurrentOwner":143,"./ReactDOM":144,"./ReactDOMTextComponent":155,"./ReactDefaultInjection":158,"./ReactElement":161,"./ReactElementValidator":162,"./ReactInstanceHandles":170,"./ReactMount":174,"./ReactPerf":179,"./ReactPropTypes":182,"./ReactReconciler":185,"./ReactServerRendering":188,"./findDOMNode":221,"./onlyChild":248,"_process":271}],133:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -9635,7 +9635,7 @@ module.exports = ReactChildren;
 
 }).call(this,require('_process'))
 
-},{"./PooledClass":131,"./ReactFragment":167,"./traverseAllChildren":257,"./warning":258,"_process":264}],137:[function(require,module,exports){
+},{"./PooledClass":131,"./ReactFragment":167,"./traverseAllChildren":257,"./warning":258,"_process":271}],137:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -10582,7 +10582,7 @@ module.exports = ReactClass;
 
 }).call(this,require('_process'))
 
-},{"./Object.assign":130,"./ReactComponent":138,"./ReactCurrentOwner":143,"./ReactElement":161,"./ReactErrorUtils":164,"./ReactInstanceMap":171,"./ReactLifeCycle":172,"./ReactPropTypeLocationNames":180,"./ReactPropTypeLocations":181,"./ReactUpdateQueue":190,"./invariant":239,"./keyMirror":244,"./keyOf":245,"./warning":258,"_process":264}],138:[function(require,module,exports){
+},{"./Object.assign":130,"./ReactComponent":138,"./ReactCurrentOwner":143,"./ReactElement":161,"./ReactErrorUtils":164,"./ReactInstanceMap":171,"./ReactLifeCycle":172,"./ReactPropTypeLocationNames":180,"./ReactPropTypeLocations":181,"./ReactUpdateQueue":190,"./invariant":239,"./keyMirror":244,"./keyOf":245,"./warning":258,"_process":271}],138:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -10737,7 +10737,7 @@ module.exports = ReactComponent;
 
 }).call(this,require('_process'))
 
-},{"./ReactUpdateQueue":190,"./invariant":239,"./warning":258,"_process":264}],139:[function(require,module,exports){
+},{"./ReactUpdateQueue":190,"./invariant":239,"./warning":258,"_process":271}],139:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -10846,7 +10846,7 @@ module.exports = ReactComponentEnvironment;
 
 }).call(this,require('_process'))
 
-},{"./invariant":239,"_process":264}],141:[function(require,module,exports){
+},{"./invariant":239,"_process":271}],141:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -11760,7 +11760,7 @@ module.exports = ReactCompositeComponent;
 
 }).call(this,require('_process'))
 
-},{"./Object.assign":130,"./ReactComponentEnvironment":140,"./ReactContext":142,"./ReactCurrentOwner":143,"./ReactElement":161,"./ReactElementValidator":162,"./ReactInstanceMap":171,"./ReactLifeCycle":172,"./ReactNativeComponent":177,"./ReactPerf":179,"./ReactPropTypeLocationNames":180,"./ReactPropTypeLocations":181,"./ReactReconciler":185,"./ReactUpdates":191,"./emptyObject":219,"./invariant":239,"./shouldUpdateReactComponent":255,"./warning":258,"_process":264}],142:[function(require,module,exports){
+},{"./Object.assign":130,"./ReactComponentEnvironment":140,"./ReactContext":142,"./ReactCurrentOwner":143,"./ReactElement":161,"./ReactElementValidator":162,"./ReactInstanceMap":171,"./ReactLifeCycle":172,"./ReactNativeComponent":177,"./ReactPerf":179,"./ReactPropTypeLocationNames":180,"./ReactPropTypeLocations":181,"./ReactReconciler":185,"./ReactUpdates":191,"./emptyObject":219,"./invariant":239,"./shouldUpdateReactComponent":255,"./warning":258,"_process":271}],142:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -11839,7 +11839,7 @@ module.exports = ReactContext;
 
 }).call(this,require('_process'))
 
-},{"./Object.assign":130,"./emptyObject":219,"./warning":258,"_process":264}],143:[function(require,module,exports){
+},{"./Object.assign":130,"./emptyObject":219,"./warning":258,"_process":271}],143:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -12053,7 +12053,7 @@ module.exports = ReactDOM;
 
 }).call(this,require('_process'))
 
-},{"./ReactElement":161,"./ReactElementValidator":162,"./mapObject":246,"_process":264}],145:[function(require,module,exports){
+},{"./ReactElement":161,"./ReactElementValidator":162,"./mapObject":246,"_process":271}],145:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -12628,7 +12628,7 @@ module.exports = ReactDOMComponent;
 
 }).call(this,require('_process'))
 
-},{"./CSSPropertyOperations":108,"./DOMProperty":113,"./DOMPropertyOperations":114,"./Object.assign":130,"./ReactBrowserEventEmitter":134,"./ReactComponentBrowserEnvironment":139,"./ReactMount":174,"./ReactMultiChild":175,"./ReactPerf":179,"./escapeTextContentForBrowser":220,"./invariant":239,"./isEventSupported":240,"./keyOf":245,"./warning":258,"_process":264}],147:[function(require,module,exports){
+},{"./CSSPropertyOperations":108,"./DOMProperty":113,"./DOMPropertyOperations":114,"./Object.assign":130,"./ReactBrowserEventEmitter":134,"./ReactComponentBrowserEnvironment":139,"./ReactMount":174,"./ReactMultiChild":175,"./ReactPerf":179,"./escapeTextContentForBrowser":220,"./invariant":239,"./isEventSupported":240,"./keyOf":245,"./warning":258,"_process":271}],147:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -12846,7 +12846,7 @@ module.exports = ReactDOMIDOperations;
 
 }).call(this,require('_process'))
 
-},{"./CSSPropertyOperations":108,"./DOMChildrenOperations":112,"./DOMPropertyOperations":114,"./ReactMount":174,"./ReactPerf":179,"./invariant":239,"./setInnerHTML":252,"_process":264}],149:[function(require,module,exports){
+},{"./CSSPropertyOperations":108,"./DOMChildrenOperations":112,"./DOMPropertyOperations":114,"./ReactMount":174,"./ReactPerf":179,"./invariant":239,"./setInnerHTML":252,"_process":271}],149:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -13115,7 +13115,7 @@ module.exports = ReactDOMInput;
 
 }).call(this,require('_process'))
 
-},{"./AutoFocusMixin":105,"./DOMPropertyOperations":114,"./LinkedValueUtils":127,"./Object.assign":130,"./ReactBrowserComponentMixin":133,"./ReactClass":137,"./ReactElement":161,"./ReactMount":174,"./ReactUpdates":191,"./invariant":239,"_process":264}],152:[function(require,module,exports){
+},{"./AutoFocusMixin":105,"./DOMPropertyOperations":114,"./LinkedValueUtils":127,"./Object.assign":130,"./ReactBrowserComponentMixin":133,"./ReactClass":137,"./ReactElement":161,"./ReactMount":174,"./ReactUpdates":191,"./invariant":239,"_process":271}],152:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -13168,7 +13168,7 @@ module.exports = ReactDOMOption;
 
 }).call(this,require('_process'))
 
-},{"./ReactBrowserComponentMixin":133,"./ReactClass":137,"./ReactElement":161,"./warning":258,"_process":264}],153:[function(require,module,exports){
+},{"./ReactBrowserComponentMixin":133,"./ReactClass":137,"./ReactElement":161,"./warning":258,"_process":271}],153:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -13817,7 +13817,7 @@ module.exports = ReactDOMTextarea;
 
 }).call(this,require('_process'))
 
-},{"./AutoFocusMixin":105,"./DOMPropertyOperations":114,"./LinkedValueUtils":127,"./Object.assign":130,"./ReactBrowserComponentMixin":133,"./ReactClass":137,"./ReactElement":161,"./ReactUpdates":191,"./invariant":239,"./warning":258,"_process":264}],157:[function(require,module,exports){
+},{"./AutoFocusMixin":105,"./DOMPropertyOperations":114,"./LinkedValueUtils":127,"./Object.assign":130,"./ReactBrowserComponentMixin":133,"./ReactClass":137,"./ReactElement":161,"./ReactUpdates":191,"./invariant":239,"./warning":258,"_process":271}],157:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -14050,7 +14050,7 @@ module.exports = {
 
 }).call(this,require('_process'))
 
-},{"./BeforeInputEventPlugin":106,"./ChangeEventPlugin":110,"./ClientReactRootIndex":111,"./DefaultEventPluginOrder":116,"./EnterLeaveEventPlugin":117,"./ExecutionEnvironment":124,"./HTMLDOMPropertyConfig":126,"./MobileSafariClickEventPlugin":129,"./ReactBrowserComponentMixin":133,"./ReactClass":137,"./ReactComponentBrowserEnvironment":139,"./ReactDOMButton":145,"./ReactDOMComponent":146,"./ReactDOMForm":147,"./ReactDOMIDOperations":148,"./ReactDOMIframe":149,"./ReactDOMImg":150,"./ReactDOMInput":151,"./ReactDOMOption":152,"./ReactDOMSelect":153,"./ReactDOMTextComponent":155,"./ReactDOMTextarea":156,"./ReactDefaultBatchingStrategy":157,"./ReactDefaultPerf":159,"./ReactElement":161,"./ReactEventListener":166,"./ReactInjection":168,"./ReactInstanceHandles":170,"./ReactMount":174,"./ReactReconcileTransaction":184,"./SVGDOMPropertyConfig":192,"./SelectEventPlugin":193,"./ServerReactRootIndex":194,"./SimpleEventPlugin":195,"./createFullPageComponent":215,"_process":264}],159:[function(require,module,exports){
+},{"./BeforeInputEventPlugin":106,"./ChangeEventPlugin":110,"./ClientReactRootIndex":111,"./DefaultEventPluginOrder":116,"./EnterLeaveEventPlugin":117,"./ExecutionEnvironment":124,"./HTMLDOMPropertyConfig":126,"./MobileSafariClickEventPlugin":129,"./ReactBrowserComponentMixin":133,"./ReactClass":137,"./ReactComponentBrowserEnvironment":139,"./ReactDOMButton":145,"./ReactDOMComponent":146,"./ReactDOMForm":147,"./ReactDOMIDOperations":148,"./ReactDOMIframe":149,"./ReactDOMImg":150,"./ReactDOMInput":151,"./ReactDOMOption":152,"./ReactDOMSelect":153,"./ReactDOMTextComponent":155,"./ReactDOMTextarea":156,"./ReactDefaultBatchingStrategy":157,"./ReactDefaultPerf":159,"./ReactElement":161,"./ReactEventListener":166,"./ReactInjection":168,"./ReactInstanceHandles":170,"./ReactMount":174,"./ReactReconcileTransaction":184,"./SVGDOMPropertyConfig":192,"./SelectEventPlugin":193,"./ServerReactRootIndex":194,"./SimpleEventPlugin":195,"./createFullPageComponent":215,"_process":271}],159:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -14831,7 +14831,7 @@ module.exports = ReactElement;
 
 }).call(this,require('_process'))
 
-},{"./Object.assign":130,"./ReactContext":142,"./ReactCurrentOwner":143,"./warning":258,"_process":264}],162:[function(require,module,exports){
+},{"./Object.assign":130,"./ReactContext":142,"./ReactCurrentOwner":143,"./warning":258,"_process":271}],162:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -15297,7 +15297,7 @@ module.exports = ReactElementValidator;
 
 }).call(this,require('_process'))
 
-},{"./ReactCurrentOwner":143,"./ReactElement":161,"./ReactFragment":167,"./ReactNativeComponent":177,"./ReactPropTypeLocationNames":180,"./ReactPropTypeLocations":181,"./getIteratorFn":230,"./invariant":239,"./warning":258,"_process":264}],163:[function(require,module,exports){
+},{"./ReactCurrentOwner":143,"./ReactElement":161,"./ReactFragment":167,"./ReactNativeComponent":177,"./ReactPropTypeLocationNames":180,"./ReactPropTypeLocations":181,"./getIteratorFn":230,"./invariant":239,"./warning":258,"_process":271}],163:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -15393,7 +15393,7 @@ module.exports = ReactEmptyComponent;
 
 }).call(this,require('_process'))
 
-},{"./ReactElement":161,"./ReactInstanceMap":171,"./invariant":239,"_process":264}],164:[function(require,module,exports){
+},{"./ReactElement":161,"./ReactInstanceMap":171,"./invariant":239,"_process":271}],164:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -15844,7 +15844,7 @@ module.exports = ReactFragment;
 
 }).call(this,require('_process'))
 
-},{"./ReactElement":161,"./warning":258,"_process":264}],168:[function(require,module,exports){
+},{"./ReactElement":161,"./warning":258,"_process":271}],168:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -16358,7 +16358,7 @@ module.exports = ReactInstanceHandles;
 
 }).call(this,require('_process'))
 
-},{"./ReactRootIndex":187,"./invariant":239,"_process":264}],171:[function(require,module,exports){
+},{"./ReactRootIndex":187,"./invariant":239,"_process":271}],171:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17384,7 +17384,7 @@ module.exports = ReactMount;
 
 }).call(this,require('_process'))
 
-},{"./DOMProperty":113,"./ReactBrowserEventEmitter":134,"./ReactCurrentOwner":143,"./ReactElement":161,"./ReactElementValidator":162,"./ReactEmptyComponent":163,"./ReactInstanceHandles":170,"./ReactInstanceMap":171,"./ReactMarkupChecksum":173,"./ReactPerf":179,"./ReactReconciler":185,"./ReactUpdateQueue":190,"./ReactUpdates":191,"./containsNode":213,"./emptyObject":219,"./getReactRootElementInContainer":233,"./instantiateReactComponent":238,"./invariant":239,"./setInnerHTML":252,"./shouldUpdateReactComponent":255,"./warning":258,"_process":264}],175:[function(require,module,exports){
+},{"./DOMProperty":113,"./ReactBrowserEventEmitter":134,"./ReactCurrentOwner":143,"./ReactElement":161,"./ReactElementValidator":162,"./ReactEmptyComponent":163,"./ReactInstanceHandles":170,"./ReactInstanceMap":171,"./ReactMarkupChecksum":173,"./ReactPerf":179,"./ReactReconciler":185,"./ReactUpdateQueue":190,"./ReactUpdates":191,"./containsNode":213,"./emptyObject":219,"./getReactRootElementInContainer":233,"./instantiateReactComponent":238,"./invariant":239,"./setInnerHTML":252,"./shouldUpdateReactComponent":255,"./warning":258,"_process":271}],175:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -17955,7 +17955,7 @@ module.exports = ReactNativeComponent;
 
 }).call(this,require('_process'))
 
-},{"./Object.assign":130,"./invariant":239,"_process":264}],178:[function(require,module,exports){
+},{"./Object.assign":130,"./invariant":239,"_process":271}],178:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -18068,7 +18068,7 @@ module.exports = ReactOwner;
 
 }).call(this,require('_process'))
 
-},{"./invariant":239,"_process":264}],179:[function(require,module,exports){
+},{"./invariant":239,"_process":271}],179:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -18173,7 +18173,7 @@ module.exports = ReactPerf;
 
 }).call(this,require('_process'))
 
-},{"_process":264}],180:[function(require,module,exports){
+},{"_process":271}],180:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -18202,7 +18202,7 @@ module.exports = ReactPropTypeLocationNames;
 
 }).call(this,require('_process'))
 
-},{"_process":264}],181:[function(require,module,exports){
+},{"_process":271}],181:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -18932,7 +18932,7 @@ module.exports = ReactReconciler;
 
 }).call(this,require('_process'))
 
-},{"./ReactElementValidator":162,"./ReactRef":186,"_process":264}],186:[function(require,module,exports){
+},{"./ReactElementValidator":162,"./ReactRef":186,"_process":271}],186:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -19117,7 +19117,7 @@ module.exports = {
 
 }).call(this,require('_process'))
 
-},{"./ReactElement":161,"./ReactInstanceHandles":170,"./ReactMarkupChecksum":173,"./ReactServerRenderingTransaction":189,"./emptyObject":219,"./instantiateReactComponent":238,"./invariant":239,"_process":264}],189:[function(require,module,exports){
+},{"./ReactElement":161,"./ReactInstanceHandles":170,"./ReactMarkupChecksum":173,"./ReactServerRenderingTransaction":189,"./emptyObject":219,"./instantiateReactComponent":238,"./invariant":239,"_process":271}],189:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -19530,7 +19530,7 @@ module.exports = ReactUpdateQueue;
 
 }).call(this,require('_process'))
 
-},{"./Object.assign":130,"./ReactCurrentOwner":143,"./ReactElement":161,"./ReactInstanceMap":171,"./ReactLifeCycle":172,"./ReactUpdates":191,"./invariant":239,"./warning":258,"_process":264}],191:[function(require,module,exports){
+},{"./Object.assign":130,"./ReactCurrentOwner":143,"./ReactElement":161,"./ReactInstanceMap":171,"./ReactLifeCycle":172,"./ReactUpdates":191,"./invariant":239,"./warning":258,"_process":271}],191:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -19813,7 +19813,7 @@ module.exports = ReactUpdates;
 
 }).call(this,require('_process'))
 
-},{"./CallbackQueue":109,"./Object.assign":130,"./PooledClass":131,"./ReactCurrentOwner":143,"./ReactPerf":179,"./ReactReconciler":185,"./Transaction":207,"./invariant":239,"./warning":258,"_process":264}],192:[function(require,module,exports){
+},{"./CallbackQueue":109,"./Object.assign":130,"./PooledClass":131,"./ReactCurrentOwner":143,"./ReactPerf":179,"./ReactReconciler":185,"./Transaction":207,"./invariant":239,"./warning":258,"_process":271}],192:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -20562,7 +20562,7 @@ module.exports = SimpleEventPlugin;
 
 }).call(this,require('_process'))
 
-},{"./EventConstants":118,"./EventPluginUtils":122,"./EventPropagators":123,"./SyntheticClipboardEvent":196,"./SyntheticDragEvent":198,"./SyntheticEvent":199,"./SyntheticFocusEvent":200,"./SyntheticKeyboardEvent":202,"./SyntheticMouseEvent":203,"./SyntheticTouchEvent":204,"./SyntheticUIEvent":205,"./SyntheticWheelEvent":206,"./getEventCharCode":226,"./invariant":239,"./keyOf":245,"./warning":258,"_process":264}],196:[function(require,module,exports){
+},{"./EventConstants":118,"./EventPluginUtils":122,"./EventPropagators":123,"./SyntheticClipboardEvent":196,"./SyntheticDragEvent":198,"./SyntheticEvent":199,"./SyntheticFocusEvent":200,"./SyntheticKeyboardEvent":202,"./SyntheticMouseEvent":203,"./SyntheticTouchEvent":204,"./SyntheticUIEvent":205,"./SyntheticWheelEvent":206,"./getEventCharCode":226,"./invariant":239,"./keyOf":245,"./warning":258,"_process":271}],196:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -21523,7 +21523,7 @@ module.exports = Transaction;
 
 }).call(this,require('_process'))
 
-},{"./invariant":239,"_process":264}],208:[function(require,module,exports){
+},{"./invariant":239,"_process":271}],208:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -21619,7 +21619,7 @@ module.exports = accumulateInto;
 
 }).call(this,require('_process'))
 
-},{"./invariant":239,"_process":264}],210:[function(require,module,exports){
+},{"./invariant":239,"_process":271}],210:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -21920,7 +21920,7 @@ module.exports = createFullPageComponent;
 
 }).call(this,require('_process'))
 
-},{"./ReactClass":137,"./ReactElement":161,"./invariant":239,"_process":264}],216:[function(require,module,exports){
+},{"./ReactClass":137,"./ReactElement":161,"./invariant":239,"_process":271}],216:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -22011,7 +22011,7 @@ module.exports = createNodesFromMarkup;
 
 }).call(this,require('_process'))
 
-},{"./ExecutionEnvironment":124,"./createArrayFromMixed":214,"./getMarkupWrap":231,"./invariant":239,"_process":264}],217:[function(require,module,exports){
+},{"./ExecutionEnvironment":124,"./createArrayFromMixed":214,"./getMarkupWrap":231,"./invariant":239,"_process":271}],217:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22128,7 +22128,7 @@ module.exports = emptyObject;
 
 }).call(this,require('_process'))
 
-},{"_process":264}],220:[function(require,module,exports){
+},{"_process":271}],220:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -22242,7 +22242,7 @@ module.exports = findDOMNode;
 
 }).call(this,require('_process'))
 
-},{"./ReactCurrentOwner":143,"./ReactInstanceMap":171,"./ReactMount":174,"./invariant":239,"./isNode":241,"./warning":258,"_process":264}],222:[function(require,module,exports){
+},{"./ReactCurrentOwner":143,"./ReactInstanceMap":171,"./ReactMount":174,"./invariant":239,"./isNode":241,"./warning":258,"_process":271}],222:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -22301,7 +22301,7 @@ module.exports = flattenChildren;
 
 }).call(this,require('_process'))
 
-},{"./traverseAllChildren":257,"./warning":258,"_process":264}],223:[function(require,module,exports){
+},{"./traverseAllChildren":257,"./warning":258,"_process":271}],223:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -22789,7 +22789,7 @@ module.exports = getMarkupWrap;
 
 }).call(this,require('_process'))
 
-},{"./ExecutionEnvironment":124,"./invariant":239,"_process":264}],232:[function(require,module,exports){
+},{"./ExecutionEnvironment":124,"./invariant":239,"_process":271}],232:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23189,7 +23189,7 @@ module.exports = instantiateReactComponent;
 
 }).call(this,require('_process'))
 
-},{"./Object.assign":130,"./ReactCompositeComponent":141,"./ReactEmptyComponent":163,"./ReactNativeComponent":177,"./invariant":239,"./warning":258,"_process":264}],239:[function(require,module,exports){
+},{"./Object.assign":130,"./ReactCompositeComponent":141,"./ReactEmptyComponent":163,"./ReactNativeComponent":177,"./invariant":239,"./warning":258,"_process":271}],239:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -23247,7 +23247,7 @@ module.exports = invariant;
 
 }).call(this,require('_process'))
 
-},{"_process":264}],240:[function(require,module,exports){
+},{"_process":271}],240:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23463,7 +23463,7 @@ module.exports = keyMirror;
 
 }).call(this,require('_process'))
 
-},{"./invariant":239,"_process":264}],245:[function(require,module,exports){
+},{"./invariant":239,"_process":271}],245:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23626,7 +23626,7 @@ module.exports = onlyChild;
 
 }).call(this,require('_process'))
 
-},{"./ReactElement":161,"./invariant":239,"_process":264}],249:[function(require,module,exports){
+},{"./ReactElement":161,"./invariant":239,"_process":271}],249:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -23990,7 +23990,7 @@ module.exports = shouldUpdateReactComponent;
 
 }).call(this,require('_process'))
 
-},{"./warning":258,"_process":264}],256:[function(require,module,exports){
+},{"./warning":258,"_process":271}],256:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -24063,7 +24063,7 @@ module.exports = toArray;
 
 }).call(this,require('_process'))
 
-},{"./invariant":239,"_process":264}],257:[function(require,module,exports){
+},{"./invariant":239,"_process":271}],257:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -24317,7 +24317,7 @@ module.exports = traverseAllChildren;
 
 }).call(this,require('_process'))
 
-},{"./ReactElement":161,"./ReactFragment":167,"./ReactInstanceHandles":170,"./getIteratorFn":230,"./invariant":239,"./warning":258,"_process":264}],258:[function(require,module,exports){
+},{"./ReactElement":161,"./ReactFragment":167,"./ReactInstanceHandles":170,"./getIteratorFn":230,"./invariant":239,"./warning":258,"_process":271}],258:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -24381,7 +24381,7 @@ module.exports = warning;
 
 }).call(this,require('_process'))
 
-},{"./emptyFunction":218,"_process":264}],259:[function(require,module,exports){
+},{"./emptyFunction":218,"_process":271}],259:[function(require,module,exports){
 module.exports = require('./lib/React');
 
 },{"./lib/React":132}],260:[function(require,module,exports){
@@ -24427,16 +24427,557 @@ var actions = {
 module.exports = actions;
 
 },{"fluxxor":1}],261:[function(require,module,exports){
+"use strict";
+
+var React = require("react");
+
+var VideoPlayer = require("./VideoPlayer.jsx");
+var VideoList = require("./VideoList.jsx");
+
+var Content = React.createClass({
+	displayName: "Content",
+
+	renderConditionalContent: function renderConditionalContent() {
+		if (this.props.showVideo) {
+			return React.createElement(VideoPlayer, {
+				currentVideo: this.props.currentVideo,
+				onVideoEnd: this.props.onVideoEnd
+			});
+		} else if (Object.keys(this.props.selectedVideos).length) {
+			return React.createElement(VideoList, {
+				selectedVideos: this.props.selectedVideos,
+				onPlayClick: this.props.onPlayClick,
+				onRemoveClick: this.props.onRemoveClick
+			});
+		} else {
+			return React.createElement(
+				"div",
+				{ className: "jumbotron" },
+				React.createElement(
+					"h1",
+					null,
+					"Welcome to KaraokeTube"
+				),
+				React.createElement(
+					"p",
+					null,
+					"Add some songs to the queue..."
+				)
+			);
+		}
+	},
+
+	render: function render() {
+		return React.createElement(
+			"div",
+			{ className: "container" },
+			this.renderConditionalContent()
+		);
+	}
+});
+
+module.exports = Content;
+
+},{"./VideoList.jsx":266,"./VideoPlayer.jsx":267,"react":259}],262:[function(require,module,exports){
+"use strict";
+
+var React = require("react");
+
+var Footer = React.createClass({
+	displayName: "Footer",
+
+	createClickHandler: function createClickHandler(id) {
+		var self = this;
+		return function (e) {
+			self.props.onClick(id);
+		};
+	},
+
+	createRemoveClickHandler: function createRemoveClickHandler(id) {
+		var self = this;
+		return function (e) {
+			self.props.onRemoveClick(id);
+		};
+	},
+
+	renderVideoList: function renderVideoList() {
+		var videos = this.props.selectedVideos;
+		var nodes = Object.keys(videos).map(function (storeId) {
+			return React.createElement(
+				"li",
+				{ key: storeId },
+				React.createElement(
+					"p",
+					{ className: "text-muted" },
+					'[' + videos[storeId].selectedBy + '] - ' + videos[storeId].title,
+					" ",
+					React.createElement("span", { className: "glyphicon glyphicon-chevron-right" })
+				)
+			);
+		});
+
+		if (nodes.length > 0) {
+			return nodes;
+		} else {
+			return "None";
+		}
+	},
+
+	render: function render() {
+		return React.createElement(
+			"footer",
+			{ className: "footer" },
+			React.createElement(
+				"div",
+				{ className: "container" },
+				React.createElement(
+					"div",
+					{ className: "video-queue-list" },
+					React.createElement(
+						"ul",
+						{ className: "list-inline" },
+						React.createElement(
+							"li",
+							null,
+							React.createElement(
+								"p",
+								{ className: "text-muted" },
+								"Now Playing: ",
+								this.props.currentVideo ? '[' + this.props.currentVideo.selectedBy + '] - ' + this.props.currentVideo.title : "None"
+							)
+						),
+						React.createElement("li", { role: "separator", className: "divider" }),
+						React.createElement(
+							"li",
+							null,
+							React.createElement("span", { className: "glyphicon glyphicon-chevron-right" })
+						),
+						React.createElement("li", { role: "separator", className: "divider" }),
+						React.createElement(
+							"li",
+							null,
+							React.createElement(
+								"p",
+								{ className: "text-muted" },
+								"Up Next:"
+							)
+						),
+						this.renderVideoList()
+					)
+				)
+			)
+		);
+	}
+});
+
+module.exports = Footer;
+
+},{"react":259}],263:[function(require,module,exports){
+'use strict';
+
+var React = require("react");
+
+var SearchBox = require('./SearchBox.jsx');
+var SearchResults = require('./SearchResults.jsx');
+
+var NavBar = React.createClass({
+	displayName: 'NavBar',
+
+	render: function render() {
+		return React.createElement(
+			'nav',
+			{ className: 'navbar navbar-default navbar-fixed-top' },
+			React.createElement(
+				'div',
+				{ className: 'container' },
+				React.createElement(NavBarHeader, null),
+				React.createElement(
+					'div',
+					{ id: 'navbar', className: 'collapse navbar-collapse' },
+					React.createElement(
+						'ul',
+						{ className: 'nav navbar-nav' },
+						React.createElement(
+							'li',
+							{ className: this.props.isVideoPlayerActive ? "active" : "", onClick: this.props.toggleVideoPlayer },
+							React.createElement(
+								'a',
+								{ href: '#' },
+								'VideoPlayer'
+							)
+						),
+						React.createElement(VideoListDropDown, {
+							toggleVideoPlayer: this.props.toggleVideoPlayer,
+							onEmptyTheQueueClick: this.props.onEmptyTheQueueClick,
+							onQueuedVideoPlay: this.props.onQueuedVideoPlay,
+							selectedVideos: this.props.selectedVideos
+						})
+					),
+					React.createElement(SearchBox, {
+						onSubmit: this.props.onSearchSubmit,
+						onInput: this.props.onSearchInput
+					}),
+					React.createElement(SearchResults, {
+						data: this.props.searchData,
+						onQueueClick: this.props.onSearchResultClick,
+						onPlayClick: this.props.onSearchResultPlayCick
+					})
+				)
+			)
+		);
+	}
+});
+
+var NavBarHeader = React.createClass({
+	displayName: 'NavBarHeader',
+
+	render: function render() {
+		return React.createElement(
+			'div',
+			{ className: 'navbar-header' },
+			React.createElement(
+				'button',
+				{ type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#navbar', 'aria-expanded': 'false', 'aria-controls': 'navbar' },
+				React.createElement(
+					'span',
+					{ className: 'sr-only' },
+					'Toggle navigation'
+				),
+				React.createElement('span', { className: 'icon-bar' }),
+				React.createElement('span', { className: 'icon-bar' }),
+				React.createElement('span', { className: 'icon-bar' })
+			),
+			React.createElement(
+				'a',
+				{ className: 'navbar-brand', href: '#' },
+				'KaraokeTube'
+			)
+		);
+	}
+});
+
+var VideoListDropDown = React.createClass({
+	displayName: 'VideoListDropDown',
+
+	renderVideoList: function renderVideoList() {
+		var videos = this.props.selectedVideos;
+		var self = this;
+		var nodes = Object.keys(videos).map(function (storeId) {
+			return React.createElement(
+				'li',
+				{ key: storeId },
+				React.createElement(
+					'a',
+					{ href: '#', onClick: function () {
+							return self.props.onQueuedVideoPlay(videos[storeId]);
+						} },
+					videos[storeId].title
+				)
+			);
+		});
+		return nodes;
+	},
+
+	render: function render() {
+		return React.createElement(
+			'li',
+			{ className: 'dropdown' },
+			React.createElement(
+				'a',
+				{ href: '#', className: 'dropdown-toggle', 'data-toggle': 'dropdown', role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false' },
+				React.createElement('span', { className: 'glyphicon glyphicon-th-list' }),
+				React.createElement('span', { className: 'caret' })
+			),
+			React.createElement(
+				'ul',
+				{ className: 'dropdown-menu' },
+				React.createElement(
+					'li',
+					null,
+					React.createElement(
+						'a',
+						{ href: '#', onClick: this.props.onEmptyTheQueueClick },
+						'Empty the Queue'
+					)
+				),
+				React.createElement('li', { role: 'separator', className: 'divider' }),
+				React.createElement(
+					'li',
+					{ className: 'dropdown-header' },
+					'Click to Play'
+				),
+				this.renderVideoList()
+			)
+		);
+	}
+});
+
+module.exports = NavBar;
+/*<!--/.nav-collapse -->*/
+
+},{"./SearchBox.jsx":264,"./SearchResults.jsx":265,"react":259}],264:[function(require,module,exports){
+'use strict';
+
+var React = require("react");
+
+var SearchBox = React.createClass({
+	displayName: 'SearchBox',
+
+	handleSubmit: function handleSubmit(e) {
+		e.preventDefault();
+		var songName = React.findDOMNode(this.refs.searchInput).value.trim();
+		var userName = React.findDOMNode(this.refs.nameInput).value.trim();
+		// if (!songName || !userName) {
+		// 	return;
+		// }
+		this.props.onSubmit(songName, userName);
+		React.findDOMNode(this.refs.searchInput).value = '';
+		React.findDOMNode(this.refs.nameInput).value = '';
+		return;
+	},
+
+	handleChange: function handleChange() {
+		this.props.onInput(React.findDOMNode(this.refs.searchInput).value);
+	},
+
+	render: function render() {
+		return React.createElement(
+			'form',
+			{ id: 'send', className: 'navbar-form', role: 'search', onSubmit: this.handleSubmit },
+			React.createElement(
+				'div',
+				{ className: 'form-group' },
+				React.createElement(
+					'div',
+					{ className: 'input-group' },
+					React.createElement(
+						'span',
+						{ className: 'input-group-addon' },
+						React.createElement('span', { className: 'glyphicon glyphicon-user' })
+					),
+					React.createElement('input', {
+						type: 'text',
+						className: 'form-control',
+						autoComplete: 'off',
+						placeholder: 'Enter Name',
+						ref: 'nameInput'
+					})
+				),
+				React.createElement(
+					'div',
+					{ className: 'input-group' },
+					React.createElement(
+						'span',
+						{ className: 'input-group-addon' },
+						React.createElement('span', { className: 'glyphicon glyphicon-music' })
+					),
+					React.createElement('input', {
+						type: 'text',
+						className: 'form-control',
+						autoComplete: 'off',
+						placeholder: 'Enter Song',
+						ref: 'searchInput',
+						onChange: this.handleChange
+					}),
+					React.createElement(
+						'span',
+						{ className: 'input-group-btn' },
+						React.createElement(
+							'button',
+							{ className: 'btn btn-default', type: 'submit' },
+							React.createElement('span', { className: 'glyphicon glyphicon-search' })
+						)
+					)
+				)
+			)
+		);
+	}
+});
+
+module.exports = SearchBox;
+
+},{"react":259}],265:[function(require,module,exports){
+"use strict";
+
+var React = require("react");
+
+var SearchResults = React.createClass({
+	displayName: "SearchResults",
+
+	createQueueClickHandler: function createQueueClickHandler(id) {
+		var self = this;
+		return function (e) {
+			self.props.onQueueClick(id);
+		};
+	},
+
+	createPlayClickHandler: function createPlayClickHandler(id) {
+		var self = this;
+		return function (e) {
+			self.props.onPlayClick(id);
+		};
+	},
+
+	render: function render() {
+		var self = this;
+		var dataNodes = this.props.data.map(function (item) {
+			return React.createElement(
+				"li",
+				{ key: item.videoId },
+				React.createElement(
+					"div",
+					null,
+					React.createElement(
+						"a",
+						{ href: "#" },
+						React.createElement("img", { src: item.thumbnailUrl, onClick: self.createQueueClickHandler(item) })
+					),
+					React.createElement(
+						"div",
+						{ className: "btn-group-vertical", role: "group" },
+						React.createElement(
+							"span",
+							{ className: "btn btn-info", onClick: self.createPlayClickHandler(item) },
+							React.createElement("span", { className: "glyphicon glyphicon-play" })
+						),
+						React.createElement(
+							"span",
+							{ className: "btn btn-info", onClick: self.createQueueClickHandler(item) },
+							React.createElement("span", { className: "glyphicon glyphicon-plus" })
+						)
+					)
+				),
+				React.createElement(
+					"a",
+					{ href: "#" },
+					React.createElement(
+						"small",
+						{ className: "text-muted", onClick: self.createQueueClickHandler(item) },
+						" ",
+						item.title,
+						" "
+					)
+				)
+			);
+		});
+		return React.createElement(
+			"div",
+			{ className: "search-result-list" },
+			React.createElement(
+				"ul",
+				{ className: "list-inline" },
+				dataNodes
+			)
+		);
+	}
+});
+
+module.exports = SearchResults;
+
+},{"react":259}],266:[function(require,module,exports){
+"use strict";
+
+var React = require("react");
+
+var VideoList = React.createClass({
+	displayName: "VideoList",
+
+	createRemoveClickHandler: function createRemoveClickHandler(id) {
+		var self = this;
+		return function (e) {
+			self.props.onRemoveClick(id);
+		};
+	},
+
+	createPlayClickHandler: function createPlayClickHandler(id) {
+		var self = this;
+		return function (e) {
+			self.props.onPlayClick(id);
+		};
+	},
+
+	render: function render() {
+		var videos = this.props.selectedVideos;
+		var self = this;
+		var dataNodes = Object.keys(videos).map(function (storeId) {
+			return React.createElement(
+				"li",
+				{ key: storeId, className: "list-group-item" },
+				'[' + videos[storeId].selectedBy + '] - ' + videos[storeId].title,
+				React.createElement(
+					"span",
+					{ href: "#", className: "badge", onClick: self.createRemoveClickHandler(videos[storeId]) },
+					React.createElement("span", { className: "glyphicon glyphicon-remove" })
+				),
+				React.createElement(
+					"span",
+					{ href: "#", className: "badge", onClick: self.createPlayClickHandler(videos[storeId]) },
+					React.createElement("span", { className: "glyphicon glyphicon-play" })
+				)
+			);
+		});
+		return React.createElement(
+			"div",
+			{ className: "video-queue-list" },
+			React.createElement(
+				"ul",
+				{ className: "list-group" },
+				dataNodes
+			)
+		);
+	}
+});
+
+module.exports = VideoList;
+
+},{"react":259}],267:[function(require,module,exports){
+"use strict";
+
+var React = require("react");
+
+var YouTube = require("react-youtube");
+
+var VideoPlayer = React.createClass({
+	displayName: "VideoPlayer",
+
+	opts: {
+		playerVars: {
+			autoplay: 1
+		}
+	},
+
+	render: function render() {
+		return React.createElement(
+			"div",
+			{ className: "embed-responsive embed-responsive-16by9" },
+			React.createElement(YouTube, {
+				url: "https://www.youtube.com/watch?v=" + this.props.currentVideo.videoId,
+				opts: this.opts,
+				onEnd: this.props.onVideoEnd
+			})
+		);
+	}
+});
+
+module.exports = VideoPlayer;
+
+},{"react":259,"react-youtube":98}],268:[function(require,module,exports){
 /*jshint esnext: true */
 "use strict";
 
 var React = require("react");
 var Fluxxor = require("fluxxor");
 var VideoStore = require("./store.js");
-var YouTube = require("react-youtube");
 var actions = require("./actions.js");
 var requestSearchResults = require("./misc.js");
 var socket = io();
+
+/*
+	React Components
+ */
+var NavBar = require('./components/NavBar.jsx');
+var Content = require('./components/Content.jsx');
+var Footer = require('./components/Footer.jsx');
 
 window.socket = socket;
 
@@ -24623,466 +25164,9 @@ var Application = React.createClass({
 	}
 });
 
-var Content = React.createClass({
-	displayName: "Content",
-
-	renderConditionalContent: function renderConditionalContent() {
-		if (this.props.showVideo) {
-			return React.createElement(VideoPlayer, {
-				currentVideo: this.props.currentVideo,
-				onVideoEnd: this.props.onVideoEnd
-			});
-		} else if (Object.keys(this.props.selectedVideos).length) {
-			return React.createElement(VideoList, {
-				selectedVideos: this.props.selectedVideos,
-				onPlayClick: this.props.onPlayClick,
-				onRemoveClick: this.props.onRemoveClick
-			});
-		} else {
-			return React.createElement(
-				"div",
-				{ className: "jumbotron" },
-				React.createElement(
-					"h1",
-					null,
-					"Welcome to KaraokeTube"
-				),
-				React.createElement(
-					"p",
-					null,
-					"Add some songs to the queue..."
-				)
-			);
-		}
-	},
-
-	render: function render() {
-		return React.createElement(
-			"div",
-			{ className: "container" },
-			this.renderConditionalContent()
-		);
-	}
-});
-
-var VideoList = React.createClass({
-	displayName: "VideoList",
-
-	createRemoveClickHandler: function createRemoveClickHandler(id) {
-		var self = this;
-		return function (e) {
-			self.props.onRemoveClick(id);
-		};
-	},
-
-	createPlayClickHandler: function createPlayClickHandler(id) {
-		var self = this;
-		return function (e) {
-			self.props.onPlayClick(id);
-		};
-	},
-
-	render: function render() {
-		var videos = this.props.selectedVideos;
-		var self = this;
-		var dataNodes = Object.keys(videos).map(function (storeId) {
-			return React.createElement(
-				"li",
-				{ key: storeId, className: "list-group-item" },
-				'[' + videos[storeId].selectedBy + '] - ' + videos[storeId].title,
-				React.createElement(
-					"span",
-					{ href: "#", className: "badge", onClick: self.createRemoveClickHandler(videos[storeId]) },
-					React.createElement("span", { className: "glyphicon glyphicon-remove" })
-				),
-				React.createElement(
-					"span",
-					{ href: "#", className: "badge", onClick: self.createPlayClickHandler(videos[storeId]) },
-					React.createElement("span", { className: "glyphicon glyphicon-play" })
-				)
-			);
-		});
-		return React.createElement(
-			"div",
-			{ className: "video-queue-list" },
-			React.createElement(
-				"ul",
-				{ className: "list-group" },
-				dataNodes
-			)
-		);
-	}
-});
-
-var VideoPlayer = React.createClass({
-	displayName: "VideoPlayer",
-
-	opts: {
-		playerVars: {
-			autoplay: 1
-		}
-	},
-
-	render: function render() {
-		return React.createElement(
-			"div",
-			{ className: "embed-responsive embed-responsive-16by9" },
-			React.createElement(YouTube, {
-				url: "https://www.youtube.com/watch?v=" + this.props.currentVideo.videoId,
-				opts: this.opts,
-				onEnd: this.props.onVideoEnd
-			})
-		);
-	}
-});
-
-var NavBar = React.createClass({
-	displayName: "NavBar",
-
-	renderVideoList: function renderVideoList() {
-		var videos = this.props.selectedVideos;
-		var self = this;
-		var nodes = Object.keys(videos).map(function (storeId) {
-			return React.createElement(
-				"li",
-				{ key: storeId },
-				React.createElement(
-					"a",
-					{ href: "#", onClick: function () {
-							return self.props.onQueuedVideoPlay(videos[storeId]);
-						} },
-					videos[storeId].title
-				)
-			);
-		});
-		return nodes;
-	},
-
-	render: function render() {
-		return React.createElement(
-			"nav",
-			{ className: "navbar navbar-default navbar-fixed-top" },
-			React.createElement(
-				"div",
-				{ className: "container" },
-				React.createElement(
-					"div",
-					{ className: "navbar-header" },
-					React.createElement(
-						"button",
-						{ type: "button", className: "navbar-toggle collapsed", "data-toggle": "collapse", "data-target": "#navbar", "aria-expanded": "false", "aria-controls": "navbar" },
-						React.createElement(
-							"span",
-							{ className: "sr-only" },
-							"Toggle navigation"
-						),
-						React.createElement("span", { className: "icon-bar" }),
-						React.createElement("span", { className: "icon-bar" }),
-						React.createElement("span", { className: "icon-bar" })
-					),
-					React.createElement(
-						"a",
-						{ className: "navbar-brand", href: "#" },
-						"KaraokeTube"
-					)
-				),
-				React.createElement(
-					"div",
-					{ id: "navbar", className: "collapse navbar-collapse" },
-					React.createElement(
-						"ul",
-						{ className: "nav navbar-nav" },
-						React.createElement(
-							"li",
-							{ className: this.props.isVideoPlayerActive ? "active" : "", onClick: this.props.toggleVideoPlayer },
-							React.createElement(
-								"a",
-								{ href: "#" },
-								"VideoPlayer"
-							)
-						),
-						React.createElement(
-							"li",
-							{ className: "dropdown" },
-							React.createElement(
-								"a",
-								{ href: "#", className: "dropdown-toggle", "data-toggle": "dropdown", role: "button", "aria-haspopup": "true", "aria-expanded": "false" },
-								React.createElement("span", { className: "glyphicon glyphicon-th-list" }),
-								React.createElement("span", { className: "caret" })
-							),
-							React.createElement(
-								"ul",
-								{ className: "dropdown-menu" },
-								React.createElement(
-									"li",
-									null,
-									React.createElement(
-										"a",
-										{ href: "#", onClick: this.props.onEmptyTheQueueClick },
-										"Empty the Queue"
-									)
-								),
-								React.createElement("li", { role: "separator", className: "divider" }),
-								React.createElement(
-									"li",
-									{ className: "dropdown-header" },
-									"Click to Play"
-								),
-								this.renderVideoList()
-							)
-						)
-					),
-					React.createElement(SearchBox, {
-						onSubmit: this.props.onSearchSubmit,
-						onInput: this.props.onSearchInput
-					}),
-					React.createElement(SearchResults, {
-						data: this.props.searchData,
-						onQueueClick: this.props.onSearchResultClick,
-						onPlayClick: this.props.onSearchResultPlayCick
-					})
-				)
-			)
-		);
-	}
-});
-
-var SearchBox = React.createClass({
-	displayName: "SearchBox",
-
-	handleSubmit: function handleSubmit(e) {
-		e.preventDefault();
-		var songName = React.findDOMNode(this.refs.searchInput).value.trim();
-		var userName = React.findDOMNode(this.refs.nameInput).value.trim();
-		// if (!songName || !userName) {
-		// 	return;
-		// }
-		this.props.onSubmit(songName, userName);
-		React.findDOMNode(this.refs.searchInput).value = '';
-		React.findDOMNode(this.refs.nameInput).value = '';
-		return;
-	},
-
-	handleChange: function handleChange() {
-		this.props.onInput(React.findDOMNode(this.refs.searchInput).value);
-	},
-
-	render: function render() {
-		return React.createElement(
-			"form",
-			{ id: "send", className: "navbar-form", role: "search", onSubmit: this.handleSubmit },
-			React.createElement(
-				"div",
-				{ className: "form-group" },
-				React.createElement(
-					"div",
-					{ className: "input-group" },
-					React.createElement(
-						"span",
-						{ className: "input-group-addon" },
-						React.createElement("span", { className: "glyphicon glyphicon-user" })
-					),
-					React.createElement("input", {
-						type: "text",
-						className: "form-control",
-						autoComplete: "off",
-						placeholder: "Enter Name",
-						ref: "nameInput"
-					})
-				),
-				React.createElement(
-					"div",
-					{ className: "input-group" },
-					React.createElement(
-						"span",
-						{ className: "input-group-addon" },
-						React.createElement("span", { className: "glyphicon glyphicon-music" })
-					),
-					React.createElement("input", {
-						type: "text",
-						className: "form-control",
-						autoComplete: "off",
-						placeholder: "Enter Song",
-						ref: "searchInput",
-						onChange: this.handleChange
-					}),
-					React.createElement(
-						"span",
-						{ className: "input-group-btn" },
-						React.createElement(
-							"button",
-							{ className: "btn btn-default", type: "submit" },
-							React.createElement("span", { className: "glyphicon glyphicon-search" })
-						)
-					)
-				)
-			)
-		);
-	}
-});
-
-var SearchResults = React.createClass({
-	displayName: "SearchResults",
-
-	createQueueClickHandler: function createQueueClickHandler(id) {
-		var self = this;
-		return function (e) {
-			self.props.onQueueClick(id);
-		};
-	},
-
-	createPlayClickHandler: function createPlayClickHandler(id) {
-		var self = this;
-		return function (e) {
-			self.props.onPlayClick(id);
-		};
-	},
-
-	render: function render() {
-		var self = this;
-		var dataNodes = this.props.data.map(function (item) {
-			return React.createElement(
-				"li",
-				{ key: item.videoId },
-				React.createElement(
-					"div",
-					null,
-					React.createElement(
-						"a",
-						{ href: "#" },
-						React.createElement("img", { src: item.thumbnailUrl, onClick: self.createQueueClickHandler(item) })
-					),
-					React.createElement(
-						"div",
-						{ className: "btn-group-vertical", role: "group" },
-						React.createElement(
-							"span",
-							{ className: "btn btn-info", onClick: self.createPlayClickHandler(item) },
-							React.createElement("span", { className: "glyphicon glyphicon-play" })
-						),
-						React.createElement(
-							"span",
-							{ className: "btn btn-info", onClick: self.createQueueClickHandler(item) },
-							React.createElement("span", { className: "glyphicon glyphicon-plus" })
-						)
-					)
-				),
-				React.createElement(
-					"a",
-					{ href: "#" },
-					React.createElement(
-						"small",
-						{ className: "text-muted", onClick: self.createQueueClickHandler(item) },
-						" ",
-						item.title,
-						" "
-					)
-				)
-			);
-		});
-		return React.createElement(
-			"div",
-			{ className: "search-result-list" },
-			React.createElement(
-				"ul",
-				{ className: "list-inline" },
-				dataNodes
-			)
-		);
-	}
-});
-
-var Footer = React.createClass({
-	displayName: "Footer",
-
-	createClickHandler: function createClickHandler(id) {
-		var self = this;
-		return function (e) {
-			self.props.onClick(id);
-		};
-	},
-
-	createRemoveClickHandler: function createRemoveClickHandler(id) {
-		var self = this;
-		return function (e) {
-			self.props.onRemoveClick(id);
-		};
-	},
-
-	renderVideoList: function renderVideoList() {
-		var videos = this.props.selectedVideos;
-		var nodes = Object.keys(videos).map(function (storeId) {
-			return React.createElement(
-				"li",
-				{ key: storeId },
-				React.createElement(
-					"p",
-					{ className: "text-muted" },
-					'[' + videos[storeId].selectedBy + '] - ' + videos[storeId].title,
-					" ",
-					React.createElement("span", { className: "glyphicon glyphicon-chevron-right" })
-				)
-			);
-		});
-
-		if (nodes.length > 0) {
-			return nodes;
-		} else {
-			return "None";
-		}
-	},
-
-	render: function render() {
-		return React.createElement(
-			"footer",
-			{ className: "footer" },
-			React.createElement(
-				"div",
-				{ className: "container" },
-				React.createElement(
-					"div",
-					{ className: "video-queue-list" },
-					React.createElement(
-						"ul",
-						{ className: "list-inline" },
-						React.createElement(
-							"li",
-							null,
-							React.createElement(
-								"p",
-								{ className: "text-muted" },
-								"Now Playing: ",
-								this.props.currentVideo ? '[' + this.props.currentVideo.selectedBy + '] - ' + this.props.currentVideo.title : "None"
-							)
-						),
-						React.createElement("li", { role: "separator", className: "divider" }),
-						React.createElement(
-							"li",
-							null,
-							React.createElement("span", { className: "glyphicon glyphicon-chevron-right" })
-						),
-						React.createElement("li", { role: "separator", className: "divider" }),
-						React.createElement(
-							"li",
-							null,
-							React.createElement(
-								"p",
-								{ className: "text-muted" },
-								"Up Next:"
-							)
-						),
-						this.renderVideoList()
-					)
-				)
-			)
-		);
-	}
-});
-
 React.render(React.createElement(Application, { flux: flux }), document.body);
-/*<!--/.nav-collapse -->*/
 
-},{"./actions.js":260,"./misc.js":262,"./store.js":263,"fluxxor":1,"react":259,"react-youtube":98}],262:[function(require,module,exports){
+},{"./actions.js":260,"./components/Content.jsx":261,"./components/Footer.jsx":262,"./components/NavBar.jsx":263,"./misc.js":269,"./store.js":270,"fluxxor":1,"react":259}],269:[function(require,module,exports){
 'use strict';
 
 var requestSearchResults = function requestSearchResults(querystring, callback) {
@@ -25103,7 +25187,7 @@ var requestSearchResults = function requestSearchResults(querystring, callback) 
 
 module.exports = requestSearchResults;
 
-},{}],263:[function(require,module,exports){
+},{}],270:[function(require,module,exports){
 "use strict";
 
 var Fluxxor = require("fluxxor");
@@ -25198,7 +25282,7 @@ var VideoStore = Fluxxor.createStore({
 
 module.exports = VideoStore;
 
-},{"fluxxor":1}],264:[function(require,module,exports){
+},{"fluxxor":1}],271:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -25290,7 +25374,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}]},{},[261])
+},{}]},{},[268])
 
 
 //# sourceMappingURL=bundle.js.map

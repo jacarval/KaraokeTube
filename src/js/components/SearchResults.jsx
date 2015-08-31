@@ -1,3 +1,5 @@
+var React = require("react");
+
 var SearchResults = React.createClass({
 	createQueueClickHandler: function(id) {
 		var self = this;
@@ -18,25 +20,27 @@ var SearchResults = React.createClass({
 		var dataNodes = this.props.data.map(function(item) {
 			return(
 				<li key={item.videoId}>
-					<div onClick={self.createQueueClickHandler(item)}>
-						<a href="#"><img src={item.thumbnailUrl} /></a>
-						<p>{item.title}</p>
-					</div>
-					<div className="btn-group-vertical" role="group">
-						<button className="btn btn-info">
-		            		<span className="glyphicon glyphicon-play" onClick={self.createPlayClickHandler(item)}></span>
-		            	</button>
-		            	<button className="btn btn-info">
-		            		<span className="glyphicon glyphicon-plus" onClick={self.createQueueClickHandler(item)}></span>
-		            	</button>
+					<div>
+						<a href="#"><img src={item.thumbnailUrl} onClick={self.createQueueClickHandler(item)} /></a>
+						<div className="btn-group-vertical" role="group">
+							<span className="btn btn-info" onClick={self.createPlayClickHandler(item)}>
+			            		<span className="glyphicon glyphicon-play" ></span>
+			            	</span>
+			            	<span className="btn btn-info" onClick={self.createQueueClickHandler(item)}>
+			            		<span className="glyphicon glyphicon-plus" ></span>
+			            	</span>
+			            </div>
 		            </div>
+					<a href="#"><small className="text-muted" onClick={self.createQueueClickHandler(item)}> {item.title} </small></a>
 				</li>
 			);
 		});
 		return (
-			<ul ref="messages">
-				{dataNodes}
-			</ul>
+			<div className="search-result-list">
+				<ul className="list-inline">
+					{dataNodes}
+				</ul>
+			</div>
 		);
 	}
 });

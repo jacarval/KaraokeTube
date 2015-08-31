@@ -1,23 +1,42 @@
 var React = require("react");
 
+var VideoPlayer = require("./VideoPlayer.jsx");
+var VideoList = require("./VideoList.jsx");
+
+
 var Content = React.createClass({
-	render: function() {
-		return (
-			<div className="container">
-				<div className="row">
-					<div className="col-md-8">
-						<VideoPlayer
-							videoId={this.props.currentVideo}
-						/>
-					</div>
-					<div className="col-md-4">
-						<SearchResults
-							data={this.props.searchData}
-							onQueueClick={this.props.onSearchResultClick}
-							onPlayClick={this.props.onSearchResultPlayCick}
-						/>
-					</div>
+	renderConditionalContent: function() {
+		if (this.props.showVideo) {
+			return (
+				<VideoPlayer
+					currentVideo={this.props.currentVideo}
+					onVideoEnd={this.props.onVideoEnd}
+				/>
+			);
+		}
+		else if (Object.keys(this.props.selectedVideos).length){
+			return (
+				<VideoList 
+					selectedVideos={this.props.selectedVideos}
+					onPlayClick={this.props.onPlayClick}
+					onRemoveClick={this.props.onRemoveClick}
+				/>
+			);
+		}
+		else {
+			return (	
+				<div className="jumbotron">
+				  <h1>Welcome to KaraokeTube</h1>
+				  <p>Add some songs to the queue...</p>
 				</div>
+			)
+		}
+	},
+
+	render: function() {
+		return(
+			<div className="container">
+				{this.renderConditionalContent()}
 			</div>
 		);
 	}

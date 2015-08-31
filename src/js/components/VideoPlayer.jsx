@@ -1,10 +1,22 @@
 var React = require("react");
 
+var YouTube = require("react-youtube");
+
 var VideoPlayer = React.createClass({
+	opts: {
+		playerVars: {
+			autoplay: 1
+		}
+	},
+
 	render: function() {
 		return (
 			<div className="embed-responsive embed-responsive-16by9">
-				<iframe className="embed-responsive-item" src={"https://www.youtube.com/embed/" + this.props.videoId + "?autoplay=1"} frameBorder="0" allowFullScreen></iframe>	
+				<YouTube
+					url={"https://www.youtube.com/watch?v=" + this.props.currentVideo.videoId}
+					opts={this.opts}
+					onEnd={this.props.onVideoEnd}
+				/>
 			</div>
 		);
 	}
