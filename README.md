@@ -2,5 +2,7 @@
 simple karaoke app using youtube api
 
 
-TODO: Change play now button to queue next button
-      Include links to issues and sources in main interface
+TODO: 
+1. Change play now button to queue next button
+
+2. Include links to issues and sources in main interface
