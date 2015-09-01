@@ -10,11 +10,12 @@ var PlayList = React.createClass({
 		var list = Object.keys(videos).map(function(id) {
 			return (
 				<div className="media" key={id}>
-					<Avatar img = {videos[id].thumbnailUrl}/>
-					<ListItem
-						title = {videos[id].title}
-						user = {videos[id].selectedBy}
-					/>
+					<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+						<Avatar img={videos[id].thumbnailUrl}/>
+						<ListItem title={videos[id].title} user={videos[id].selectedBy}/>
+					</a>
+
+
 				</div>
 			);
 		});
@@ -59,9 +60,6 @@ var ContextMenu = React.createClass({
 		return (
     <div class="panel-heading" role="tab" id="headingOne">
       <h4 class="panel-title">
-        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Collapsible Group Item #1
-        </a>
       </h4>
     </div>
 
