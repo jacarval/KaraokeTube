@@ -24486,30 +24486,16 @@ var React = require("react");
 var Footer = React.createClass({
 	displayName: "Footer",
 
-	createClickHandler: function createClickHandler(id) {
-		var self = this;
-		return function (e) {
-			self.props.onClick(id);
-		};
-	},
-
-	createRemoveClickHandler: function createRemoveClickHandler(id) {
-		var self = this;
-		return function (e) {
-			self.props.onRemoveClick(id);
-		};
-	},
-
 	renderVideoList: function renderVideoList() {
 		var videos = this.props.selectedVideos;
-		var nodes = Object.keys(videos).map(function (storeId) {
+		var nodes = Object.keys(videos).map(function (id) {
 			return React.createElement(
 				"li",
-				{ key: storeId },
+				{ key: id },
 				React.createElement(
 					"p",
 					{ className: "text-muted" },
-					'[' + videos[storeId].selectedBy + '] - ' + videos[storeId].title,
+					'[' + videos[id].selectedBy + '] - ' + videos[id].title,
 					" ",
 					React.createElement("span", { className: "glyphicon glyphicon-chevron-right" })
 				)
@@ -24579,6 +24565,7 @@ var React = require("react");
 
 var SearchBox = require('./SearchBox.jsx');
 var SearchResults = require('./SearchResults.jsx');
+var createHandler = require("../misc.js").createClickHandler;
 
 var NavBar = React.createClass({
 	displayName: 'NavBar',
@@ -24668,9 +24655,7 @@ var VideoListDropDown = React.createClass({
 				{ key: storeId },
 				React.createElement(
 					'a',
-					{ href: '#', onClick: function () {
-							return self.props.onQueuedVideoPlay(videos[storeId]);
-						} },
+					{ href: '#', onClick: createHandler(videos[storeId], self.props.onQueuedVideoPlay) },
 					videos[storeId].title
 				)
 			);
@@ -24715,7 +24700,7 @@ var VideoListDropDown = React.createClass({
 module.exports = NavBar;
 /*<!--/.nav-collapse -->*/
 
-},{"./SearchBox.jsx":264,"./SearchResults.jsx":265,"react":259}],264:[function(require,module,exports){
+},{"../misc.js":269,"./SearchBox.jsx":264,"./SearchResults.jsx":265,"react":259}],264:[function(require,module,exports){
 'use strict';
 
 var React = require("react");
@@ -24800,23 +24785,10 @@ module.exports = SearchBox;
 "use strict";
 
 var React = require("react");
+var createHandler = require("../misc.js").createClickHandler;
 
 var SearchResults = React.createClass({
 	displayName: "SearchResults",
-
-	createQueueClickHandler: function createQueueClickHandler(id) {
-		var self = this;
-		return function (e) {
-			self.props.onQueueClick(id);
-		};
-	},
-
-	createPlayClickHandler: function createPlayClickHandler(id) {
-		var self = this;
-		return function (e) {
-			self.props.onPlayClick(id);
-		};
-	},
 
 	render: function render() {
 		var self = this;
@@ -24830,19 +24802,19 @@ var SearchResults = React.createClass({
 					React.createElement(
 						"a",
 						{ href: "#" },
-						React.createElement("img", { src: item.thumbnailUrl, onClick: self.createQueueClickHandler(item) })
+						React.createElement("img", { src: item.thumbnailUrl, onClick: createHandler(item, self.props.onQueueClick) })
 					),
 					React.createElement(
 						"div",
 						{ className: "btn-group-vertical", role: "group" },
 						React.createElement(
 							"span",
-							{ className: "btn btn-info", onClick: self.createPlayClickHandler(item) },
+							{ className: "btn btn-info", onClick: createHandler(item, self.props.onPlayClick) },
 							React.createElement("span", { className: "glyphicon glyphicon-play" })
 						),
 						React.createElement(
 							"span",
-							{ className: "btn btn-info", onClick: self.createQueueClickHandler(item) },
+							{ className: "btn btn-info", onClick: createHandler(item, self.props.onQueueClick) },
 							React.createElement("span", { className: "glyphicon glyphicon-plus" })
 						)
 					)
@@ -24852,7 +24824,7 @@ var SearchResults = React.createClass({
 					{ href: "#" },
 					React.createElement(
 						"small",
-						{ className: "text-muted", onClick: self.createQueueClickHandler(item) },
+						{ className: "text-muted", onClick: createHandler(item, self.props.onQueueClick) },
 						" ",
 						item.title,
 						" "
@@ -24874,7 +24846,7 @@ var SearchResults = React.createClass({
 
 module.exports = SearchResults;
 
-},{"react":259}],266:[function(require,module,exports){
+},{"../misc.js":269,"react":259}],266:[function(require,module,exports){
 "use strict";
 
 var React = require("react");
@@ -24969,7 +24941,7 @@ var React = require("react");
 var Fluxxor = require("fluxxor");
 var VideoStore = require("./store.js");
 var actions = require("./actions.js");
-var requestSearchResults = require("./misc.js");
+var requestSearchResults = require("./misc.js").requestSearchResults;
 var socket = io();
 
 /*
@@ -25185,7 +25157,15 @@ var requestSearchResults = function requestSearchResults(querystring, callback) 
 	xhr.send();
 };
 
-module.exports = requestSearchResults;
+var createClickHandler = function createClickHandler(id, handler) {
+	var self = this;
+	return function (e) {
+		handler(id);
+	};
+};
+
+module.exports.requestSearchResults = requestSearchResults;
+module.exports.createClickHandler = createClickHandler;
 
 },{}],270:[function(require,module,exports){
 "use strict";
@@ -25208,6 +25188,8 @@ var VideoStore = Fluxxor.createStore({
 		this.storeId = 0;
 		this.videos = {};
 		this.bindActions(constants.ADD_VIDEO, this.onAddVideo, constants.REMOVE_VIDEO, this.onRemoveVideo, constants.CLEAR_VIDEOS, this.onClearVideos, constants.SADD_VIDEO, this.onServerAddVideo, constants.SREMOVE_VIDEO, this.onServerRemoveVideo, constants.SCLEAR_VIDEOS, this.onServerClearVideos);
+
+		socket.emit("client:playlist:initialize");
 	},
 
 	onAddVideo: function onAddVideo(payload) {
@@ -25377,4 +25359,4 @@ process.umask = function() { return 0; };
 },{}]},{},[268])
 
 
-//# sourceMappingURL=bundle.js.map
+//# sourceMappingURL=desktop.js.map

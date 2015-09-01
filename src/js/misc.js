@@ -15,4 +15,12 @@ var requestSearchResults = function(querystring, callback) {
 	xhr.send();
 };
 
-module.exports = requestSearchResults;
+var createClickHandler = function(id, handler) {
+		var self = this;
+	  	return function(e) {
+	    	handler(id);
+	  	};
+};
+
+module.exports.requestSearchResults = requestSearchResults;
+module.exports.createClickHandler = createClickHandler;

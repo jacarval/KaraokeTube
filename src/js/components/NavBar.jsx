@@ -2,6 +2,7 @@ var React = require("react");
 
 var SearchBox = require('./SearchBox.jsx');
 var SearchResults = require('./SearchResults.jsx');
+var createHandler = require("../misc.js").createClickHandler;
 
 var NavBar = React.createClass({
 	render: function() {
@@ -58,9 +59,8 @@ var VideoListDropDown = React.createClass({
 		var nodes = Object.keys(videos).map(function(storeId) {
 			return (
 				<li key={storeId}>
-					<a href="#" onClick={function(){return self.props.onQueuedVideoPlay(videos[storeId])}}>
+					<a href="#" onClick={createHandler(videos[storeId], self.props.onQueuedVideoPlay)} >
 						{videos[storeId].title}
-
 					</a>
 				</li>
 			);

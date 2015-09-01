@@ -2,59 +2,49 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var Flux = require('fluxxor');
-var pg = require('pg');
 var io = require('socket.io')(http);
-
-DATABASE_URL = process.env.VIDEOS_DB_URL;
+var db = require('./db');
 
 app.use(express.static(__dirname + '/public'));
 
+// Catchall - redirect to mobile or desktop page
+app.get('*', function(req, res){
 
-app.get('/', function(req, res){
-
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/public' + (/Android|iPhone|iPad/.test(req.headers['user-agent']) ? '/mobile.html' : '/desktop.html'));
 
 });
 
 io.on('connection', function(socket){
 
-	socket.join(socket.id);	
+	socket.on("client:playlist:initialize", function(){
+		db.querydb('Select * from videos', null, function(payload) {
 
-	pg.connect(DATABASE_URL, function(err, client) {
-		if (err) throw err;
+			// lower cases db column names fix
+			payload.selectedBy = payload.selectedby;
+			payload.thumbnailUrl = payload.thumburl;
 
-		client.query("CREATE TABLE IF NOT EXISTS videos(storeId serial PRIMARY KEY, videoId VARCHAR(15), title VARCHAR(100), thumbUrl VARCHAR(100), selectedBy VARCHAR(20))");
-
-
-		client
-		.query('Select * from videos')
-		.on('row', function(row) {
-			var payload = {
-				storeId: row.storeid,
-				videoId: row.videoid,
-				title: row.title,
-				thumbnailUrl: row.thumburl,
-				selectedBy: row.selectedby
-			};
-
-			io.sockets.in(socket.id).emit("server:playlist:initialize", payload);
+			socket.emit("server:playlist:initialize", payload);
 		});
 	});
 
+
 	socket.on("client:playlist:add", function(video) {
+		db.addVideoToDB([video.videoId, video.title, video.thumbnailUrl, video.selectedBy]);
 		socket.broadcast.emit("server:playlist:add", video);
-		addVideoToDB([video.videoId, video.title, video.thumbnailUrl, video.selectedBy]);
 	});
 
-	socket.on("client:playlist:remove", function(video) {
+
+	socket.on("client:playlist:remove", function(video) {		
+		db.removeVideoFromDB(video.videoId);
 		socket.broadcast.emit("server:playlist:remove", video);
-		removeVideoFromDB(video.videoId);
 	});
+
 
 	socket.on("client:playlist:clear", function() {
-		socket.broadcast.emit("server:playlist:clear");
-		clearVideosFromDB();
+		db.clearVideosFromDB();
+		socket.broadcast.emit("server:playlist:clear");		
 	});
+
 
 	socket.on("client:currentvideo:update", function(video) {
 		socket.broadcast.emit("server:currentvideo:update", video);
@@ -62,42 +52,8 @@ io.on('connection', function(socket){
 	
 });
 
-function getAllVideosFromDB(callback) {
-	querydb("SELECT * FROM videos", null, callback);
-}
-
-function addVideoToDB(dataArray) {
-	querydb("INSERT INTO videos (videoId, title, thumbUrl, selectedBy) VALUES($1, $2, $3, $4)", dataArray);
-}
-
-function removeVideoFromDB(videoId) {
-	querydb("DELETE FROM videos WHERE videoId=$1", [videoId]);
-}
-
-function clearVideosFromDB(videoId) {
-	querydb("DELETE FROM videos");
-}
-
-function querydb(queryString, values, cb) {
-	pg.connect(DATABASE_URL, function(err, client) {
-		if (err) throw err;
-
-		client
-		.query(queryString, values)
-		.on('row', function(row) {
-			if (cb) {
-				cb(row);
-			}
-		});
-
-		client
-		.query('Select * from videos')
-		.on('row', function(row) {
-			console.log(JSON.stringify(row));
-		});
-	});
-}
-
 http.listen(process.env.PORT || 3000, function(){
   console.log('listening on *:3000');
 });
+
+

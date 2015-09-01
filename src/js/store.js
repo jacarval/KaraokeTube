@@ -23,6 +23,8 @@ var VideoStore = Fluxxor.createStore({
 			constants.SREMOVE_VIDEO, this.onServerRemoveVideo,
 			constants.SCLEAR_VIDEOS, this.onServerClearVideos
 		);
+
+		socket.emit("client:playlist:initialize");
 	},
 
 	onAddVideo: function(payload) {

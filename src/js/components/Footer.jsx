@@ -1,28 +1,13 @@
 var React = require("react");
 
 var Footer = React.createClass({
-
-	createClickHandler: function(id) {
-		var self = this;
-	  	return function(e) {
-	    	self.props.onClick(id);
-	  	};
-	},
-
-	createRemoveClickHandler: function(id) {
-		var self = this;
-	  	return function(e) {
-	    	self.props.onRemoveClick(id);
-	  	};
-	},
-
 	renderVideoList: function() {
 		var videos = this.props.selectedVideos;
-		var nodes = Object.keys(videos).map(function(storeId) {
+		var nodes = Object.keys(videos).map(function(id) {
 			return (
-				<li key={storeId}>
+				<li key={id}>
 					<p className="text-muted"> 
-						{'['+videos[storeId].selectedBy+'] - '+videos[storeId].title} <span className="glyphicon glyphicon-chevron-right"></span>
+						{'['+videos[id].selectedBy+'] - '+videos[id].title} <span className="glyphicon glyphicon-chevron-right"></span>
 					</p>
 				</li>
 			);
