@@ -24358,7 +24358,8 @@ var PlayList = React.createClass({
 				React.createElement(ListItem, {
 					title: videos[id].title,
 					user: videos[id].selectedBy
-				})
+				}),
+				React.createElement(ContextMenu, null)
 			);
 		});
 
@@ -24411,15 +24412,7 @@ var ContextMenu = React.createClass({
 	displayName: "ContextMenu",
 
 	render: function render() {
-		return React.createElement(
-			"h4",
-			{ "class": "panel-title" },
-			React.createElement(
-				"a",
-				{ role: "button", "data-toggle": "collapse", "data-parent": "#accordion", href: "#collapseOne", "aria-expanded": "true", "aria-controls": "collapseOne" },
-				"Collapsible Group Item #1"
-			)
-		);
+		return React.createElement("div", null);
 	}
 });
 
