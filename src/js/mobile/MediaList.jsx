@@ -1,6 +1,6 @@
 var React = require("react");
 
-var PlayList = React.createClass({
+var MediaList = React.createClass({
 	getInitialState: function() {
 		return {openItemId: -1}
 	},
@@ -48,7 +48,7 @@ var ListItem = React.createClass({
 	render: function() {
 		var video = this.props.video;
 		return(
-			<div onTouchStart={this.toggleContext}>
+			<div onTouchEnd={this.toggleContext}>
 				<Avatar img={video.thumbnailUrl}/>
 				<MediaBody title={video.title} user={video.selectedBy}/>
 			</div>
@@ -89,13 +89,17 @@ var ContextMenu = React.createClass({
 	},
 
 	render: function() {
-		var style = { height: this.getHeight() }
+		var style = {height: this.getHeight()}
 		return (
 			<div className="contextMenu" style={style}>
-				<p> Hello World! </p>
+				<div className="btn-group btn-group-justified" role="group" aria-label="...">
+					<a role="button" className="btn btn-default">Left</a>
+					<a role="button" className="btn btn-default">Middle</a>
+					<a role="button" className="btn btn-default">Right</a>
+				</div>
 			</div>
 		);
 	}
 });
 
-module.exports = PlayList;
+module.exports = MediaList;

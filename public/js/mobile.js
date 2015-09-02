@@ -23973,7 +23973,7 @@ window.socket = socket;
 	React Components
  */
 var Footer = require('./mobile/Footer.jsx');
-var PlayList = require('./mobile/PlayList.jsx');
+var MediaList = require('./mobile/MediaList.jsx');
 var NavBar = require('./mobile/NavBar.jsx');
 
 var stores = { VideoStore: new VideoStore() };
@@ -24019,7 +24019,7 @@ var Application = React.createClass({
 			"body",
 			null,
 			React.createElement(NavBar, null),
-			React.createElement(PlayList, {
+			React.createElement(MediaList, {
 				selectedVideos: this.state.selectedVideos
 			}),
 			React.createElement(Footer, {
@@ -24034,7 +24034,7 @@ React.initializeTouchEvents(true);
 
 React.render(React.createElement(Application, { flux: flux }), document.body);
 
-},{"./actions.js":253,"./misc.js":254,"./mobile/Footer.jsx":256,"./mobile/NavBar.jsx":257,"./mobile/PlayList.jsx":258,"./store.js":259,"fluxxor":1,"react":252}],256:[function(require,module,exports){
+},{"./actions.js":253,"./misc.js":254,"./mobile/Footer.jsx":256,"./mobile/MediaList.jsx":257,"./mobile/NavBar.jsx":258,"./store.js":259,"fluxxor":1,"react":252}],256:[function(require,module,exports){
 "use strict";
 
 var React = require("react");
@@ -24119,6 +24119,144 @@ var NowPlaying = React.createClass({
 module.exports = Footer;
 
 },{"react":252}],257:[function(require,module,exports){
+"use strict";
+
+var React = require("react");
+
+var MediaList = React.createClass({
+	displayName: "MediaList",
+
+	getInitialState: function getInitialState() {
+		return { openItemId: -1 };
+	},
+
+	generateList: function generateList() {
+		var videos = this.props.selectedVideos;
+		var self = this;
+		var list = Object.keys(videos).map(function (id) {
+			var openStatus = id === self.state.openItemId;
+			return React.createElement(
+				"div",
+				{ className: "media", key: id },
+				React.createElement(ListItem, { id: id, video: videos[id], handleToggle: self.toggleContext }),
+				React.createElement(ContextMenu, { id: id, open: openStatus })
+			);
+		});
+
+		return list;
+	},
+
+	toggleContext: function toggleContext(id) {
+		if (this.state.openItemId === id) {
+			this.setState({ openItemId: -1 });
+		} else {
+			this.setState({ openItemId: id });
+		}
+	},
+
+	render: function render() {
+		return React.createElement(
+			"ul",
+			{ className: "media-list" },
+			this.generateList()
+		);
+	}
+});
+
+var ListItem = React.createClass({
+	displayName: "ListItem",
+
+	toggleContext: function toggleContext() {
+		var id = this.props.id;
+		this.props.handleToggle(id);
+	},
+
+	render: function render() {
+		var video = this.props.video;
+		return React.createElement(
+			"div",
+			{ onTouchEnd: this.toggleContext },
+			React.createElement(Avatar, { img: video.thumbnailUrl }),
+			React.createElement(MediaBody, { title: video.title, user: video.selectedBy })
+		);
+	}
+});
+
+var Avatar = React.createClass({
+	displayName: "Avatar",
+
+	render: function render() {
+		return React.createElement(
+			"div",
+			{ className: "media-left media-middle avatar" },
+			React.createElement(
+				"a",
+				{ href: "#" },
+				React.createElement("img", { className: "media-object", src: this.props.img, alt: "..." })
+			)
+		);
+	}
+});
+
+var MediaBody = React.createClass({
+	displayName: "MediaBody",
+
+	render: function render() {
+		return React.createElement(
+			"div",
+			{ className: "media-body" },
+			React.createElement(
+				"h4",
+				{ className: "media-heading" },
+				this.props.user
+			),
+			this.props.title
+		);
+	}
+});
+
+var ContextMenu = React.createClass({
+	displayName: "ContextMenu",
+
+	getHeight: function getHeight() {
+		if (this.props.open) {
+			return "3em";
+		} else {
+			return "0";
+		}
+	},
+
+	render: function render() {
+		var style = { height: this.getHeight() };
+		return React.createElement(
+			"div",
+			{ className: "contextMenu", style: style },
+			React.createElement(
+				"div",
+				{ className: "btn-group btn-group-justified", role: "group", "aria-label": "..." },
+				React.createElement(
+					"a",
+					{ role: "button", className: "btn btn-default" },
+					"Left"
+				),
+				React.createElement(
+					"a",
+					{ role: "button", className: "btn btn-default" },
+					"Middle"
+				),
+				React.createElement(
+					"a",
+					{ role: "button", className: "btn btn-default" },
+					"Right"
+				)
+			)
+		);
+	}
+});
+
+module.exports = MediaList;
+
+},{"react":252}],258:[function(require,module,exports){
 "use strict";
 
 var React = require("react");
@@ -24337,130 +24475,6 @@ var DropDownMenu = React.createClass({
 
 module.exports = NavBar;
 /*<NavBarRight />*/
-
-},{"react":252}],258:[function(require,module,exports){
-"use strict";
-
-var React = require("react");
-
-var PlayList = React.createClass({
-	displayName: "PlayList",
-
-	getInitialState: function getInitialState() {
-		return { openItemId: -1 };
-	},
-
-	generateList: function generateList() {
-		var videos = this.props.selectedVideos;
-		var self = this;
-		var list = Object.keys(videos).map(function (id) {
-			var openStatus = id === self.state.openItemId;
-			return React.createElement(
-				"div",
-				{ className: "media", key: id },
-				React.createElement(ListItem, { id: id, video: videos[id], handleToggle: self.toggleContext }),
-				React.createElement(ContextMenu, { id: id, open: openStatus })
-			);
-		});
-
-		return list;
-	},
-
-	toggleContext: function toggleContext(id) {
-		if (this.state.openItemId === id) {
-			this.setState({ openItemId: -1 });
-		} else {
-			this.setState({ openItemId: id });
-		}
-	},
-
-	render: function render() {
-		return React.createElement(
-			"ul",
-			{ className: "media-list" },
-			this.generateList()
-		);
-	}
-});
-
-var ListItem = React.createClass({
-	displayName: "ListItem",
-
-	toggleContext: function toggleContext() {
-		var id = this.props.id;
-		this.props.handleToggle(id);
-	},
-
-	render: function render() {
-		var video = this.props.video;
-		return React.createElement(
-			"div",
-			{ onTouchStart: this.toggleContext },
-			React.createElement(Avatar, { img: video.thumbnailUrl }),
-			React.createElement(MediaBody, { title: video.title, user: video.selectedBy })
-		);
-	}
-});
-
-var Avatar = React.createClass({
-	displayName: "Avatar",
-
-	render: function render() {
-		return React.createElement(
-			"div",
-			{ className: "media-left media-middle avatar" },
-			React.createElement(
-				"a",
-				{ href: "#" },
-				React.createElement("img", { className: "media-object", src: this.props.img, alt: "..." })
-			)
-		);
-	}
-});
-
-var MediaBody = React.createClass({
-	displayName: "MediaBody",
-
-	render: function render() {
-		return React.createElement(
-			"div",
-			{ className: "media-body" },
-			React.createElement(
-				"h4",
-				{ className: "media-heading" },
-				this.props.user
-			),
-			this.props.title
-		);
-	}
-});
-
-var ContextMenu = React.createClass({
-	displayName: "ContextMenu",
-
-	getHeight: function getHeight() {
-		if (this.props.open) {
-			return "3em";
-		} else {
-			return "0";
-		}
-	},
-
-	render: function render() {
-		var style = { height: this.getHeight() };
-		return React.createElement(
-			"div",
-			{ className: "contextMenu", style: style },
-			React.createElement(
-				"p",
-				null,
-				" Hello World! "
-			)
-		);
-	}
-});
-
-module.exports = PlayList;
 
 },{"react":252}],259:[function(require,module,exports){
 "use strict";

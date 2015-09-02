@@ -45,7 +45,9 @@ function createDB() {
 
 		if (err) throw err;
 
-		client.query("CREATE TABLE IF NOT EXISTS videos(storeId serial PRIMARY KEY, videoId VARCHAR(15), title VARCHAR(100), thumbUrl VARCHAR(100), selectedBy VARCHAR(20))");
+		client.query("CREATE TABLE IF NOT EXISTS videos(storeId serial PRIMARY KEY, videoId TEXT, title TEXT, thumbUrl TEXT, selectedBy TEXT)");
+		client.query("CREATE TABLE IF NOT EXISTS queues(queueid serial PRIMARY KEY, order TEXT ARRAY)");
+
 	});
 }
 

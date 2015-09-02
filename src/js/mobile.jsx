@@ -12,7 +12,7 @@ window.socket = socket;
 	React Components
  */
 var Footer = require('./mobile/Footer.jsx');
-var PlayList = require('./mobile/PlayList.jsx');
+var MediaList = require('./mobile/MediaList.jsx');
 var NavBar = require('./mobile/NavBar.jsx');
 
 
@@ -60,7 +60,7 @@ var Application = React.createClass({
 			<body>
 				<NavBar />
 
-				<PlayList 
+				<MediaList 
 					selectedVideos = {this.state.selectedVideos}
 				/>
 				<Footer 

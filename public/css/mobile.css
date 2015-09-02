@@ -42,8 +42,13 @@ body {
 	width: 100%;
 }
 
+.media {
+  margin: 0;
+}
+
 .contextMenu {
   overflow: hidden;
+  margin: 10px 20px 5px 20px;
   -webkit-transition: height 0.2s ease-in;
   -moz-transition: height 0.2s ease-in;
   -o-transition: height 0.2s ease-in;
