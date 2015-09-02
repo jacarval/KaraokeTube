@@ -24030,6 +24030,8 @@ var Application = React.createClass({
 	}
 });
 
+React.initializeTouchEvents(true);
+
 React.render(React.createElement(Application, { flux: flux }), document.body);
 
 },{"./actions.js":253,"./misc.js":254,"./mobile/Footer.jsx":256,"./mobile/NavBar.jsx":257,"./mobile/PlayList.jsx":258,"./store.js":259,"fluxxor":1,"react":252}],256:[function(require,module,exports){
@@ -24350,20 +24352,26 @@ var PlayList = React.createClass({
 
 	generateList: function generateList() {
 		var videos = this.props.selectedVideos;
+		var self = this;
 		var list = Object.keys(videos).map(function (id) {
+			var openStatus = id === self.state.openItemId;
 			return React.createElement(
 				"div",
 				{ className: "media", key: id },
-				React.createElement(Avatar, { img: videos[id].thumbnailUrl }),
-				React.createElement(ListItem, {
-					title: videos[id].title,
-					user: videos[id].selectedBy
-				}),
-				React.createElement(ContextMenu, null)
+				React.createElement(ListItem, { id: id, video: videos[id], handleToggle: self.toggleContext }),
+				React.createElement(ContextMenu, { id: id, open: openStatus })
 			);
 		});
 
 		return list;
+	},
+
+	toggleContext: function toggleContext(id) {
+		if (this.state.openItemId === id) {
+			this.setState({ openItemId: -1 });
+		} else {
+			this.setState({ openItemId: id });
+		}
 	},
 
 	render: function render() {
@@ -24371,6 +24379,25 @@ var PlayList = React.createClass({
 			"ul",
 			{ className: "media-list" },
 			this.generateList()
+		);
+	}
+});
+
+var ListItem = React.createClass({
+	displayName: "ListItem",
+
+	toggleContext: function toggleContext() {
+		var id = this.props.id;
+		this.props.handleToggle(id);
+	},
+
+	render: function render() {
+		var video = this.props.video;
+		return React.createElement(
+			"div",
+			{ onTouchStart: this.toggleContext },
+			React.createElement(Avatar, { img: video.thumbnailUrl }),
+			React.createElement(MediaBody, { title: video.title, user: video.selectedBy })
 		);
 	}
 });
@@ -24391,8 +24418,8 @@ var Avatar = React.createClass({
 	}
 });
 
-var ListItem = React.createClass({
-	displayName: "ListItem",
+var MediaBody = React.createClass({
+	displayName: "MediaBody",
 
 	render: function render() {
 		return React.createElement(
@@ -24411,8 +24438,25 @@ var ListItem = React.createClass({
 var ContextMenu = React.createClass({
 	displayName: "ContextMenu",
 
+	getHeight: function getHeight() {
+		if (this.props.open) {
+			return "3em";
+		} else {
+			return "0";
+		}
+	},
+
 	render: function render() {
-		return React.createElement("div", null);
+		var style = { height: this.getHeight() };
+		return React.createElement(
+			"div",
+			{ className: "contextMenu", style: style },
+			React.createElement(
+				"p",
+				null,
+				" Hello World! "
+			)
+		);
 	}
 });
 

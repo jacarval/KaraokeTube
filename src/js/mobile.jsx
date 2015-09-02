@@ -72,7 +72,7 @@ var Application = React.createClass({
 	}
 });
 
-
+React.initializeTouchEvents(true);
 
 React.render( <Application flux={flux} /> , document.body);
 
