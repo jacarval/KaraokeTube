@@ -7,6 +7,7 @@ var VideoStore = Fluxxor.createStore({
 
 		this.storeId = 0;
 		this.videos = {};
+		this.queueOrder = [];
 		this.bindActions(		
 			constants.ADD_VIDEO, this.onAddVideo,
 			constants.REMOVE_VIDEO, this.onRemoveVideo,

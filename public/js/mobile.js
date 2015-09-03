@@ -24488,6 +24488,8 @@ var Application = React.createClass({
 	componentDidMount: function componentDidMount() {
 		var self = this;
 
+		this.setState({ currentUser: prompt('What is your name?') });
+
 		socket.on("server:playlist:initialize", function (video) {
 			self.getFlux().actions.addVideo(video);
 		});
@@ -24521,13 +24523,13 @@ var Application = React.createClass({
 	},
 
 	handleSearchSubmit: function handleSearchSubmit(songName) {
-		var userName = 'test';
+		var userName = this.state.currentUser;
+
 		this.setState({ searchData: [] });
 		if (!songName || !userName) {
 			return;
 		}
 		this.getSearchResultsFromYouTube(songName);
-		this.setState({ currentUser: userName });
 	},
 
 	addVideoToQueue: function addVideoToQueue(videoObject) {
@@ -24577,6 +24579,7 @@ var VideoStore = Fluxxor.createStore({
 
 		this.storeId = 0;
 		this.videos = {};
+		this.queueOrder = [];
 		this.bindActions(constants.ADD_VIDEO, this.onAddVideo, constants.REMOVE_VIDEO, this.onRemoveVideo, constants.CLEAR_VIDEOS, this.onClearVideos, constants.SADD_VIDEO, this.onServerAddVideo, constants.SREMOVE_VIDEO, this.onServerRemoveVideo, constants.SCLEAR_VIDEOS, this.onServerClearVideos);
 
 		socket.emit("client:playlist:initialize");
