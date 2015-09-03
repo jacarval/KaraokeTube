@@ -4,7 +4,7 @@ var DATABASE_URL = process.env.VIDEOS_DB_URL;
 
 module.exports = {
 
-	getAllVideosFromDB: function(callback) {
+	getVideosFromDB: function(callback) {
 		querydb("SELECT * FROM videos", null, callback);
 	},
 
@@ -20,25 +20,6 @@ module.exports = {
 		querydb("DELETE FROM videos");
 	},
 
-	// querydb: function(queryString, values, cb) {
-	// 	pg.connect(DATABASE_URL, function(err, client) {
-
-	// 		if (err) throw err;
-
-	// 		client	.query(queryString, values)
-	// 			  	.on('row', function(row) {
-	// 					if (cb) {
-	// 						cb(row);
-	// 					}
-	// 				});
-
-	// 		// client	.query('Select * from videos')
-	// 		// 		.on('row', function(row) {
-	// 		// 			console.log(JSON.stringify(row));
-	// 		// 		client.end();
-	// 		// 		});
-	// 	});
-	// },
 };
 
 function createdb() {

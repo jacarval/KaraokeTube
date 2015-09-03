@@ -20,10 +20,9 @@ var mobile = io.of('/mobile');
 io.on('connection', function(socket){
 
 	socket.on("client:getState", function(){
-		console.log('init!');
-		db.getAllVideosFromDB(function(payload) {
-			console.log('payload', payload);
 
+		db.getVideosFromDB(function(payload) {
+			console.log('loadingallvids!');
 			// lower cases db column names fix
 			payload.selectedBy = payload.selectedby;
 			payload.thumbnailUrl = payload.thumburl;

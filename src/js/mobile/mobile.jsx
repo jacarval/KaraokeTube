@@ -104,12 +104,12 @@ var Application = React.createClass({
 		console.log(videoObject);
 	},
 
-	toggleContent: function() {
+	renderMediaList: function() {
 		if (this.state.searchData.length > 0) {
-			return (<MediaList showContext={true} selectedVideos={this.state.searchData} onClick={this.addVideoToQueue}/>);
+			return (<MediaList buttonText="Add To Queue" selectedVideos={this.state.searchData} onClick={this.addVideoToQueue}/>);
 		}
 		else {
-			return (<MediaList showContext={false} selectedVideos={this.state.selectedVideos} onClick={this.playNext}/>);
+			return (<MediaList buttonText="Play Next (disabled)" selectedVideos={this.state.selectedVideos} onClick={this.playNext}/>);
 		}
 	},
 
@@ -117,7 +117,7 @@ var Application = React.createClass({
 		return (
 			<body>
 				<NavBar onSearchSubmit={this.handleSearchSubmit}/>
-				{this.toggleContent()}
+				{this.renderMediaList()}
 				<Footer 
 					selectedVideos = {this.state.selectedVideos}
 					currentVideo = {this.state.currentVideo}

@@ -14,8 +14,8 @@ var MediaList = React.createClass({
 			var openStatus = (id === self.state.openItemId);
 			return (
 				<div className="media" key={id}>
-					<ListItem showContext={self.props.showContext} id={id} video={videos[id]} handleToggle={self.toggleContext} />
-					<ContextMenu id={id} video={videos[id]} open={openStatus} onClick={self.props.onClick} />
+					<ListItem id={id} video={videos[id]} handleToggle={self.toggleContext} />
+					<ContextMenu text={self.props.buttonText} id={id} video={videos[id]} open={openStatus} onClick={self.props.onClick} />
 				</div>
 			);
 		});
@@ -24,10 +24,7 @@ var MediaList = React.createClass({
 	},
 
 	toggleContext: function(id){
-		if (this.props.showContext === false){
-			this.setState({openItemId: -1});
-		}
-		else if(this.state.openItemId === id){
+		if(this.state.openItemId === id){
 			this.setState({openItemId: -1});
 		} 
 		else {
@@ -46,10 +43,8 @@ var MediaList = React.createClass({
 
 var ListItem = React.createClass({
 	toggleContext: function() {
-		if (this.props.showContext) {
-			var id = this.props.id;
-			this.props.handleToggle(id);
-		}
+		var id = this.props.id;
+		this.props.handleToggle(id);
 	},
 
 	render: function() {
@@ -100,7 +95,7 @@ var ContextMenu = React.createClass({
 		return (
 			<div className="contextMenu" style={style}>
 				<div className="btn-group btn-group-justified" role="group" aria-label="...">
-					<a onClick={createHandler(this.props.video, this.props.onClick)} role="button" className="btn btn-default">Add To Queue</a>
+					<a onClick={createHandler(this.props.video, this.props.onClick)} role="button" className="btn btn-default">{this.props.text}</a>
 				</div>
 			</div>
 		);

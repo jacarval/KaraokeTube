@@ -24026,8 +24026,8 @@ var MediaList = React.createClass({
 			return React.createElement(
 				"div",
 				{ className: "media", key: id },
-				React.createElement(ListItem, { showContext: self.props.showContext, id: id, video: videos[id], handleToggle: self.toggleContext }),
-				React.createElement(ContextMenu, { id: id, video: videos[id], open: openStatus, onClick: self.props.onClick })
+				React.createElement(ListItem, { id: id, video: videos[id], handleToggle: self.toggleContext }),
+				React.createElement(ContextMenu, { text: self.props.buttonText, id: id, video: videos[id], open: openStatus, onClick: self.props.onClick })
 			);
 		});
 
@@ -24035,9 +24035,7 @@ var MediaList = React.createClass({
 	},
 
 	toggleContext: function toggleContext(id) {
-		if (this.props.showContext === false) {
-			this.setState({ openItemId: -1 });
-		} else if (this.state.openItemId === id) {
+		if (this.state.openItemId === id) {
 			this.setState({ openItemId: -1 });
 		} else {
 			this.setState({ openItemId: id });
@@ -24057,10 +24055,8 @@ var ListItem = React.createClass({
 	displayName: "ListItem",
 
 	toggleContext: function toggleContext() {
-		if (this.props.showContext) {
-			var id = this.props.id;
-			this.props.handleToggle(id);
-		}
+		var id = this.props.id;
+		this.props.handleToggle(id);
 	},
 
 	render: function render() {
@@ -24129,7 +24125,7 @@ var ContextMenu = React.createClass({
 				React.createElement(
 					"a",
 					{ onClick: createHandler(this.props.video, this.props.onClick), role: "button", className: "btn btn-default" },
-					"Add To Queue"
+					this.props.text
 				)
 			)
 		);
@@ -24552,11 +24548,11 @@ var Application = React.createClass({
 		console.log(videoObject);
 	},
 
-	toggleContent: function toggleContent() {
+	renderMediaList: function renderMediaList() {
 		if (this.state.searchData.length > 0) {
-			return React.createElement(MediaList, { showContext: true, selectedVideos: this.state.searchData, onClick: this.addVideoToQueue });
+			return React.createElement(MediaList, { buttonText: "Add To Queue", selectedVideos: this.state.searchData, onClick: this.addVideoToQueue });
 		} else {
-			return React.createElement(MediaList, { showContext: false, selectedVideos: this.state.selectedVideos, onClick: this.playNext });
+			return React.createElement(MediaList, { buttonText: "Play Next (disabled)", selectedVideos: this.state.selectedVideos, onClick: this.playNext });
 		}
 	},
 
@@ -24565,7 +24561,7 @@ var Application = React.createClass({
 			"body",
 			null,
 			React.createElement(NavBar, { onSearchSubmit: this.handleSearchSubmit }),
-			this.toggleContent(),
+			this.renderMediaList(),
 			React.createElement(Footer, {
 				selectedVideos: this.state.selectedVideos,
 				currentVideo: this.state.currentVideo
