@@ -2,7 +2,7 @@ var React = require("react");
 
 var SearchBox = require('./SearchBox.jsx');
 var SearchResults = require('./SearchResults.jsx');
-var createHandler = require("../misc.js").createClickHandler;
+var createHandler = require("../../resources/misc.js").createClickHandler;
 
 var NavBar = React.createClass({
 	render: function() {

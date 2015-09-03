@@ -24389,14 +24389,7 @@ module.exports = require('./lib/React');
 
 var Fluxxor = require("fluxxor");
 
-var constants = {
-  ADD_VIDEO: "ADD_VIDEO",
-  REMOVE_VIDEO: "REMOVE_VIDEO",
-  CLEAR_VIDEOS: "CLEAR_VIDEOS",
-  SADD_VIDEO: "SADD_VIDEO",
-  SREMOVE_VIDEO: "SREMOVE_VIDEO",
-  SCLEAR_VIDEOS: "SCLEAR_VIDEOS"
-};
+var constants = require("../resources/misc.js").constants;
 
 var actions = {
   addVideo: function addVideo(videoInfoObject) {
@@ -24426,7 +24419,7 @@ var actions = {
 
 module.exports = actions;
 
-},{"fluxxor":1}],261:[function(require,module,exports){
+},{"../resources/misc.js":270,"fluxxor":1}],261:[function(require,module,exports){
 "use strict";
 
 var React = require("react");
@@ -24565,7 +24558,7 @@ var React = require("react");
 
 var SearchBox = require('./SearchBox.jsx');
 var SearchResults = require('./SearchResults.jsx');
-var createHandler = require("../misc.js").createClickHandler;
+var createHandler = require("../../resources/misc.js").createClickHandler;
 
 var NavBar = React.createClass({
 	displayName: 'NavBar',
@@ -24700,7 +24693,7 @@ var VideoListDropDown = React.createClass({
 module.exports = NavBar;
 /*<!--/.nav-collapse -->*/
 
-},{"../misc.js":269,"./SearchBox.jsx":264,"./SearchResults.jsx":265,"react":259}],264:[function(require,module,exports){
+},{"../../resources/misc.js":270,"./SearchBox.jsx":264,"./SearchResults.jsx":265,"react":259}],264:[function(require,module,exports){
 'use strict';
 
 var React = require("react");
@@ -24711,7 +24704,7 @@ var SearchBox = React.createClass({
 	handleSubmit: function handleSubmit(e) {
 		e.preventDefault();
 		var songName = React.findDOMNode(this.refs.searchInput).value.trim();
-		var userName = React.findDOMNode(this.refs.nameInput).value.trim();
+		var userName = React.findDOMNode(this.refs.nameInput).value.trim().substr(0, 20);
 		// if (!songName || !userName) {
 		// 	return;
 		// }
@@ -24785,7 +24778,7 @@ module.exports = SearchBox;
 "use strict";
 
 var React = require("react");
-var createHandler = require("../misc.js").createClickHandler;
+var createHandler = require("../../resources/misc.js").createClickHandler;
 
 var SearchResults = React.createClass({
 	displayName: "SearchResults",
@@ -24846,7 +24839,7 @@ var SearchResults = React.createClass({
 
 module.exports = SearchResults;
 
-},{"../misc.js":269,"react":259}],266:[function(require,module,exports){
+},{"../../resources/misc.js":270,"react":259}],266:[function(require,module,exports){
 "use strict";
 
 var React = require("react");
@@ -24941,7 +24934,7 @@ var React = require("react");
 var Fluxxor = require("fluxxor");
 var VideoStore = require("./store.js");
 var actions = require("./actions.js");
-var requestSearchResults = require("./misc.js").requestSearchResults;
+var requestSearchResults = require("../resources/misc.js").requestSearchResults;
 var socket = io();
 
 /*
@@ -25138,48 +25131,12 @@ var Application = React.createClass({
 
 React.render(React.createElement(Application, { flux: flux }), document.body);
 
-},{"./actions.js":260,"./components/Content.jsx":261,"./components/Footer.jsx":262,"./components/NavBar.jsx":263,"./misc.js":269,"./store.js":270,"fluxxor":1,"react":259}],269:[function(require,module,exports){
-'use strict';
-
-var requestSearchResults = function requestSearchResults(querystring, callback) {
-	var xhr = new XMLHttpRequest();
-	var url = 'https://www.googleapis.com/youtube/v3/search';
-	var params = '?part=snippet&q=' + querystring + " lyrics&type=video&maxResults=50&regionCode=US&key=AIzaSyAjZ9Y2YeyNJSk8Ko7T2iY-qTD-8QOUGBE";
-	xhr.open('GET', encodeURI(url + params));
-	xhr.onload = function () {
-		if (xhr.status === 200) {
-			var results = JSON.parse(xhr.responseText);
-			callback(results);
-		} else {
-			alert('Request failed.  Returned status of ' + xhr.status);
-		}
-	};
-	xhr.send();
-};
-
-var createClickHandler = function createClickHandler(id, handler) {
-	var self = this;
-	return function (e) {
-		handler(id);
-	};
-};
-
-module.exports.requestSearchResults = requestSearchResults;
-module.exports.createClickHandler = createClickHandler;
-
-},{}],270:[function(require,module,exports){
+},{"../resources/misc.js":270,"./actions.js":260,"./components/Content.jsx":261,"./components/Footer.jsx":262,"./components/NavBar.jsx":263,"./store.js":269,"fluxxor":1,"react":259}],269:[function(require,module,exports){
 "use strict";
 
 var Fluxxor = require("fluxxor");
 
-var constants = {
-	ADD_VIDEO: "ADD_VIDEO",
-	REMOVE_VIDEO: "REMOVE_VIDEO",
-	CLEAR_VIDEOS: "CLEAR_VIDEOS",
-	SADD_VIDEO: "SADD_VIDEO",
-	SREMOVE_VIDEO: "SREMOVE_VIDEO",
-	SCLEAR_VIDEOS: "SCLEAR_VIDEOS"
-};
+var constants = require("../resources/misc.js").constants;
 
 var VideoStore = Fluxxor.createStore({
 
@@ -25264,7 +25221,68 @@ var VideoStore = Fluxxor.createStore({
 
 module.exports = VideoStore;
 
-},{"fluxxor":1}],271:[function(require,module,exports){
+},{"../resources/misc.js":270,"fluxxor":1}],270:[function(require,module,exports){
+"use strict";
+
+function createCORSRequest(method, url) {
+		var xhr = new XMLHttpRequest();
+		if ("withCredentials" in xhr) {
+				// XHR for Chrome/Firefox/Opera/Safari.
+				xhr.open(method, url, true);
+		} else if (typeof XDomainRequest != "undefined") {
+				// XDomainRequest for IE.
+				xhr = new XDomainRequest();
+				xhr.open(method, url);
+		} else {
+				// CORS not supported.
+				xhr = null;
+		}
+		return xhr;
+}
+
+var requestSearchResults = function requestSearchResults(querystring, callback) {
+		var url = 'https://www.googleapis.com/youtube/v3/search';
+		var params = '?part=snippet&q=' + querystring + " lyrics&type=video&maxResults=50&regionCode=US&key=AIzaSyAjZ9Y2YeyNJSk8Ko7T2iY-qTD-8QOUGBE";
+
+		var xhr = createCORSRequest('GET', encodeURI(url + params));
+
+		if (!xhr) {
+				alert('This device is not supported');
+				return;
+		}
+
+		xhr.onload = function () {
+				if (xhr.status === 200) {
+						var results = JSON.parse(xhr.responseText);
+						callback(results);
+				} else {
+						alert('Request failed.  Returned status of ' + xhr.status);
+				}
+		};
+		xhr.send();
+};
+
+var createClickHandler = function createClickHandler(id, handler) {
+		var self = this;
+		return function (e) {
+				handler(id);
+		};
+};
+
+var constants = {
+		ADD_VIDEO: "ADD_VIDEO",
+		REMOVE_VIDEO: "REMOVE_VIDEO",
+		CLEAR_VIDEOS: "CLEAR_VIDEOS",
+		SADD_VIDEO: "SADD_VIDEO",
+		SREMOVE_VIDEO: "SREMOVE_VIDEO",
+		SCLEAR_VIDEOS: "SCLEAR_VIDEOS"
+};
+
+module.exports.requestSearchResults = requestSearchResults;
+module.exports.createClickHandler = createClickHandler;
+module.exports.constants = constants;
+
+},{}],271:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};

@@ -10,13 +10,13 @@ var babel = require('babelify');
 
 // add custom browserify options here
 var customOpts = {
-  entries: ['./src/js/desktop.jsx', './src/js/mobile.jsx'],
+  entries: ['./src/js/desktop/desktop.jsx', './src/js/mobile/mobile.jsx'],
   debug: true
 };
 
 var opts = assign({}, watchify.args, customOpts);
 
-var b = watchify(browserify(['./src/js/desktop.jsx'], { debug: true }).transform(babel));
+var b = watchify(browserify(['./src/js/desktop/desktop.jsx'], { debug: true }).transform(babel));
 // add transformations here
 // i.e. b.transform(coffeeify);
 
@@ -38,7 +38,7 @@ function desktop() {
     .pipe(gulp.dest('./public/js'));
 }
 
-var m = watchify(browserify(['./src/js/mobile.jsx'], { debug: true }).transform(babel));
+var m = watchify(browserify(['./src/js/mobile/mobile.jsx'], { debug: true }).transform(babel));
 
 gulp.task('mobile', mobile); // so you can run `gulp js` to build the file
 m.on('update', mobile); // on any dep update, runs the bundler

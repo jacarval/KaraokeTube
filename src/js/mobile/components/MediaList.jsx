@@ -13,7 +13,7 @@ var MediaList = React.createClass({
 			return (
 				<div className="media" key={id}>
 					<ListItem id={id} video={videos[id]} handleToggle={self.toggleContext} />
-					<ContextMenu id={id} open={openStatus} />
+					<ContextMenu id={id} open={openStatus} onClick={self.props.onClick} />
 				</div>
 			);
 		});

@@ -4,7 +4,7 @@ var SearchBox = React.createClass({
 	handleSubmit: function(e) {
 		e.preventDefault();
 		var songName = React.findDOMNode(this.refs.searchInput).value.trim();
-		var userName = React.findDOMNode(this.refs.nameInput).value.trim();
+		var userName = React.findDOMNode(this.refs.nameInput).value.trim().substr(0, 20);
 		// if (!songName || !userName) {
 		// 	return;
 		// }

@@ -3,7 +3,7 @@ var React = require("react");
 var Fluxxor = require("fluxxor");
 var VideoStore = require("./store.js");
 var actions = require("./actions.js");
-var requestSearchResults = require("./misc.js").requestSearchResults;
+var requestSearchResults = require("../resources/misc.js").requestSearchResults;
 var socket = io();
 
 /*

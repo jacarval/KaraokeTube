@@ -1,12 +1,25 @@
 var React = require("react");
+var Search = require("./Search.jsx");
 
 var NavBar = React.createClass({
 	render: function() {
 		return (
 			<nav className="navbar navbar-default">
 				<div className="container-fluid">
-					<NavBarHeader />
-					<NavBarToggle />
+
+					<NavBarHeader>
+						<Search visibility={'visible-xs-block'} style={{margin:'0'}} onSubmit={this.props.onSearchSubmit}/>
+					</NavBarHeader>
+
+					<NavBarCollapse id='menu-collapse'>
+						<NavBarLeft>
+							<DropDown>
+								<DropDownMenu />
+							</DropDown>
+						</NavBarLeft>
+						<Search visibility={'hidden-xs'} onSubmit={this.props.onSearchSubmit}/>
+					</NavBarCollapse>
+
 				</div>
 			</nav>		
 		);
@@ -17,25 +30,31 @@ var NavBarHeader = React.createClass({
 	render: function() {
 		return(
 			<div className="navbar-header">
-				<button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-					<span className="sr-only">Toggle navigation</span>
-					<span className="icon-bar"></span>
-					<span className="icon-bar"></span>
-					<span className="icon-bar"></span>
-				</button>
-				<a className="navbar-brand" href="#">KaraokeTube</a>
+				{this.props.children}
+				<a className="navbar-brand hidden-xs" href="#">KaraokeTube</a>
 			</div>
 		);
 	}
 });
 
-var NavBarToggle = React.createClass({
+var NavBarToggleButton = React.createClass({
 	render: function() {
 		return (
-			<div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<NavBarLeft />
-				<NavBarForm />
-				{/*<NavBarRight />*/}
+			<button style={{marginTop: '11px'}} type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target={this.props.target} aria-expanded="false">
+				<span className="sr-only">Toggle navigation</span>
+				<span className="icon-bar"></span>
+				<span className="icon-bar"></span>
+				<span className="icon-bar"></span>
+			</button>
+		);
+	}
+});
+
+var NavBarCollapse = React.createClass({
+	render: function() {
+		return (
+			<div className="collapse navbar-collapse" id={this.props.id}>
+				{this.props.children}
 			</div>
 		);
 	}
@@ -47,7 +66,7 @@ var NavBarLeft = React.createClass({
 			<ul className="nav navbar-nav">
 				<li className="active"><a href="#">Search <span className="sr-only">(current)</span></a></li>
 				<li><a href="#">Queue</a></li>
-				<DropDown />
+				{this.props.children}
 			</ul>
 		);
 	}
@@ -72,7 +91,7 @@ var NavBarRight = React.createClass({
 		return (
 			<ul className="nav navbar-nav navbar-right">
 				<li><a href="#">Link</a></li>
-				<DropDown />
+				{this.props.children}
 			</ul>
 		);
 	}
@@ -83,7 +102,7 @@ var DropDown = React.createClass({
 		return (
 			<li className="dropdown">
 				<a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Rooms <span className="caret"></span></a>
-				<DropDownMenu />
+				{this.props.children}
 			</li>
 		);
 	}

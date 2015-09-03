@@ -1,5 +1,5 @@
 var React = require("react");
-var createHandler = require("../misc.js").createClickHandler;
+var createHandler = require("../../resources/misc.js").createClickHandler;
 
 var SearchResults = React.createClass({
 	render: function() {

@@ -1,27 +1,22 @@
 /*jshint esnext: true */
-var React = require("react");
+window.React = require("react");
+window.socket = io();
+
 var Fluxxor = require("fluxxor");
 var VideoStore = require("./store.js");
 var actions = require("./actions.js");
-var requestSearchResults = require("./misc.js").requestSearchResults;
-
-var socket = io();
-window.socket = socket;
+var requestSearchResults = require("../resources/misc.js").requestSearchResults;
 
 /*
 	React Components
  */
-var Footer = require('./mobile/Footer.jsx');
-var MediaList = require('./mobile/MediaList.jsx');
-var NavBar = require('./mobile/NavBar.jsx');
+var Footer = require('./components/Footer.jsx');
+var MediaList = require('./components/MediaList.jsx');
+var NavBar = require('./components/NavBar.jsx');
 
 
 var stores = {VideoStore: new VideoStore()};
 var flux = new Fluxxor.Flux(stores, actions);
-
-
-window.React = React;
-window.flux = flux;
 
 flux.on("dispatch", function(type, payload) {
   if (console && console.log) {
@@ -55,14 +50,38 @@ var Application = React.createClass({
 		});
 	},
 
+	getSearchResultsFromYouTube: function(querystring) {
+		var data = [];
+		var self = this;
+		requestSearchResults(querystring, function(results) {
+			for (var item of results.items){
+				data.push({videoId: item.id.videoId, thumbnailUrl: item.snippet.thumbnails.medium.url, title: item.snippet.title, description: item.snippet.description, channel: item.snippet.channelTitle});
+			}
+			self.setState({searchData: data});
+		});
+	},
+
+	handleSearchSubmit: function(songName) {
+		var userName = 'test';
+		this.setState({searchData: []});
+		if (!songName || !userName) {
+			return;
+		}
+		this.getSearchResultsFromYouTube(songName);
+		this.setState({currentUser: userName});
+	},	
+
+	addVideoToQueue: function(videoObject) {
+		videoObject.selectedBy = this.state.currentUser;
+		this.getFlux().actions.addVideo(videoObject);
+		this.setState({searchData: []});
+	},
+
 	render: function() {
 		return (
 			<body>
-				<NavBar />
-
-				<MediaList 
-					selectedVideos = {this.state.selectedVideos}
-				/>
+				<NavBar onSearchSubmit={this.handleSearchSubmit}/>
+				<MediaList selectedVideos={this.state.searchData} onClick={this.addVideoToQueue}/>
 				<Footer 
 					selectedVideos = {this.state.selectedVideos}
 					currentVideo = {this.state.currentVideo}
@@ -73,6 +92,5 @@ var Application = React.createClass({
 });
 
 React.initializeTouchEvents(true);
-
 React.render( <Application flux={flux} /> , document.body);
 

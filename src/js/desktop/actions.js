@@ -1,13 +1,6 @@
 var Fluxxor = require("fluxxor");
 
-var constants = {
-  ADD_VIDEO: "ADD_VIDEO",
-  REMOVE_VIDEO: "REMOVE_VIDEO",
-  CLEAR_VIDEOS: "CLEAR_VIDEOS",
-  SADD_VIDEO: "SADD_VIDEO",
-  SREMOVE_VIDEO: "SREMOVE_VIDEO",
-  SCLEAR_VIDEOS: "SCLEAR_VIDEOS"
-};
+var constants = require("../resources/misc.js").constants;
 
 var actions = {
   addVideo: function(videoInfoObject) {

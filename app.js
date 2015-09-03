@@ -5,6 +5,8 @@ var Flux = require('fluxxor');
 var io = require('socket.io')(http);
 var db = require('./db');
 
+db.check();
+
 app.use(express.static(__dirname + '/public'));
 
 // Catchall - redirect to mobile or desktop page
@@ -13,6 +15,9 @@ app.get('*', function(req, res){
   res.sendFile(__dirname + '/public' + (/Android|iPhone|iPad/.test(req.headers['user-agent']) ? '/mobile.html' : '/desktop.html'));
 
 });
+
+var desktop = io.of('/desktop');
+var mobile = io.of('/mobile');
 
 io.on('connection', function(socket){
 
