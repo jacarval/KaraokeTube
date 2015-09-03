@@ -43,10 +43,24 @@ var Application = React.createClass({
 	componentDidMount: function(){
 		var self = this;
 
-		socket.on("server:playlist:initialize", function(video){
-			
+		socket.on("server:playlist:initialize", function(video){	
 			self.getFlux().actions.addVideo(video);
+		});
 
+		socket.on("server:playlist:add", function(video){
+			self.getFlux().actions.addVideo(video);
+		});
+
+		socket.on("server:playlist:remove", function(video){
+			self.getFlux().actions.removeVideo(video);
+		});
+
+		socket.on("server:playlist:clear", function(){
+			self.getFlux().actions.clearVideos();
+		});
+
+		socket.on("server:currentvideo:update", function(video){
+			self.setState({currentVideo: video});
 		});
 	},
 
@@ -54,11 +68,12 @@ var Application = React.createClass({
 		var data = [];
 		var self = this;
 		requestSearchResults(querystring, function(results) {
-			for (var item of results.items){
+			results.items.forEach(function(item){
 				data.push({videoId: item.id.videoId, thumbnailUrl: item.snippet.thumbnails.medium.url, title: item.snippet.title, description: item.snippet.description, channel: item.snippet.channelTitle});
-			}
+			});
 			self.setState({searchData: data});
 		});
+
 	},
 
 	handleSearchSubmit: function(songName) {
@@ -73,15 +88,28 @@ var Application = React.createClass({
 
 	addVideoToQueue: function(videoObject) {
 		videoObject.selectedBy = this.state.currentUser;
-		this.getFlux().actions.addVideo(videoObject);
+		this.getFlux().actions.sAddVideo(videoObject);
 		this.setState({searchData: []});
+	},
+
+	playNext: function(videoObject) {
+		console.log(videoObject);
+	},
+
+	toggleContent: function() {
+		if (this.state.searchData.length > 0) {
+			return (<MediaList selectedVideos={this.state.searchData} onClick={this.addVideoToQueue}/>);
+		}
+		else {
+			return (<MediaList selectedVideos={this.state.selectedVideos} onClick={this.playNext}/>);
+		}
 	},
 
 	render: function() {
 		return (
 			<body>
 				<NavBar onSearchSubmit={this.handleSearchSubmit}/>
-				<MediaList selectedVideos={this.state.searchData} onClick={this.addVideoToQueue}/>
+				{this.toggleContent()}
 				<Footer 
 					selectedVideos = {this.state.selectedVideos}
 					currentVideo = {this.state.currentVideo}

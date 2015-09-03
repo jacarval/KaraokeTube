@@ -25242,7 +25242,7 @@ function createCORSRequest(method, url) {
 
 var requestSearchResults = function requestSearchResults(querystring, callback) {
 		var url = 'https://www.googleapis.com/youtube/v3/search';
-		var params = '?part=snippet&q=' + querystring + " lyrics&type=video&maxResults=50&regionCode=US&key=AIzaSyAjZ9Y2YeyNJSk8Ko7T2iY-qTD-8QOUGBE";
+		var params = '?part=snippet&q=' + querystring + " &type=video&maxResults=50&regionCode=US&key=AIzaSyAjZ9Y2YeyNJSk8Ko7T2iY-qTD-8QOUGBE";
 
 		var xhr = createCORSRequest('GET', encodeURI(url + params));
 

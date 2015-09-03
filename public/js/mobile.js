@@ -24009,6 +24009,8 @@ module.exports = Footer;
 
 var React = require("react");
 
+var createHandler = require("../../resources/misc.js").createClickHandler;
+
 var MediaList = React.createClass({
 	displayName: "MediaList",
 
@@ -24025,7 +24027,7 @@ var MediaList = React.createClass({
 				"div",
 				{ className: "media", key: id },
 				React.createElement(ListItem, { id: id, video: videos[id], handleToggle: self.toggleContext }),
-				React.createElement(ContextMenu, { id: id, open: openStatus, onClick: self.props.onClick })
+				React.createElement(ContextMenu, { id: id, video: videos[id], open: openStatus, onClick: self.props.onClick })
 			);
 		});
 
@@ -24122,18 +24124,8 @@ var ContextMenu = React.createClass({
 				{ className: "btn-group btn-group-justified", role: "group", "aria-label": "..." },
 				React.createElement(
 					"a",
-					{ role: "button", className: "btn btn-default" },
-					"Left"
-				),
-				React.createElement(
-					"a",
-					{ role: "button", className: "btn btn-default" },
-					"Middle"
-				),
-				React.createElement(
-					"a",
-					{ role: "button", className: "btn btn-default" },
-					"Right"
+					{ onClick: createHandler(this.props.video, this.props.onClick), role: "button", className: "btn btn-default" },
+					"Add To Queue"
 				)
 			)
 		);
@@ -24142,7 +24134,7 @@ var ContextMenu = React.createClass({
 
 module.exports = MediaList;
 
-},{"react":252}],256:[function(require,module,exports){
+},{"../../resources/misc.js":260,"react":252}],256:[function(require,module,exports){
 "use strict";
 
 var React = require("react");
@@ -24497,8 +24489,23 @@ var Application = React.createClass({
 		var self = this;
 
 		socket.on("server:playlist:initialize", function (video) {
-
 			self.getFlux().actions.addVideo(video);
+		});
+
+		socket.on("server:playlist:add", function (video) {
+			self.getFlux().actions.addVideo(video);
+		});
+
+		socket.on("server:playlist:remove", function (video) {
+			self.getFlux().actions.removeVideo(video);
+		});
+
+		socket.on("server:playlist:clear", function () {
+			self.getFlux().actions.clearVideos();
+		});
+
+		socket.on("server:currentvideo:update", function (video) {
+			self.setState({ currentVideo: video });
 		});
 	},
 
@@ -24506,31 +24513,9 @@ var Application = React.createClass({
 		var data = [];
 		var self = this;
 		requestSearchResults(querystring, function (results) {
-			var _iteratorNormalCompletion = true;
-			var _didIteratorError = false;
-			var _iteratorError = undefined;
-
-			try {
-				for (var _iterator = results.items[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-					var item = _step.value;
-
-					data.push({ videoId: item.id.videoId, thumbnailUrl: item.snippet.thumbnails.medium.url, title: item.snippet.title, description: item.snippet.description, channel: item.snippet.channelTitle });
-				}
-			} catch (err) {
-				_didIteratorError = true;
-				_iteratorError = err;
-			} finally {
-				try {
-					if (!_iteratorNormalCompletion && _iterator["return"]) {
-						_iterator["return"]();
-					}
-				} finally {
-					if (_didIteratorError) {
-						throw _iteratorError;
-					}
-				}
-			}
-
+			results.items.forEach(function (item) {
+				data.push({ videoId: item.id.videoId, thumbnailUrl: item.snippet.thumbnails.medium.url, title: item.snippet.title, description: item.snippet.description, channel: item.snippet.channelTitle });
+			});
 			self.setState({ searchData: data });
 		});
 	},
@@ -24547,8 +24532,20 @@ var Application = React.createClass({
 
 	addVideoToQueue: function addVideoToQueue(videoObject) {
 		videoObject.selectedBy = this.state.currentUser;
-		this.getFlux().actions.addVideo(videoObject);
+		this.getFlux().actions.sAddVideo(videoObject);
 		this.setState({ searchData: [] });
+	},
+
+	playNext: function playNext(videoObject) {
+		console.log(videoObject);
+	},
+
+	toggleContent: function toggleContent() {
+		if (this.state.searchData.length > 0) {
+			return React.createElement(MediaList, { selectedVideos: this.state.searchData, onClick: this.addVideoToQueue });
+		} else {
+			return React.createElement(MediaList, { selectedVideos: this.state.selectedVideos, onClick: this.playNext });
+		}
 	},
 
 	render: function render() {
@@ -24556,7 +24553,7 @@ var Application = React.createClass({
 			"body",
 			null,
 			React.createElement(NavBar, { onSearchSubmit: this.handleSearchSubmit }),
-			React.createElement(MediaList, { selectedVideos: this.state.searchData, onClick: this.addVideoToQueue }),
+			this.toggleContent(),
 			React.createElement(Footer, {
 				selectedVideos: this.state.selectedVideos,
 				currentVideo: this.state.currentVideo
@@ -24678,7 +24675,7 @@ function createCORSRequest(method, url) {
 
 var requestSearchResults = function requestSearchResults(querystring, callback) {
 		var url = 'https://www.googleapis.com/youtube/v3/search';
-		var params = '?part=snippet&q=' + querystring + " lyrics&type=video&maxResults=50&regionCode=US&key=AIzaSyAjZ9Y2YeyNJSk8Ko7T2iY-qTD-8QOUGBE";
+		var params = '?part=snippet&q=' + querystring + " &type=video&maxResults=50&regionCode=US&key=AIzaSyAjZ9Y2YeyNJSk8Ko7T2iY-qTD-8QOUGBE";
 
 		var xhr = createCORSRequest('GET', encodeURI(url + params));
 

@@ -1,5 +1,7 @@
 var React = require("react");
 
+var createHandler = require("../../resources/misc.js").createClickHandler;
+
 var MediaList = React.createClass({
 	getInitialState: function() {
 		return {openItemId: -1}
@@ -13,7 +15,7 @@ var MediaList = React.createClass({
 			return (
 				<div className="media" key={id}>
 					<ListItem id={id} video={videos[id]} handleToggle={self.toggleContext} />
-					<ContextMenu id={id} open={openStatus} onClick={self.props.onClick} />
+					<ContextMenu id={id} video={videos[id]} open={openStatus} onClick={self.props.onClick} />
 				</div>
 			);
 		});
@@ -93,9 +95,7 @@ var ContextMenu = React.createClass({
 		return (
 			<div className="contextMenu" style={style}>
 				<div className="btn-group btn-group-justified" role="group" aria-label="...">
-					<a role="button" className="btn btn-default">Left</a>
-					<a role="button" className="btn btn-default">Middle</a>
-					<a role="button" className="btn btn-default">Right</a>
+					<a onClick={createHandler(this.props.video, this.props.onClick)} role="button" className="btn btn-default">Add To Queue</a>
 				</div>
 			</div>
 		);
