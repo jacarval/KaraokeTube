@@ -5,8 +5,6 @@ var Flux = require('fluxxor');
 var io = require('socket.io')(http);
 var db = require('./db');
 
-db.check();
-
 app.use(express.static(__dirname + '/public'));
 
 // Catchall - redirect to mobile or desktop page
@@ -22,6 +20,7 @@ var mobile = io.of('/mobile');
 io.on('connection', function(socket){
 
 	socket.on("client:playlist:initialize", function(){
+		console.log('init!');
 		db.querydb('Select * from videos', null, function(payload) {
 
 			// lower cases db column names fix

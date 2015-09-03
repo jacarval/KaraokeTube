@@ -24489,6 +24489,8 @@ var Application = React.createClass({
 		var self = this;
 
 		socket.on("server:playlist:initialize", function (video) {
+			console.log('event');
+			console.log(video);
 			self.getFlux().actions.addVideo(video);
 		});
 

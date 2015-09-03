@@ -32,14 +32,16 @@ module.exports = {
 						}
 					});
 
-			client	.query('Select * from videos')
-					.on('row', function(row) {
-						console.log(JSON.stringify(row));
-					});
+			// client	.query('Select * from videos')
+			// 		.on('row', function(row) {
+			// 			console.log(JSON.stringify(row));
+			// 		client.end();
+			// 		});
 		});
 	},
+};
 
-	check: function() {
+function createdb() {
 		pg.connect(DATABASE_URL, function(err, client) {
 
 			if (err) throw err;
@@ -49,7 +51,6 @@ module.exports = {
 
 		});
 	} 
-};
 
 function querydb(queryString, values, cb) {
 	pg.connect(DATABASE_URL, function(err, client) {
