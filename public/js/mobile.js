@@ -24488,8 +24488,6 @@ var Application = React.createClass({
 	componentDidMount: function componentDidMount() {
 		var self = this;
 
-		this.setState({ currentUser: prompt('What is your name?') });
-
 		socket.on("server:playlist:initialize", function (video) {
 			self.getFlux().actions.addVideo(video);
 		});
@@ -24509,6 +24507,8 @@ var Application = React.createClass({
 		socket.on("server:currentvideo:update", function (video) {
 			self.setState({ currentVideo: video });
 		});
+
+		this.setState({ currentUser: prompt('What is your name?') });
 	},
 
 	getSearchResultsFromYouTube: function getSearchResultsFromYouTube(querystring) {
