@@ -24972,6 +24972,9 @@ var Application = React.createClass({
 
 	componentDidMount: function componentDidMount() {
 		var self = this;
+
+		socket.emit("client:getState");
+
 		socket.on("server:playlist:initialize", function (video) {
 			self.tempVideoFix[video.videoId] = true;
 			self.getFlux().actions.addVideo(video);

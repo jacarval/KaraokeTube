@@ -19,9 +19,10 @@ var mobile = io.of('/mobile');
 
 io.on('connection', function(socket){
 
-	socket.on("client:playlist:initialize", function(){
+	socket.on("client:getState", function(){
 		console.log('init!');
-		db.querydb('Select * from videos', null, function(payload) {
+		db.getAllVideosFromDB(function(payload) {
+			console.log('payload', payload);
 
 			// lower cases db column names fix
 			payload.selectedBy = payload.selectedby;

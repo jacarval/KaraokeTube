@@ -20,25 +20,25 @@ module.exports = {
 		querydb("DELETE FROM videos");
 	},
 
-	querydb: function(queryString, values, cb) {
-		pg.connect(DATABASE_URL, function(err, client) {
+	// querydb: function(queryString, values, cb) {
+	// 	pg.connect(DATABASE_URL, function(err, client) {
 
-			if (err) throw err;
+	// 		if (err) throw err;
 
-			client	.query(queryString, values)
-				  	.on('row', function(row) {
-						if (cb) {
-							cb(row);
-						}
-					});
+	// 		client	.query(queryString, values)
+	// 			  	.on('row', function(row) {
+	// 					if (cb) {
+	// 						cb(row);
+	// 					}
+	// 				});
 
-			// client	.query('Select * from videos')
-			// 		.on('row', function(row) {
-			// 			console.log(JSON.stringify(row));
-			// 		client.end();
-			// 		});
-		});
-	},
+	// 		// client	.query('Select * from videos')
+	// 		// 		.on('row', function(row) {
+	// 		// 			console.log(JSON.stringify(row));
+	// 		// 		client.end();
+	// 		// 		});
+	// 	});
+	// },
 };
 
 function createdb() {

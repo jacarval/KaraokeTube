@@ -24026,7 +24026,7 @@ var MediaList = React.createClass({
 			return React.createElement(
 				"div",
 				{ className: "media", key: id },
-				React.createElement(ListItem, { id: id, video: videos[id], handleToggle: self.toggleContext }),
+				React.createElement(ListItem, { showContext: self.props.showContext, id: id, video: videos[id], handleToggle: self.toggleContext }),
 				React.createElement(ContextMenu, { id: id, video: videos[id], open: openStatus, onClick: self.props.onClick })
 			);
 		});
@@ -24035,7 +24035,9 @@ var MediaList = React.createClass({
 	},
 
 	toggleContext: function toggleContext(id) {
-		if (this.state.openItemId === id) {
+		if (this.props.showContext === false) {
+			this.setState({ openItemId: -1 });
+		} else if (this.state.openItemId === id) {
 			this.setState({ openItemId: -1 });
 		} else {
 			this.setState({ openItemId: id });
@@ -24055,8 +24057,10 @@ var ListItem = React.createClass({
 	displayName: "ListItem",
 
 	toggleContext: function toggleContext() {
-		var id = this.props.id;
-		this.props.handleToggle(id);
+		if (this.props.showContext) {
+			var id = this.props.id;
+			this.props.handleToggle(id);
+		}
 	},
 
 	render: function render() {
@@ -24488,9 +24492,9 @@ var Application = React.createClass({
 	componentDidMount: function componentDidMount() {
 		var self = this;
 
+		socket.emit("client:getState");
+
 		socket.on("server:playlist:initialize", function (video) {
-			console.log('event');
-			console.log(video);
 			self.getFlux().actions.addVideo(video);
 		});
 
@@ -24528,7 +24532,11 @@ var Application = React.createClass({
 		var userName = this.state.currentUser;
 
 		this.setState({ searchData: [] });
-		if (!songName || !userName) {
+		if (!songName) {
+			return;
+		}
+		if (!userName) {
+			this.setState({ currentUser: prompt('Enter a name and try again!') });
 			return;
 		}
 		this.getSearchResultsFromYouTube(songName);
@@ -24546,9 +24554,9 @@ var Application = React.createClass({
 
 	toggleContent: function toggleContent() {
 		if (this.state.searchData.length > 0) {
-			return React.createElement(MediaList, { selectedVideos: this.state.searchData, onClick: this.addVideoToQueue });
+			return React.createElement(MediaList, { showContext: true, selectedVideos: this.state.searchData, onClick: this.addVideoToQueue });
 		} else {
-			return React.createElement(MediaList, { selectedVideos: this.state.selectedVideos, onClick: this.playNext });
+			return React.createElement(MediaList, { showContext: false, selectedVideos: this.state.selectedVideos, onClick: this.playNext });
 		}
 	},
 
@@ -24583,8 +24591,6 @@ var VideoStore = Fluxxor.createStore({
 		this.videos = {};
 		this.queueOrder = [];
 		this.bindActions(constants.ADD_VIDEO, this.onAddVideo, constants.REMOVE_VIDEO, this.onRemoveVideo, constants.CLEAR_VIDEOS, this.onClearVideos, constants.SADD_VIDEO, this.onServerAddVideo, constants.SREMOVE_VIDEO, this.onServerRemoveVideo, constants.SCLEAR_VIDEOS, this.onServerClearVideos);
-
-		socket.emit("client:playlist:initialize");
 	},
 
 	onAddVideo: function onAddVideo(payload) {

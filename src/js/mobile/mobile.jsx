@@ -43,9 +43,9 @@ var Application = React.createClass({
 	componentDidMount: function(){
 		var self = this;
 
+		socket.emit("client:getState");
+
 		socket.on("server:playlist:initialize", function(video){
-			console.log('event')
-			console.log(video);
 			self.getFlux().actions.addVideo(video);
 		});
 
@@ -84,7 +84,11 @@ var Application = React.createClass({
 		var userName = this.state.currentUser;
 
 		this.setState({searchData: []});
-		if (!songName || !userName) {
+		if (!songName) {
+			return;
+		}
+		if (!userName) {
+			this.setState({currentUser: prompt('Enter a name and try again!')});
 			return;
 		}
 		this.getSearchResultsFromYouTube(songName);
@@ -102,10 +106,10 @@ var Application = React.createClass({
 
 	toggleContent: function() {
 		if (this.state.searchData.length > 0) {
-			return (<MediaList selectedVideos={this.state.searchData} onClick={this.addVideoToQueue}/>);
+			return (<MediaList showContext={true} selectedVideos={this.state.searchData} onClick={this.addVideoToQueue}/>);
 		}
 		else {
-			return (<MediaList selectedVideos={this.state.selectedVideos} onClick={this.playNext}/>);
+			return (<MediaList showContext={false} selectedVideos={this.state.selectedVideos} onClick={this.playNext}/>);
 		}
 	},
 

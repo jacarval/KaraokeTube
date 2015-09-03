@@ -14,7 +14,7 @@ var MediaList = React.createClass({
 			var openStatus = (id === self.state.openItemId);
 			return (
 				<div className="media" key={id}>
-					<ListItem id={id} video={videos[id]} handleToggle={self.toggleContext} />
+					<ListItem showContext={self.props.showContext} id={id} video={videos[id]} handleToggle={self.toggleContext} />
 					<ContextMenu id={id} video={videos[id]} open={openStatus} onClick={self.props.onClick} />
 				</div>
 			);
@@ -24,7 +24,10 @@ var MediaList = React.createClass({
 	},
 
 	toggleContext: function(id){
-		if(this.state.openItemId === id){
+		if (this.props.showContext === false){
+			this.setState({openItemId: -1});
+		}
+		else if(this.state.openItemId === id){
 			this.setState({openItemId: -1});
 		} 
 		else {
@@ -43,8 +46,10 @@ var MediaList = React.createClass({
 
 var ListItem = React.createClass({
 	toggleContext: function() {
-		var id = this.props.id;
-		this.props.handleToggle(id);
+		if (this.props.showContext) {
+			var id = this.props.id;
+			this.props.handleToggle(id);
+		}
 	},
 
 	render: function() {
