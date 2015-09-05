@@ -1,4 +1,8 @@
 var React = require("react");
+var Sortable = require("react-sortable");
+
+var createHandler = require("../../resources/misc.js").createClickHandler;
+
 
 var VideoList = React.createClass({
 	createRemoveClickHandler: function(id) {
@@ -20,15 +24,14 @@ var VideoList = React.createClass({
 		var self = this;
 		var dataNodes = Object.keys(videos).map(function(storeId) {
 			return(
-				<li key={storeId} className="list-group-item">
-					{'['+videos[storeId].selectedBy+'] - '+videos[storeId].title}
-					<span href="#" className="badge" onClick={self.createRemoveClickHandler(videos[storeId])}>
-						<span className="glyphicon glyphicon-remove"></span>
-					</span>
-					<span href="#" className="badge" onClick={self.createPlayClickHandler(videos[storeId])}>
-						<span className="glyphicon glyphicon-play"></span>
-					</span>
-				</li>
+				<ListItem 
+					key={storeId}
+					selectedBy={videos[storeId].selectedBy}
+					title={videos[storeId].title}
+					onRemoveClick={self.props.onRemoveClick}
+					onPlayClick={self.props.onPlayClick}
+					video={videos[storeId]}
+				/>
 			);
 		});
 		return (
@@ -39,6 +42,23 @@ var VideoList = React.createClass({
 			</div>
 		);
 	}
+});
+
+var ListItem = React.createClass({
+	render: function() {
+		return (
+			<li key={this.props.key} className="list-group-item" draggable="true">
+				{'['+this.props.selectedBy+'] - '+this.props.title}
+				<span href="#" className="badge" onClick={createHandler(this.props.video, this.props.onRemoveClick)}>
+					<span className="glyphicon glyphicon-remove"></span>
+				</span>
+				<span href="#" className="badge" onClick={createHandler(this.props.video, this.props.onPlayClick)}>
+					<span className="glyphicon glyphicon-play"></span>
+				</span>
+			</li>
+		);
+	}
+
 });
 
 module.exports = VideoList;

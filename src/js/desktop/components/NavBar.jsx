@@ -13,6 +13,8 @@ var NavBar = React.createClass({
 		        <div id="navbar" className="collapse navbar-collapse">
 				  <ul className="nav navbar-nav">
 				  	<li className={this.props.isVideoPlayerActive ? "active" : ""} onClick={this.props.toggleVideoPlayer}><a href="#">VideoPlayer</a></li>
+				  	<li><a href="https://github.com/jacarval/karaoke-tube">GitHub</a></li>
+				  	<li><a href="https://github.com/jacarval/karaoke-tube/issues">Issues</a></li>
 				  	<VideoListDropDown 
 			          	toggleVideoPlayer = {this.props.toggleVideoPlayer}
 			          	onEmptyTheQueueClick = {this.props.onEmptyTheQueueClick}
