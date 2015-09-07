@@ -48,7 +48,7 @@ desktop.on('connection', function(socket) {
 	});
 
 	socket.on('state:update', function(state){
-		db.addQueue(state.currentVideo, state.selectedVideos);
+		db.updateQueueById(1, state.currentVideo, state.selectedVideos);
 		mobile.emit('state:update', state);
 	});
 
