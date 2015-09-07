@@ -10,8 +10,8 @@ module.exports = {
 		querydb("SELECT * FROM queues", null, callback);
 	},
 
-	addQueue: function(queue) {
-		querydb("INSERT INTO queues (queue) VALUES($1)", [JSON.stringify(queue)]);
+	addQueue: function(current, queue) {
+		querydb("INSERT INTO queues (current, queue) VALUES($1, $2)", [JSON.stringify(current), JSON.stringify(queue)]);
 	},
 
 	getQueueById: function(id, callback) {
@@ -22,8 +22,8 @@ module.exports = {
 		querydb("DELETE FROM queues WHERE id=$1", [id]);
 	},
 
-	updateQueueById: function(id, queue) {
-		querydb("UPDATE queues SET queue=$2 WHERE id=$1", [id, JSON.stringify(queue)]);
+	updateQueueById: function(id, current, queue) {
+		querydb("UPDATE queues SET current=$2,queue=$3 WHERE id=$1", [id, JSON.stringify(current), JSON.stringify(queue)]);
 	},
 
 };

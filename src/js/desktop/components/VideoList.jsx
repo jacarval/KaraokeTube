@@ -22,22 +22,24 @@ var VideoList = React.createClass({
 	render: function() {
 		var videos = this.props.selectedVideos;
 		var self = this;
-		var dataNodes = Object.keys(videos).map(function(storeId) {
-			return(
+		var nodes = []; 
+		videos.forEach(function(video, index) {
+			nodes.push(
 				<ListItem 
-					key={storeId}
-					selectedBy={videos[storeId].selectedBy}
-					title={videos[storeId].title}
+					key={index}
+					index={index}
+					selectedBy={video.selectedBy}
+					title={video.title}
 					onRemoveClick={self.props.onRemoveClick}
 					onPlayClick={self.props.onPlayClick}
-					video={videos[storeId]}
+					video={video}
 				/>
 			);
 		});
 		return (
 			<div className="video-queue-list">
 				<ul className="list-group">
-					{dataNodes}
+					{nodes}
 				</ul>
 			</div>
 		);
@@ -47,12 +49,12 @@ var VideoList = React.createClass({
 var ListItem = React.createClass({
 	render: function() {
 		return (
-			<li key={this.props.key} className="list-group-item" draggable="true">
+			<li className="list-group-item" draggable="true">
 				{'['+this.props.selectedBy+'] - '+this.props.title}
-				<span href="#" className="badge" onClick={createHandler(this.props.video, this.props.onRemoveClick)}>
+				<span href="#" className="badge" onClick={createHandler(this.props.index, this.props.onRemoveClick)}>
 					<span className="glyphicon glyphicon-remove"></span>
 				</span>
-				<span href="#" className="badge" onClick={createHandler(this.props.video, this.props.onPlayClick)}>
+				<span href="#" className="badge" onClick={createHandler(this.props.index, this.props.onPlayClick)}>
 					<span className="glyphicon glyphicon-play"></span>
 				</span>
 			</li>

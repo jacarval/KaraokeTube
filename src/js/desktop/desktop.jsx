@@ -1,11 +1,27 @@
 /*jshint esnext: true */
 var React = require("react");
-var requestSearchResults = require("../resources/misc.js").requestSearchResults;
-var socket = io(window.location.host + '/desktop');
-var flux = require("Fluxxor");
+var Fluxxor = require("Fluxxor");
+var VideoStore = require("./store");
 
+var requestSearchResults = require("../resources/misc").requestSearchResults;
+
+var socket = io(window.location.host + '/desktop');
+var stores = {VideoStore: new VideoStore()};
+var actions = require("./actions");
+var flux = new Fluxxor.Flux(stores, actions);
 
 window.React = React;
+window.socket = socket;
+window.flux = flux;
+
+flux.on("dispatch", function(type, payload) {
+  if (console && console.log) {
+    console.log("[Dispatch]", type, payload);
+  }
+});
+
+var FluxMixin = Fluxxor.FluxMixin(React),
+    StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
 /*
 	React Components
@@ -16,8 +32,16 @@ var Footer = require('./components/Footer.jsx');
 
 var Application = React.createClass({
 
+	mixins: [FluxMixin, StoreWatchMixin("VideoStore")],
+
 	getInitialState: function() {
-		return {showVideo: false, currentUser: '', searchData: [], currentVideo: {}, selectedVideos: []};
+		return {showVideo: false, currentUser: '', searchData: []};
+	},
+
+	getStateFromFlux: function() {
+		var flux = this.getFlux();
+
+		return flux.store("VideoStore").getState();
 	},
 
 	getSearchResultsFromYouTube: function(querystring) {
@@ -36,15 +60,12 @@ var Application = React.createClass({
 
 		socket.emit('ready');
 
-		socket.on('queue:add', function(video) {
-			var videos = self.state.selectedVideos
-			videos.push(video);
-			
-			socket.emit('queue:add', video);
+		socket.on('state:initialize', function(state) {
+			self.setState({currentVideo: state.currentVideo, selectedVideos: state.selectedVideos});
 		});
 
-		socket.on('state:update', function(state) {
-			self.setState({currentVideo: state.currentVideo, selectedVideos: state.selectedVideos});
+		socket.on('queue:add', function(video) {
+			self.getFlux().actions.addVideo(video);
 		});
 	},
 
@@ -59,30 +80,23 @@ var Application = React.createClass({
 
 	addVideoToQueue: function(video) {
 		video.selectedBy = this.state.currentUser;
-		
-		socket.emit('queue:add', video);
-
-		this.setState({searchData: []});
+		this.getFlux().actions.addVideo(video);
 	},
 
-	removeVideoFromQueue: function(video) {
-		socket.emit('queue:remove', video);
+	removeVideoFromQueue: function(index) {
+		this.getFlux().actions.removeVideo(index);
 	},
 
-	playVideoAndRemoveFromQueue: function(video) {
-		socket.emit('video:play&remove', video);
+	playVideoAndRemoveFromQueue: function(index) {
+		this.getFlux().actions.playVideoByIndex(index);
 	},
 
 	playNextVideo: function() {
-		var videos = this.state.selectedVideos
-		console.log(videos);
-		if (videos.length > 0) {
-			this.playVideoAndRemoveFromQueue(videos[0]);
-		}
+		this.getFlux().actions.playNextVideo(index);
 	},
 
 	emptyQueue: function() {
-		socket.emit('queue:empty');
+		this.getFlux().actions.clearVideos(index);
 	},
 
 	toggleVideoPlayer: function() {
@@ -126,7 +140,7 @@ var Application = React.createClass({
 	}
 });
 
-React.render( <Application /> , document.body);
+React.render( <Application flux={flux} /> , document.body);
 
 
 

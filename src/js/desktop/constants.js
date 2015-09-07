@@ -1,0 +1,9 @@
+var constants = {
+	ADD_VIDEO: "ADD_VIDEO",
+	REMOVE_VIDEO: "REMOVE_VIDEO",
+	CLEAR_VIDEOS: "CLEAR_VIDEOS",
+	PLAY_VIDEO_ID: "PLAY_VIDEO_ID",
+	PLAY_NEXT: "PLAY_NEXT"
+};
+
+module.exports = constants;
