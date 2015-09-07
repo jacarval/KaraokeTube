@@ -1,10 +1,9 @@
 /*jshint esnext: true */
 var React = require("react");
-var Fluxxor = require("fluxxor");
-var VideoStore = require("./store.js");
-var actions = require("./actions.js");
 var requestSearchResults = require("../resources/misc.js").requestSearchResults;
-var socket = io();
+var socket = io(window.location.host + '/desktop');
+
+window.React = React;
 
 /*
 	React Components
@@ -13,75 +12,10 @@ var NavBar = require('./components/NavBar.jsx');
 var Content = require('./components/Content.jsx');
 var Footer = require('./components/Footer.jsx');
 
-window.socket = socket;
-
-window.React = React;
-
-var stores = {VideoStore: new VideoStore()};
-
-var flux = new Fluxxor.Flux(stores, actions);
-
-window.flux = flux;
-
-flux.on("dispatch", function(type, payload) {
-  if (console && console.log) {
-    console.log("[Dispatch]", type, payload);
-  }
-});
-
-var FluxMixin = Fluxxor.FluxMixin(React);
-var StoreWatchMixin = Fluxxor.StoreWatchMixin;
-
 var Application = React.createClass({
 
-	mixins: [FluxMixin, StoreWatchMixin("VideoStore")],
-
-	tempVideoFix: {}, 
-
-	componentDidMount: function(){
-		var self = this;
-
-		socket.emit("client:getState");
-
-		socket.on("server:playlist:initialize", function(video){
-			self.tempVideoFix[video.videoId] = true;
-			self.getFlux().actions.addVideo(video);
-		});
-
-		socket.on("server:playlist:add", function(video){
-			self.getFlux().actions.addVideo(video);
-		});
-
-		socket.on("server:playlist:remove", function(video){
-			self.tempVideoFix[video.videoId] = false;
-			self.getFlux().actions.removeVideo(video);
-		});
-
-		socket.on("server:playlist:clear", function(){
-			self.getFlux().actions.clearVideos();
-		});
-
-		socket.on("server:currentvideo:update", function(video){
-			self.setState({currentVideo: video});
-		});
-	},
-
-	handleSearchSubmit: function(songName, userName) {
-		this.setState({searchData: []});
-		if (!songName || !userName) {
-			return;
-		}
-		this.getSearchResultsFromYouTube(songName);
-		this.setState({currentUser: userName});
-	},
-
 	getInitialState: function() {
-		return {showVideo: false, currentUser: '', searchData: [], currentVideo: {selectedBy: "Rick", title: "Never Gonna Give You Up", videoId: "dQw4w9WgXcQ"}};
-	},
-
-	getStateFromFlux: function() {
-		var flux = this.getFlux();
-		return flux.store("VideoStore").getState();
+		return {showVideo: false, currentUser: '', searchData: [], currentVideo: {}, selectedVideos: []};
 	},
 
 	getSearchResultsFromYouTube: function(querystring) {
@@ -95,46 +29,58 @@ var Application = React.createClass({
 		});
 	},
 
-	addVideoToQueue: function(videoObject) {
-		if (this.tempVideoFix[videoObject.videoId]) {
-			alert("This video is already queued.");
+	componentDidMount: function(){
+		var self = this;
+
+		socket.emit('ready');
+
+		socket.on('queue:add', function(video) {
+			var videos = self.state.selectedVideos
+			videos.push(video);
+			
+			socket.emit('queue:add', video);
+		});
+
+		socket.on('state:update', function(state) {
+			self.setState({currentVideo: state.currentVideo, selectedVideos: state.selectedVideos});
+		});
+	},
+
+	handleSearchSubmit: function(songName, userName) {
+		this.setState({searchData: []});
+		if (!songName || !userName) {
 			return;
 		}
-		else {
-			this.tempVideoFix[videoObject.videoId] = true;
-			videoObject.selectedBy = this.state.currentUser;
-			this.getFlux().actions.sAddVideo(videoObject);
-			this.setState({searchData: []});
-		}
+		this.getSearchResultsFromYouTube(songName);
+		this.setState({currentUser: userName});
 	},
 
-	playVideo: function(videoObject) {
-		this.setState({showVideo: true});
-		this.setState({currentVideo: videoObject});
+	addVideoToQueue: function(video) {
+		video.selectedBy = this.state.currentUser;
+		
+		socket.emit('queue:add', video);
+
 		this.setState({searchData: []});
-		socket.emit('client:currentvideo:update', videoObject);
 	},
 
-	removeVideoFromQueue: function(videoObject) {
-		this.tempVideoFix[videoObject.videoId] = false;
-		this.getFlux().actions.sRemoveVideo(videoObject);
+	removeVideoFromQueue: function(video) {
+		socket.emit('queue:remove', video);
 	},
 
-	playVideoAndRemoveFromQueue: function(videoObject) {
-		this.playVideo(videoObject);
-		this.removeVideoFromQueue(videoObject);
+	playVideoAndRemoveFromQueue: function(video) {
+		socket.emit('video:play&remove', video);
 	},
 
 	playNextVideo: function() {
-		var videos = this.getStateFromFlux().selectedVideos;
-		var keys = Object.keys(videos);
-		if (keys.length > 0) {
-			this.playVideoAndRemoveFromQueue(videos[keys[0]]);
+		var videos = this.state.selectedVideos
+		console.log(videos);
+		if (videos.length > 0) {
+			this.playVideoAndRemoveFromQueue(videos[0]);
 		}
 	},
 
 	emptyQueue: function() {
-		this.getFlux().actions.sClearVideos();
+		socket.emit('queue:empty');
 	},
 
 	toggleVideoPlayer: function() {
@@ -178,7 +124,7 @@ var Application = React.createClass({
 	}
 });
 
-React.render( <Application flux={flux} /> , document.body);
+React.render( <Application /> , document.body);
 
 
 

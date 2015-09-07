@@ -2,22 +2,28 @@ var pg = require('pg');
 
 var DATABASE_URL = process.env.VIDEOS_DB_URL;
 
+createdb();
+
 module.exports = {
 
-	getVideosFromDB: function(callback) {
-		querydb("SELECT * FROM videos", null, callback);
+	getAllQueues: function(callback) {
+		querydb("SELECT * FROM queues", null, callback);
 	},
 
-	addVideoToDB: function(dataArray) {
-		querydb("INSERT INTO videos (videoId, title, thumbUrl, selectedBy) VALUES($1, $2, $3, $4)", dataArray);
+	addQueue: function(queue) {
+		querydb("INSERT INTO queues (queue) VALUES($1)", [JSON.stringify(queue)]);
 	},
 
-	removeVideoFromDB: function(videoId) {
-		querydb("DELETE FROM videos WHERE videoId=$1", [videoId]);
+	getQueueById: function(id, callback) {
+		querydb("SELECT * FROM queues WHERE id=$1", [id], callback);
 	},
 
-	clearVideosFromDB: function(videoId) {
-		querydb("DELETE FROM videos");
+	removeQueueById: function(id) {
+		querydb("DELETE FROM queues WHERE id=$1", [id]);
+	},
+
+	updateQueueById: function(id, queue) {
+		querydb("UPDATE queues SET queue=$2 WHERE id=$1", [id, JSON.stringify(queue)]);
 	},
 
 };
@@ -27,8 +33,7 @@ function createdb() {
 
 			if (err) throw err;
 
-			client.query("CREATE TABLE IF NOT EXISTS videos(storeId serial PRIMARY KEY, videoId VARCHAR(15), title VARCHAR(100), thumbUrl VARCHAR(100), selectedBy VARCHAR(15))");
-			client.query("CREATE TABLE IF NOT EXISTS queues(queueid serial PRIMARY KEY, queue VARCHAR(15) ARRAY)");
+			client.query("CREATE TABLE IF NOT EXISTS queues(id serial PRIMARY KEY, queue text)");
 
 		});
 	} 

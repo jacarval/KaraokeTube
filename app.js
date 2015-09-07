@@ -1,7 +1,6 @@
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
-var Flux = require('fluxxor');
 var io = require('socket.io')(http);
 var db = require('./db');
 
@@ -17,43 +16,59 @@ app.get('*', function(req, res){
 var desktop = io.of('/desktop');
 var mobile = io.of('/mobile');
 
-io.on('connection', function(socket){
+var state = {selectedVideos: [], currentVideo: {selectedBy: "Rick", title: "Never Gonna Give You Up", videoId: "dQw4w9WgXcQ"}};
 
-	socket.on("client:getState", function(){
+mobile.on('connection', function(socket) {
 
-		db.getVideosFromDB(function(payload) {
-			console.log('loadingallvids!');
-			// lower cases db column names fix
-			payload.selectedBy = payload.selectedby;
-			payload.thumbnailUrl = payload.thumburl;
+	console.log('mobile connect')
 
-			socket.emit("server:playlist:initialize", payload);
+	socket.on('ready', function() {
+		socket.emit('state:update', state);
+	});
+
+	socket.on('queue:add', function(video) {
+		desktop.emit('queue:add', state);
+	}); 
+});
+
+desktop.on('connection', function(socket) {
+
+	console.log('desktop connect')
+
+	socket.on('ready', function() {
+		db.getQueueById(1, function(row) {
+			state.selectedVideos = JSON.parse(row.queue);
+			socket.emit('state:update', state);
 		});
 	});
 
-
-	socket.on("client:playlist:add", function(video) {
-		db.addVideoToDB([video.videoId, video.title, video.thumbnailUrl, video.selectedBy]);
-		socket.broadcast.emit("server:playlist:add", video);
+	socket.on('queue:add', function(video) {
+		state.selectedVideos.push(video);
+		mobile.emit('state:update', state);
 	});
 
-
-	socket.on("client:playlist:remove", function(video) {		
-		db.removeVideoFromDB(video.videoId);
-		socket.broadcast.emit("server:playlist:remove", video);
+	socket.on('queue:remove', function(video) {
+		var videos = state.selectedVideos;
+		var position = videos.indexOf(videos.filter(function (val) {
+		      return val.videoId === video.videoId;
+		})[0]);
+		state.selectedVideos.splice(state.selectedVideos.indexOf(position, 1));
+		mobile.emit('state:update', state);
 	});
 
-
-	socket.on("client:playlist:clear", function() {
-		db.clearVideosFromDB();
-		socket.broadcast.emit("server:playlist:clear");		
+	socket.on('queue:empty', function() {
+		state.selectedVideos = {};
+		mobile.emit('state:update', state);
 	});
 
-
-	socket.on("client:currentvideo:update", function(video) {
-		socket.broadcast.emit("server:currentvideo:update", video);
+	socket.on('video:play&remove', function(video) {
+		var videos = state.selectedVideos;
+		var position = videos.indexOf(videos.filter(function (val) {
+		      return val.videoId === video.videoId;
+		})[0]);
+		state.selectedVideos.splice(state.selectedVideos.indexOf(position, 1));
+		mobile.emit('state:update', state);
 	});
-	
 });
 
 http.listen(process.env.PORT || 3000, function(){
