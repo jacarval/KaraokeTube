@@ -61,7 +61,7 @@ var Application = React.createClass({
 		socket.emit('ready');
 
 		socket.on('state:initialize', function(state) {
-			self.setState({currentVideo: state.currentVideo, selectedVideos: state.selectedVideos});
+			self.getFlux().actions.hydrate(state.currentVideo, selectedVideos: state.selectedVideos);
 		});
 
 		socket.on('queue:add', function(video) {

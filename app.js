@@ -21,6 +21,7 @@ mobile.on('connection', function(socket) {
 	console.log('mobile connect');
 
 	socket.on('ready', function() {
+		console.log('mobile ready');
 		db.getQueueById(1, function(row) {
 			var state = {};
 			state.selectedVideos = JSON.parse(row.queue);

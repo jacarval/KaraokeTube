@@ -25552,7 +25552,11 @@ var VideoStore = Fluxxor.createStore({
 			selectedBy: payload.selectedBy
 		};
 
+		console.log(this.selectedVideos);
+
 		this.selectedVideos.push(video);
+
+		console.log(this.selectedVideos);
 
 		this._emitChange();
 	},
@@ -25585,12 +25589,22 @@ var VideoStore = Fluxxor.createStore({
 	onPlayNextVideo: function onPlayNextVideo() {
 		console.log("play next video");
 
+		this.currentVideo = this.selectedVideos[0];
+		this.selectedVideos.splice(0, 1);
+
 		this._emitChange();
 	},
 
 	getState: function getState() {
 
 		return { selectedVideos: this.selectedVideos, currentVideo: this.currentVideo };
+	},
+
+	setState: function setState(current, selected) {
+		this.currentVideo = current;
+		this.selectedVideos = selected;
+
+		this._emitChange();
 	},
 
 	_nextStoreId: function _nextStoreId() {

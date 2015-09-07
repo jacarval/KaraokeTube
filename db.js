@@ -15,6 +15,7 @@ module.exports = {
 	},
 
 	getQueueById: function(id, callback) {
+		console.log('queue request by id');
 		querydb("SELECT * FROM queues WHERE id=$1", [id], callback);
 	},
 
@@ -23,6 +24,7 @@ module.exports = {
 	},
 
 	updateQueueById: function(id, current, queue) {
+		console.log('queue update by id');
 		querydb("UPDATE queues SET current=$2,queue=$3 WHERE id=$1", [id, JSON.stringify(current), JSON.stringify(queue)]);
 	},
 

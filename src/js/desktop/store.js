@@ -15,7 +15,8 @@ var VideoStore = Fluxxor.createStore({
 			CONSTANTS.REMOVE_VIDEO, this.onRemoveVideo,
 			CONSTANTS.CLEAR_VIDEOS, this.onClearVideos,
 			CONSTANTS.PLAY_VIDEO_ID, this.onPlayVideoByIndex,
-			CONSTANTS.PLAY_NEXT, this.onPlayNextVideo
+			CONSTANTS.PLAY_NEXT, this.onPlayNextVideo,
+			CONSTANTS.HYDRATE, this.hydrate
 		);
 	},
 
@@ -30,7 +31,11 @@ var VideoStore = Fluxxor.createStore({
 				selectedBy: payload.selectedBy
 		};
 
+		console.log(this.selectedVideos);
+
 		this.selectedVideos.push(video);
+
+		console.log(this.selectedVideos);
 
 		this._emitChange();
 	},
@@ -63,12 +68,22 @@ var VideoStore = Fluxxor.createStore({
 	onPlayNextVideo: function() {
 		console.log("play next video");
 
+		this.currentVideo = this.selectedVideos[0];
+		this.selectedVideos.splice(0, 1);
+
 		this._emitChange();
 	},
 
 	getState: function() {
 
 		return {selectedVideos: this.selectedVideos, currentVideo: this.currentVideo};
+	},
+
+	hydrate: function(current, selected) {
+		this.currentVideo = current;
+		this.selectedVideos = selected;
+
+		this.emit("change");
 	},
 
 	_nextStoreId: function() {
