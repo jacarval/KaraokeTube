@@ -33,7 +33,7 @@ function createdb() {
 
 			if (err) throw err;
 
-			client.query("CREATE TABLE IF NOT EXISTS queues(id serial PRIMARY KEY, queue text)");
+			client.query("CREATE TABLE IF NOT EXISTS queues(id serial PRIMARY KEY, current text, queue text)");
 
 		});
 	} 

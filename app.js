@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var db = require('./db');
+// var db = require('./db');
 
 app.use(express.static(__dirname + '/public'));
 
@@ -16,14 +16,15 @@ app.get('*', function(req, res){
 var desktop = io.of('/desktop');
 var mobile = io.of('/mobile');
 
-var state = {selectedVideos: [], currentVideo: {selectedBy: "Rick", title: "Never Gonna Give You Up", videoId: "dQw4w9WgXcQ"}};
-
 mobile.on('connection', function(socket) {
 
-	console.log('mobile connect')
+	console.log('mobile connect');
 
 	socket.on('ready', function() {
-		socket.emit('state:update', state);
+		db.getQueueById(1, function(row) {
+			state.selectedVideos = JSON.parse(row.queue);
+			socket.emit('state:update', state);
+		});
 	});
 
 	socket.on('queue:add', function(video) {

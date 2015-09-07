@@ -2,6 +2,8 @@
 var React = require("react");
 var requestSearchResults = require("../resources/misc.js").requestSearchResults;
 var socket = io(window.location.host + '/desktop');
+var flux = require("Fluxxor");
+
 
 window.React = React;
 
