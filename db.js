@@ -1,6 +1,6 @@
 var pg = require('pg');
 
-var DATABASE_URL = process.env.VIDEOS_DB_URL;
+var DATABASE_URL = 'postgres://rpjskmzejhrsar:JESvp7TQ2DN-jQ6EcHf_bRm4_v@<c2-54-197-253-142.compute-1.amazonaws.com/d165ahdrvdmiq2'
 
 createdb();
 
