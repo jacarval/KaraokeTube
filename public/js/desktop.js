@@ -25447,12 +25447,10 @@ var Application = React.createClass({
 		socket.emit('ready');
 
 		socket.on('state:initialize', function (state) {
-			console.log('iinitializing', state);
 			self.getFlux().actions.hydrate(state);
 		});
 
 		socket.on('queue:add', function (video) {
-			console.log('adding video from mobile', video);
 			self.getFlux().actions.addVideo(video);
 		});
 	},
@@ -25480,7 +25478,7 @@ var Application = React.createClass({
 	},
 
 	playNextVideo: function playNextVideo() {
-		this.getFlux().actions.playNextVideo(index);
+		this.getFlux().actions.playNextVideo();
 	},
 
 	emptyQueue: function emptyQueue() {
@@ -25537,8 +25535,6 @@ React.render(React.createElement(Application, { flux: flux }), document.body);
 var Fluxxor = require("fluxxor");
 var CONSTANTS = require("./constants");
 
-console.log(CONSTANTS);
-
 var VideoStore = Fluxxor.createStore({
 
 	initialize: function initialize() {
@@ -25594,10 +25590,13 @@ var VideoStore = Fluxxor.createStore({
 	onPlayNextVideo: function onPlayNextVideo() {
 		console.log("play next video");
 
-		this.currentVideo = this.selectedVideos[0];
-		this.selectedVideos.splice(0, 1);
+		if (!this.selectedVideos[0]) {
 
-		this._emitChange();
+			this.currentVideo = this.selectedVideos[0];
+			this.selectedVideos.splice(0, 1);
+
+			this._emitChange();
+		}
 	},
 
 	getState: function getState() {

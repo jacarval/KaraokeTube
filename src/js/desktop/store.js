@@ -1,8 +1,6 @@
 var Fluxxor = require("fluxxor");
 var CONSTANTS = require("./constants");
 
-console.log(CONSTANTS);
-
 var VideoStore = Fluxxor.createStore({
 
 	initialize: function() {
@@ -65,10 +63,13 @@ var VideoStore = Fluxxor.createStore({
 	onPlayNextVideo: function() {
 		console.log("play next video");
 
-		this.currentVideo = this.selectedVideos[0];
-		this.selectedVideos.splice(0, 1);
+		if (!this.selectedVideos[0]){
 
-		this._emitChange();
+			this.currentVideo = this.selectedVideos[0];
+			this.selectedVideos.splice(0, 1);
+
+			this._emitChange();
+		}
 	},
 
 	getState: function() {

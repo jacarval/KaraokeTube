@@ -61,12 +61,10 @@ var Application = React.createClass({
 		socket.emit('ready');
 
 		socket.on('state:initialize', function(state) {
-			console.log('iinitializing', state);
 			self.getFlux().actions.hydrate(state);
 		});
 
 		socket.on('queue:add', function(video) {
-			console.log('adding video from mobile', video);
 			self.getFlux().actions.addVideo(video);
 		});
 	},
@@ -94,7 +92,7 @@ var Application = React.createClass({
 	},
 
 	playNextVideo: function() {
-		this.getFlux().actions.playNextVideo(index);
+		this.getFlux().actions.playNextVideo();
 	},
 
 	emptyQueue: function() {

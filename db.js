@@ -43,6 +43,8 @@ function createdb() {
 function querydb(queryString, values, cb) {
 	pg.connect(DATABASE_URL, function(err, client) {
 
+		console.log(process.env.VIDEOS_DB_URL);
+
 		if (err) throw err;
 
 		client	.query(queryString, values)
