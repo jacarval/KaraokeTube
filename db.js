@@ -5,9 +5,7 @@ var DATABASE_URL = process.env.VIDEOS_DB_URL;
 
 query.connectionParameters = DATABASE_URL;
 
-
-
-createdb();
+// createdb();
 
 module.exports = {
 
@@ -16,9 +14,9 @@ module.exports = {
 		query.first("SELECT * FROM queues WHERE id=$1", [id], callback);
 	},
 
-	updateQueueById: function(id, current, queue) {
+	updateQueueById: function(id, current, queue, callback) {
 		console.log('queue update by id');
-		query("UPDATE queues SET current=$2,queue=$3 WHERE id=$1", [id, JSON.stringify(current), JSON.stringify(queue)]);
+		query("UPDATE queues SET current=$2,queue=$3 WHERE id=$1", [id, JSON.stringify(current), JSON.stringify(queue)], callback);
 	},
 
 	// getQueueById: function(id, callback) {

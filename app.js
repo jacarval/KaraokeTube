@@ -24,6 +24,9 @@ mobile.on('connection', function(socket) {
 		console.log('mobile ready');
 		db.getQueueById(1, function(err, row) {
 			console.log(err, row)
+			if (err) {
+				socket.emit('alert', err);
+			}
 			var state = {};
 			state.selectedVideos = JSON.parse(row.queue);
 			state.currentVideo = JSON.parse(row.current);
@@ -42,7 +45,10 @@ desktop.on('connection', function(socket) {
 
 	socket.on('ready', function() {
 		db.getQueueById(1, function(err, row) {
-			console.log(err, row)
+			console.log(err, row);
+			if (err) {
+				socket.emit('alert', err);
+			}
 			var state = {};
 			state.selectedVideos = JSON.parse(row.queue);
 			state.currentVideo = JSON.parse(row.current);
@@ -51,7 +57,13 @@ desktop.on('connection', function(socket) {
 	});
 
 	socket.on('state:update', function(state){
-		db.updateQueueByIdQ(1, state.currentVideo, state.selectedVideos);
+		console.log('updates from desktop')
+		db.updateQueueById(1, state.currentVideo, state.selectedVideos, function(err, row) {
+			console.log(err, row);
+			if (err) {
+				socket.emit('alert', err);
+			}
+		});
 		mobile.emit('state:update', state);
 	});
 
