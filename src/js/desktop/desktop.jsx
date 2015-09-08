@@ -67,6 +67,10 @@ var Application = React.createClass({
 		socket.on('queue:add', function(video) {
 			self.getFlux().actions.addVideo(video);
 		});
+
+		socket.on('alert', function(msg) {
+			alert(msg);
+		});
 	},
 
 	handleSearchSubmit: function(songName, userName) {
