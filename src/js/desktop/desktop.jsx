@@ -61,10 +61,12 @@ var Application = React.createClass({
 		socket.emit('ready');
 
 		socket.on('state:initialize', function(state) {
-			self.getFlux().actions.hydrate(state.currentVideo, selectedVideos: state.selectedVideos);
+			console.log('iinitializing', state);
+			self.getFlux().actions.hydrate(state);
 		});
 
 		socket.on('queue:add', function(video) {
+			console.log('adding video from mobile', video);
 			self.getFlux().actions.addVideo(video);
 		});
 	},

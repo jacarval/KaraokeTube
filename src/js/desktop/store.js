@@ -21,6 +21,7 @@ var VideoStore = Fluxxor.createStore({
 	},
 
 	onAddVideo: function(payload) {
+		console.log('store adding vid', payload)
 
 		var storeId = this._nextStoreId();
 		var video = {
@@ -31,6 +32,7 @@ var VideoStore = Fluxxor.createStore({
 				selectedBy: payload.selectedBy
 		};
 
+		console.log('the store this', this);
 		console.log(this.selectedVideos);
 
 		this.selectedVideos.push(video);
@@ -79,9 +81,10 @@ var VideoStore = Fluxxor.createStore({
 		return {selectedVideos: this.selectedVideos, currentVideo: this.currentVideo};
 	},
 
-	hydrate: function(current, selected) {
-		this.currentVideo = current;
-		this.selectedVideos = selected;
+	hydrate: function(state) {
+		console.log(state.currentVideo, state.selectedVideos);
+		this.currentVideo = state.currentVideo;
+		this.selectedVideos = state.selectedVideos;
 
 		this.emit("change");
 	},

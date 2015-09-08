@@ -23,6 +23,7 @@ var VideoList = React.createClass({
 		var videos = this.props.selectedVideos;
 		var self = this;
 		var nodes = []; 
+		console.log(videos);
 		videos.forEach(function(video, index) {
 			nodes.push(
 				<ListItem 

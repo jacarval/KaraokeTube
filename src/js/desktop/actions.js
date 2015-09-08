@@ -20,10 +20,10 @@ var actions = {
 
   playNextVideo: function() {
     this.dispatch(CONSTANTS.PLAY_NEXT);
-  }
+  },
 
-  hydrate: function() {
-    this.dispatch(CONSTANTS.HYDRATE);
+  hydrate: function(state) {
+    this.dispatch(CONSTANTS.HYDRATE, state);
   }
 };
 
