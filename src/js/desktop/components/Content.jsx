@@ -11,6 +11,7 @@ var Content = React.createClass({
 				<VideoPlayer
 					currentVideo={this.props.currentVideo}
 					onVideoEnd={this.props.onVideoEnd}
+					autoplay={this.props.autoplay}
 				/>
 			);
 		}

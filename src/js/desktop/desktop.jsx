@@ -35,7 +35,7 @@ var Application = React.createClass({
 	mixins: [FluxMixin, StoreWatchMixin("VideoStore")],
 
 	getInitialState: function() {
-		return {showVideo: false, currentUser: '', searchData: []};
+		return {showVideo: false, currentUser: '', searchData: [], autoplay: 0};
 	},
 
 	getStateFromFlux: function() {
@@ -92,6 +92,7 @@ var Application = React.createClass({
 	},
 
 	playVideoAndRemoveFromQueue: function(index) {
+		this.setState({showVideo: true});
 		this.getFlux().actions.playVideoByIndex(index);
 	},
 
@@ -100,7 +101,7 @@ var Application = React.createClass({
 	},
 
 	emptyQueue: function() {
-		this.getFlux().actions.clearVideos(index);
+		this.getFlux().actions.clearVideos();
 	},
 
 	toggleVideoPlayer: function() {
@@ -109,6 +110,15 @@ var Application = React.createClass({
 		}
 		else {
 			this.setState({showVideo: true});
+		}
+	},
+
+	toggleAutoPlay: function() {
+		if (this.state.autoplay) {
+			this.setState({autoplay: 0});
+		}
+		else {
+			this.setState({autoplay: 1});
 		}
 	},
 
@@ -134,6 +144,7 @@ var Application = React.createClass({
 					selectedVideos={this.state.selectedVideos}
 					onPlayClick={this.playVideoAndRemoveFromQueue}
 					onRemoveClick={this.removeVideoFromQueue}
+					autoplay={this.state.autoplay}
 				/>
 				<Footer 
 					selectedVideos={this.state.selectedVideos}

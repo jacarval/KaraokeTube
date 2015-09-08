@@ -25,6 +25,9 @@ var Search = React.createClass({
 								type="text"
 								className="form-control" 
 								autoComplete="off"
+								autoCorret="off"
+								spellCheck="off"
+								autoCapitalize="off"
 								placeholder="KaraokeTube"
 								ref="searchInput"
 							/>

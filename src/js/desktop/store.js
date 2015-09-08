@@ -63,13 +63,10 @@ var VideoStore = Fluxxor.createStore({
 	onPlayNextVideo: function() {
 		console.log("play next video");
 
-		if (!this.selectedVideos[0]){
+		this.currentVideo = this.selectedVideos[0];
+		this.selectedVideos.splice(0, 1);
 
-			this.currentVideo = this.selectedVideos[0];
-			this.selectedVideos.splice(0, 1);
-
-			this._emitChange();
-		}
+		this._emitChange();
 	},
 
 	getState: function() {

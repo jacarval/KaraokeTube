@@ -22,7 +22,7 @@ var SearchBox = React.createClass({
 
 	render: function() {
 		return (
-			<form id="send" className="navbar-form" role ="search" onSubmit={this.handleSubmit}>
+			<form id="send" className="navbar-form navbar-left" role ="search" onSubmit={this.handleSubmit}>
 				<div className="form-group">
 					<div className="input-group">
 						<span className="input-group-addon">
@@ -59,5 +59,12 @@ var SearchBox = React.createClass({
 		);
 	}
 });
+
+					// <div className="checkbox navbar-btn">
+					// 	<label ClassName="navbar-link" for="filterUnfulfilled">
+					// 		<input type="checkbox" ClassName="autosubmit" id="filterUnfulfilled" value="true"/>
+					// 		<span className="text-muted"> + lyrics </span>
+					// 	</label>
+					// </div>
 
 module.exports = SearchBox;

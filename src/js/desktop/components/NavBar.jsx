@@ -13,19 +13,19 @@ var NavBar = React.createClass({
 		        <div id="navbar" className="collapse navbar-collapse">
 				  <ul className="nav navbar-nav">
 				  	<li className={this.props.isVideoPlayerActive ? "active" : ""} onClick={this.props.toggleVideoPlayer}><a href="#">VideoPlayer</a></li>
-				  	<li><a href="https://github.com/jacarval/karaoke-tube">GitHub</a></li>
-				  	<li><a href="https://github.com/jacarval/karaoke-tube/issues">Issues</a></li>
 				  	<VideoListDropDown 
 			          	toggleVideoPlayer = {this.props.toggleVideoPlayer}
 			          	onEmptyTheQueueClick = {this.props.onEmptyTheQueueClick}
 			          	onQueuedVideoPlay = {this.props.onQueuedVideoPlay}
 			          	selectedVideos = {this.props.selectedVideos}
 		          	/>
+		          	
 				  </ul>
 		          <SearchBox 
 		          	onSubmit={this.props.onSearchSubmit}
 		          	onInput={this.props.onSearchInput}
 		          />
+		          <GitHubDropDown />		         
 		          <SearchResults
 					data={this.props.searchData}
 					onQueueClick={this.props.onSearchResultClick}
@@ -84,6 +84,26 @@ var VideoListDropDown = React.createClass({
 		        {this.renderVideoList()}
 		      </ul>
 		    </li>
+		);
+	}
+});
+
+var GitHubDropDown = React.createClass({
+	render: function() {
+		return(
+			<ul className="nav navbar-nav navbar-right">
+				<li className="dropdown">
+			      <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+			      	<span className="glyphicon glyphicon-console"></span>
+			      	<span className="caret"></span>
+			      </a>
+			      <ul className="dropdown-menu">
+			      	<li className="dropdown-header">GitHub Links</li>
+			        <li><a href="https://github.com/jacarval/karaoke-tube">Code Repository</a></li>
+					<li><a href="https://github.com/jacarval/karaoke-tube/issues">View/Report Issues</a></li>
+			      </ul>
+			    </li>
+		    </ul>
 		);
 	}
 });

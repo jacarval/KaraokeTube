@@ -24812,7 +24812,8 @@ var Content = React.createClass({
 		if (this.props.showVideo) {
 			return React.createElement(VideoPlayer, {
 				currentVideo: this.props.currentVideo,
-				onVideoEnd: this.props.onVideoEnd
+				onVideoEnd: this.props.onVideoEnd,
+				autoplay: this.props.autoplay
 			});
 		} else if (Object.keys(this.props.selectedVideos).length) {
 			return React.createElement(VideoList, {
@@ -24964,24 +24965,6 @@ var NavBar = React.createClass({
 								'VideoPlayer'
 							)
 						),
-						React.createElement(
-							'li',
-							null,
-							React.createElement(
-								'a',
-								{ href: 'https://github.com/jacarval/karaoke-tube' },
-								'GitHub'
-							)
-						),
-						React.createElement(
-							'li',
-							null,
-							React.createElement(
-								'a',
-								{ href: 'https://github.com/jacarval/karaoke-tube/issues' },
-								'Issues'
-							)
-						),
 						React.createElement(VideoListDropDown, {
 							toggleVideoPlayer: this.props.toggleVideoPlayer,
 							onEmptyTheQueueClick: this.props.onEmptyTheQueueClick,
@@ -24993,6 +24976,7 @@ var NavBar = React.createClass({
 						onSubmit: this.props.onSearchSubmit,
 						onInput: this.props.onSearchInput
 					}),
+					React.createElement(GitHubDropDown, null),
 					React.createElement(SearchResults, {
 						data: this.props.searchData,
 						onQueueClick: this.props.onSearchResultClick,
@@ -25086,6 +25070,54 @@ var VideoListDropDown = React.createClass({
 	}
 });
 
+var GitHubDropDown = React.createClass({
+	displayName: 'GitHubDropDown',
+
+	render: function render() {
+		return React.createElement(
+			'ul',
+			{ className: 'nav navbar-nav navbar-right' },
+			React.createElement(
+				'li',
+				{ className: 'dropdown' },
+				React.createElement(
+					'a',
+					{ href: '#', className: 'dropdown-toggle', 'data-toggle': 'dropdown', role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false' },
+					React.createElement('span', { className: 'glyphicon glyphicon-console' }),
+					React.createElement('span', { className: 'caret' })
+				),
+				React.createElement(
+					'ul',
+					{ className: 'dropdown-menu' },
+					React.createElement(
+						'li',
+						{ className: 'dropdown-header' },
+						'GitHub Links'
+					),
+					React.createElement(
+						'li',
+						null,
+						React.createElement(
+							'a',
+							{ href: 'https://github.com/jacarval/karaoke-tube' },
+							'Code Repository'
+						)
+					),
+					React.createElement(
+						'li',
+						null,
+						React.createElement(
+							'a',
+							{ href: 'https://github.com/jacarval/karaoke-tube/issues' },
+							'View/Report Issues'
+						)
+					)
+				)
+			)
+		);
+	}
+});
+
 module.exports = NavBar;
 /*<!--/.nav-collapse -->*/
 
@@ -25117,7 +25149,7 @@ var SearchBox = React.createClass({
 	render: function render() {
 		return React.createElement(
 			'form',
-			{ id: 'send', className: 'navbar-form', role: 'search', onSubmit: this.handleSubmit },
+			{ id: 'send', className: 'navbar-form navbar-left', role: 'search', onSubmit: this.handleSubmit },
 			React.createElement(
 				'div',
 				{ className: 'form-group' },
@@ -25167,6 +25199,13 @@ var SearchBox = React.createClass({
 		);
 	}
 });
+
+// <div className="checkbox navbar-btn">
+// 	<label ClassName="navbar-link" for="filterUnfulfilled">
+// 		<input type="checkbox" ClassName="autosubmit" id="filterUnfulfilled" value="true"/>
+// 		<span className="text-muted"> + lyrics </span>
+// 	</label>
+// </div>
 
 module.exports = SearchBox;
 
@@ -25323,19 +25362,13 @@ var YouTube = require("react-youtube");
 var VideoPlayer = React.createClass({
 	displayName: "VideoPlayer",
 
-	opts: {
-		playerVars: {
-			autoplay: 1
-		}
-	},
-
 	render: function render() {
 		return React.createElement(
 			"div",
 			{ className: "embed-responsive embed-responsive-16by9" },
 			React.createElement(YouTube, {
-				url: "https://www.youtube.com/watch?v=" + this.props.currentVideo.videoId,
-				opts: this.opts,
+				url: "https://www.youtube.com/watch?v=" + (this.props.currentVideo.videoId || 'dQw4w9WgXcQ'),
+				opts: { playerVars: { autoplay: this.props.autoplay } },
 				onEnd: this.props.onVideoEnd
 			})
 		);
@@ -25399,7 +25432,7 @@ var Application = React.createClass({
 	mixins: [FluxMixin, StoreWatchMixin("VideoStore")],
 
 	getInitialState: function getInitialState() {
-		return { showVideo: false, currentUser: '', searchData: [] };
+		return { showVideo: false, currentUser: '', searchData: [], autoplay: 0 };
 	},
 
 	getStateFromFlux: function getStateFromFlux() {
@@ -25478,6 +25511,7 @@ var Application = React.createClass({
 	},
 
 	playVideoAndRemoveFromQueue: function playVideoAndRemoveFromQueue(index) {
+		this.setState({ showVideo: true });
 		this.getFlux().actions.playVideoByIndex(index);
 	},
 
@@ -25486,7 +25520,7 @@ var Application = React.createClass({
 	},
 
 	emptyQueue: function emptyQueue() {
-		this.getFlux().actions.clearVideos(index);
+		this.getFlux().actions.clearVideos();
 	},
 
 	toggleVideoPlayer: function toggleVideoPlayer() {
@@ -25494,6 +25528,14 @@ var Application = React.createClass({
 			this.setState({ showVideo: false });
 		} else {
 			this.setState({ showVideo: true });
+		}
+	},
+
+	toggleAutoPlay: function toggleAutoPlay() {
+		if (this.state.autoplay) {
+			this.setState({ autoplay: 0 });
+		} else {
+			this.setState({ autoplay: 1 });
 		}
 	},
 
@@ -25521,7 +25563,8 @@ var Application = React.createClass({
 				showVideo: this.state.showVideo,
 				selectedVideos: this.state.selectedVideos,
 				onPlayClick: this.playVideoAndRemoveFromQueue,
-				onRemoveClick: this.removeVideoFromQueue
+				onRemoveClick: this.removeVideoFromQueue,
+				autoplay: this.state.autoplay
 			}),
 			React.createElement(Footer, {
 				selectedVideos: this.state.selectedVideos,
@@ -25594,13 +25637,10 @@ var VideoStore = Fluxxor.createStore({
 	onPlayNextVideo: function onPlayNextVideo() {
 		console.log("play next video");
 
-		if (!this.selectedVideos[0]) {
+		this.currentVideo = this.selectedVideos[0];
+		this.selectedVideos.splice(0, 1);
 
-			this.currentVideo = this.selectedVideos[0];
-			this.selectedVideos.splice(0, 1);
-
-			this._emitChange();
-		}
+		this._emitChange();
 	},
 
 	getState: function getState() {
