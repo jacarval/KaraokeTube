@@ -3,7 +3,6 @@ var React = require("react");
 var VideoPlayer = require("./VideoPlayer.jsx");
 var VideoList = require("./VideoList.jsx");
 
-
 var Content = React.createClass({
 	renderConditionalContent: function() {
 		if (this.props.showVideo) {
@@ -42,5 +41,11 @@ var Content = React.createClass({
 		);
 	}
 });
+
+				// <VideoList 
+				// 	selectedVideos={this.props.selectedVideos}
+				// 	onPlayClick={this.props.onPlayClick}
+				// 	onRemoveClick={this.props.onRemoveClick}
+				// />
 
 module.exports = Content;

@@ -15,6 +15,7 @@ body {
   /* Set the fixed height of the footer here */
   height: 60px;
   background-color: #f5f5f5;
+  z-index:9999;
 }
 
 
@@ -78,5 +79,30 @@ code {
 
 .jumbotron {
   margin-top: 120px;
+}
+
+
+.demo8 {
+  width: 80%;
+  height: auto;
+}
+
+.demo8-item {
+  position: absolute;
+  width: 60%;
+  height: 80px;
+  overflow: hidden;
+  pointer-events: auto;
+  transform-origin: 50% 50% 0px;
+  border-radius: 4px;
+  color: rgb(153, 153, 153);
+  line-height: 96px;
+  padding-left: 32px;
+  padding-right: 32px;
+  font-size: 24px;
+  font-weight: 400;
+  background-color: rgb(255, 255, 255);
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
 }
 

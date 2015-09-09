@@ -1,6 +1,4 @@
 var React = require("react");
-var Sortable = require("react-sortable");
-
 var createHandler = require("../../resources/misc.js").createClickHandler;
 
 
@@ -50,7 +48,7 @@ var VideoList = React.createClass({
 var ListItem = React.createClass({
 	render: function() {
 		return (
-			<li className="list-group-item" draggable="true">
+			<li className="list-group-item">
 				{'['+this.props.selectedBy+'] - '+this.props.title}
 				<span href="#" className="badge" onClick={createHandler(this.props.index, this.props.onRemoveClick)}>
 					<span className="glyphicon glyphicon-remove"></span>
