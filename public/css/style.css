@@ -56,6 +56,12 @@ code {
   width:100%;
 }
 
+.jumbotron {
+  position: absolute;
+  top: 35%;
+  transform: translate(0%,-20%);
+}
+
 /*.dropdown-menu a {
     white-space:normal;
 }*/
