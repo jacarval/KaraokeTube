@@ -26,9 +26,9 @@ var FluxMixin = Fluxxor.FluxMixin(React),
 /*
 	React Components
  */ 
-var NavBar = require('./components/NavBar.jsx');
-var Content = require('./components/Content.jsx');
-var Footer = require('./components/Footer.jsx');
+var NavBar = require('../components/NavBar.jsx');
+var Content = require('../components/Content.jsx');
+var Footer = require('../components/Footer.jsx');
 
 var Application = React.createClass({
 
@@ -68,23 +68,47 @@ var Application = React.createClass({
 			self.getFlux().actions.addVideo(video);
 		});
 
+		socket.on('queue:playNext', function(id) {
+			self.getFlux().actions.moveVideo(id, 0);
+		});
+
 		socket.on('alert', function(msg) {
-			alert(msg);
+			console.log(msg);
+			alert('an error occured')
 		});
 	},
 
-	handleSearchSubmit: function(songName, userName) {
+	handleSearchSubmit: function(songName) {
+		var userName = this.state.currentUser;
 		this.setState({searchData: []});
-		if (!songName || !userName) {
+		if (!songName) {
+			return;
+		}
+		if (!userName) {
+			this.setState({currentUser: prompt('Enter a name and try again!')});
 			return;
 		}
 		this.getSearchResultsFromYouTube(songName);
+	},
+
+	handleNameInput: function(userName) {
 		this.setState({currentUser: userName});
 	},
 
 	addVideoToQueue: function(video) {
+		this.setState({searchData: []});
 		video.selectedBy = this.state.currentUser;
 		this.getFlux().actions.addVideo(video);
+	},
+
+	addVideoToTopOfQueue: function(video) {
+		this.setState({searchData: []});
+		video.selectedBy = this.state.currentUser;
+		this.getFlux().actions.addVideoTop(video);
+	},
+
+	moveVideoToTop: function(fromIndex) {
+		this.getFlux().actions.moveVideo(fromIndex, 0);
 	},
 
 	removeVideoFromQueue: function(index) {
@@ -113,7 +137,7 @@ var Application = React.createClass({
 		}
 	},
 
-	toggleAutoPlay: function() {
+	toggleAutoplay: function() {
 		if (this.state.autoplay) {
 			this.setState({autoplay: 0});
 		}
@@ -127,17 +151,20 @@ var Application = React.createClass({
 			<body>
 				<NavBar 
 					onSearchSubmit={this.handleSearchSubmit}
-					onSearchInput={function(data){console.log(data)}}
-					onSearchResultClick={this.addVideoToQueue}
-					onSearchResultPlayCick={this.playVideo}
-					searchData={this.state.searchData}
+					onNameInput={this.handleNameInput}
+					userName={this.state.currentUser}
 					selectedVideos={this.state.selectedVideos}
 					onQueuedVideoPlay={this.playVideoAndRemoveFromQueue}
 					onEmptyTheQueueClick={this.emptyQueue}
 					toggleVideoPlayer={this.toggleVideoPlayer}
 					isVideoPlayerActive={this.state.showVideo}
+					toggleAutoplay={this.toggleAutoplay}
+					autoplay={this.state.autoplay}
 				/>
 				<Content 
+					onSearchResultAddClick={this.addVideoToQueue}
+					onSearchResultPlayClick={this.addVideoToTopOfQueue}
+					searchData={this.state.searchData}
 					currentVideo={this.state.currentVideo}
 					onVideoEnd={this.playNextVideo} 
 					showVideo={this.state.showVideo}

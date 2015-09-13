@@ -10,6 +10,8 @@ var VideoStore = Fluxxor.createStore({
 		this.currentVideo = {};
 		this.bindActions(		
 			CONSTANTS.ADD_VIDEO, this.onAddVideo,
+			CONSTANTS.ADD_VIDEO_TOP, this.onAddVideoTop,
+			CONSTANTS.MOVE_VIDEO, this.onMoveVideo,
 			CONSTANTS.REMOVE_VIDEO, this.onRemoveVideo,
 			CONSTANTS.CLEAR_VIDEOS, this.onClearVideos,
 			CONSTANTS.PLAY_VIDEO_ID, this.onPlayVideoByIndex,
@@ -19,7 +21,6 @@ var VideoStore = Fluxxor.createStore({
 	},
 
 	onAddVideo: function(payload) {
-		console.log('adding video');
 
 		var storeId = this._nextStoreId();
 		var video = {
@@ -35,8 +36,33 @@ var VideoStore = Fluxxor.createStore({
 		this._emitChange();
 	},
 
+	onAddVideoTop: function(payload) {
+
+		var storeId = this._nextStoreId();
+		var video = {
+				storeId: storeId,
+				videoId: payload.videoId,
+				title: payload.title,
+				thumbnailUrl: payload.thumbnailUrl,
+				selectedBy: payload.selectedBy
+		};
+
+		this.selectedVideos.unshift(video);
+
+		this._emitChange();
+	},
+
+	onMoveVideo: function(payload) {
+
+		var video = this.selectedVideos[payload.from];
+
+		this.selectedVideos.splice(payload.from, 1);
+		this.selectedVideos.splice(payload.to, 0, video);
+
+		this._emitChange();
+	},
+
 	onRemoveVideo: function(index) {
-		console.log("removing video");
 
 		this.selectedVideos.splice(index, 1);
 
@@ -44,7 +70,6 @@ var VideoStore = Fluxxor.createStore({
 	},
 
 	onClearVideos: function() {
-		console.log("clearing queue");
 
 		this.selectedVideos = [];
 
@@ -52,7 +77,6 @@ var VideoStore = Fluxxor.createStore({
 	},
 
 	onPlayVideoByIndex: function(index) {
-		console.log("play video by index");
 
 		this.currentVideo = this.selectedVideos[index];
 		this.selectedVideos.splice(index, 1);
@@ -61,7 +85,6 @@ var VideoStore = Fluxxor.createStore({
 	},
 
 	onPlayNextVideo: function() {
-		console.log("play next video");
 
 		this.currentVideo = this.selectedVideos[0];
 		this.selectedVideos.splice(0, 1);
@@ -75,7 +98,6 @@ var VideoStore = Fluxxor.createStore({
 	},
 
 	hydrate: function(state) {
-		console.log('hydrating store');
 
 		this.currentVideo = state.currentVideo;
 		this.selectedVideos = state.selectedVideos;
@@ -90,7 +112,6 @@ var VideoStore = Fluxxor.createStore({
 
 	_emitChange: function() {
 		var state = {currentVideo: this.currentVideo, selectedVideos: this.selectedVideos};
-		console.log('store update event', state)
 		socket.emit('state:update', state);
 		this.emit("change");
 	}

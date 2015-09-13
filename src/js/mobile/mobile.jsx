@@ -7,14 +7,19 @@ var requestSearchResults = require("../resources/misc.js").requestSearchResults;
 /*
 	React Components
  */
-var Footer = require('./components/Footer.jsx');
-var MediaList = require('./components/MediaList.jsx');
-var NavBar = require('./components/NavBar.jsx');
+var Footer = require('../components/Footer.jsx');
+var MediaList = require('../components/MediaList.jsx');
+var NavBar = require('../components/NavBar.jsx');
 
 var Application = React.createClass({
 
 	getInitialState: function() {
-		return {currentUser: '', searchData: [], selectedVideos: [], currentVideo: {}};
+		return {
+			currentUser: '', 
+			searchData: [], 
+			selectedVideos: [], 
+			currentVideo: {}, 
+		};
 	},
 
 	componentDidMount: function(){
@@ -24,6 +29,11 @@ var Application = React.createClass({
 
 		socket.on('state:update', function(state) {
 			self.setState({selectedVideos: state.selectedVideos, currentVideo: state.currentVideo});
+		});
+
+		socket.on('alert', function(msg) {
+			console.log(msg);
+			alert('an error occured', msg);
 		});
 
 		this.setState({currentUser: prompt('What is your name?')});
@@ -42,48 +52,48 @@ var Application = React.createClass({
 
 	handleSearchSubmit: function(songName) {
 		var userName = this.state.currentUser;
-
 		this.setState({searchData: []});
 		if (!songName) {
 			return;
 		}
-		if (!userName) {
+		while (!userName) {
 			this.setState({currentUser: prompt('Enter a name and try again!')});
 			return;
 		}
 		this.getSearchResultsFromYouTube(songName);
-	},	
+	},
 
-	addVideoToQueue: function(video) {
+	handleNameInput: function(userName) {
+		this.setState({currentUser: userName});
+	},
+
+	addVideoToQueue: function(data) {
+		var video = data.video;
 		video.selectedBy = this.state.currentUser;
-
 		socket.emit('queue:add', video)
-
 		this.setState({searchData: []});
 	},
 
-	playNext: function(video) {
-		console.log(video);
+	playNext: function(data) {
+		socket.emit('queue:playNext', data.id);
 	},
 
-	renderMediaList: function() {
-		if (this.state.searchData.length > 0) {
-			return (<MediaList buttonText="Add To Queue" selectedVideos={this.state.searchData} onClick={this.addVideoToQueue}/>);
-		}
-		else {
-			return (<MediaList buttonText="Play Next (disabled)" selectedVideos={this.state.selectedVideos} onClick={this.playNext}/>);
-		}
+	getMediaListProps: function() {
+		var search = this.state.searchData.length;
+		return {
+			text: (search ? "Add To Queue" : "Play Next"),
+			list: (search ? this.state.searchData : this.state.selectedVideos),
+			click: (search ? this.addVideoToQueue : this.playNext)
+		};
 	},
 
 	render: function() {
+		var mediaProps = this.getMediaListProps();
 		return (
 			<body>
-				<NavBar onSearchSubmit={this.handleSearchSubmit}/>
-				{this.renderMediaList()}
-				<Footer 
-					selectedVideos = {this.state.selectedVideos}
-					currentVideo = {this.state.currentVideo}
-				/>
+				<NavBar onSearchSubmit={this.handleSearchSubmit} onNameInput={this.handleNameInput} userName={this.state.currentUser}/>
+				<MediaList buttonText={mediaProps.text} videoList={mediaProps.list} onClick={mediaProps.click}/>
+				<Footer selectedVideos = {this.state.selectedVideos} currentVideo = {this.state.currentVideo}/>
 			</body>
 		);
 	}

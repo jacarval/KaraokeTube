@@ -17,22 +17,17 @@ var desktop = io.of('/desktop');
 var mobile = io.of('/mobile');
 
 mobile.on('connection', function(socket) {
-	
-	console.log('mobile connect');
 
 	socket.on('ready', function() {
 
-		console.log('mobile ready');
-
 		db.getQueueById(1, function(err, row) {
-
-			console.log(err, row)
-
 			if (err) {
 				socket.emit('alert', err);
+				return console.log('error retrieving queue by id', err);
 			}
 
-			var state = {};
+			var state = new Object();
+			
 			state.selectedVideos = JSON.parse(row.queue);
 			state.currentVideo = JSON.parse(row.current);
 
@@ -43,24 +38,24 @@ mobile.on('connection', function(socket) {
 	socket.on('queue:add', function(video) {
 		desktop.emit('queue:add', video);
 	}); 
+
+	socket.on('queue:playNext', function(id) {
+		desktop.emit('queue:playNext', id);
+	}); 
 });
 
 desktop.on('connection', function(socket) {
 
-	console.log('desktop connect')
-
 	socket.on('ready', function() {
 
-		console.log('desktop ready');
-
 		db.getQueueById(1, function(err, row) {
-			console.log(err, row);
-
 			if (err) {
 				socket.emit('alert', err);
+				return console.log('error retrieving queue by id', err);
 			}
 
-			var state = {};
+			var state = new Object();
+
 			state.selectedVideos = JSON.parse(row.queue);
 			state.currentVideo = JSON.parse(row.current);
 
@@ -70,13 +65,10 @@ desktop.on('connection', function(socket) {
 
 	socket.on('state:update', function(state){
 
-		console.log('state update from desktop')
-
 		db.updateQueueById(1, state.currentVideo, state.selectedVideos, function(err, row) {
-			console.log(err, row);
-
 			if (err) {
 				socket.emit('alert', err);
+				return console.log('error updating queue by id', err);
 			}
 		});
 
@@ -85,7 +77,7 @@ desktop.on('connection', function(socket) {
 });
 
 http.listen(process.env.PORT || 3000, function(){
-  console.log('listening on *:3000');
+  console.log('listening on *:' + process.env.PORT || 3000);
 });
 
 

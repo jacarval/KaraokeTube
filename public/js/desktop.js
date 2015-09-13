@@ -24715,44 +24715,11 @@ module.exports = require('./lib/React');
 },{"./lib/React":229}],357:[function(require,module,exports){
 "use strict";
 
-var Fluxxor = require("fluxxor");
-var CONSTANTS = require("./constants");
-
-var actions = {
-  addVideo: function addVideo(video) {
-    this.dispatch(CONSTANTS.ADD_VIDEO, video);
-  },
-
-  removeVideo: function removeVideo(index) {
-    this.dispatch(CONSTANTS.REMOVE_VIDEO, index);
-  },
-
-  clearVideos: function clearVideos() {
-    this.dispatch(CONSTANTS.CLEAR_VIDEOS);
-  },
-
-  playVideoByIndex: function playVideoByIndex(index) {
-    this.dispatch(CONSTANTS.PLAY_VIDEO_ID, index);
-  },
-
-  playNextVideo: function playNextVideo() {
-    this.dispatch(CONSTANTS.PLAY_NEXT);
-  },
-
-  hydrate: function hydrate(state) {
-    this.dispatch(CONSTANTS.HYDRATE, state);
-  }
-};
-
-module.exports = actions;
-
-},{"./constants":365,"fluxxor":99}],358:[function(require,module,exports){
-"use strict";
-
 var React = require("react");
 
 var VideoPlayer = require("./VideoPlayer.jsx");
 var VideoList = require("./VideoList.jsx");
+var SearchResults = require('./SearchResults.jsx');
 
 var Content = React.createClass({
 	displayName: "Content",
@@ -24792,20 +24759,19 @@ var Content = React.createClass({
 		return React.createElement(
 			"div",
 			{ className: "container" },
+			React.createElement(SearchResults, {
+				data: this.props.searchData,
+				onQueueClick: this.props.onSearchResultAddClick,
+				onPlayClick: this.props.onSearchResultPlayClick
+			}),
 			this.renderConditionalContent()
 		);
 	}
 });
 
-// <VideoList
-// 	selectedVideos={this.props.selectedVideos}
-// 	onPlayClick={this.props.onPlayClick}
-// 	onRemoveClick={this.props.onRemoveClick}
-// />
-
 module.exports = Content;
 
-},{"./VideoList.jsx":363,"./VideoPlayer.jsx":364,"react":356}],359:[function(require,module,exports){
+},{"./SearchResults.jsx":361,"./VideoList.jsx":362,"./VideoPlayer.jsx":363,"react":356}],358:[function(require,module,exports){
 "use strict";
 
 var React = require("react");
@@ -24844,40 +24810,44 @@ var Footer = React.createClass({
 				"div",
 				{ className: "container" },
 				React.createElement(
-					"div",
-					{ className: "video-queue-list" },
+					"ul",
+					{ className: "list-inline" },
+					React.createElement(NowPlaying, { currentVideo: this.props.currentVideo }),
+					React.createElement("li", { role: "separator", className: "divider" }),
 					React.createElement(
-						"ul",
-						{ className: "list-inline" },
+						"li",
+						null,
+						React.createElement("span", { className: "glyphicon glyphicon-chevron-right" })
+					),
+					React.createElement("li", { role: "separator", className: "divider" }),
+					React.createElement(
+						"li",
+						null,
 						React.createElement(
-							"li",
-							null,
-							React.createElement(
-								"p",
-								{ className: "text-muted" },
-								"Now Playing: ",
-								this.props.currentVideo ? '[' + this.props.currentVideo.selectedBy + '] - ' + this.props.currentVideo.title : "None"
-							)
-						),
-						React.createElement("li", { role: "separator", className: "divider" }),
-						React.createElement(
-							"li",
-							null,
-							React.createElement("span", { className: "glyphicon glyphicon-chevron-right" })
-						),
-						React.createElement("li", { role: "separator", className: "divider" }),
-						React.createElement(
-							"li",
-							null,
-							React.createElement(
-								"p",
-								{ className: "text-muted" },
-								"Up Next:"
-							)
-						),
-						this.renderVideoList()
-					)
+							"p",
+							{ className: "text-muted" },
+							"Up Next:"
+						)
+					),
+					this.renderVideoList()
 				)
+			)
+		);
+	}
+});
+
+var NowPlaying = React.createClass({
+	displayName: "NowPlaying",
+
+	render: function render() {
+		return React.createElement(
+			"li",
+			null,
+			React.createElement(
+				"p",
+				{ className: "text-muted" },
+				"Now Playing: ",
+				this.props.currentVideo ? '[' + this.props.currentVideo.selectedBy + '] - ' + this.props.currentVideo.title : "None"
 			)
 		);
 	}
@@ -24885,58 +24855,81 @@ var Footer = React.createClass({
 
 module.exports = Footer;
 
-},{"react":356}],360:[function(require,module,exports){
-'use strict';
+},{"react":356}],359:[function(require,module,exports){
+"use strict";
 
 var React = require("react");
-
-var SearchBox = require('./SearchBox.jsx');
-var SearchResults = require('./SearchResults.jsx');
-var createHandler = require("../../resources/misc.js").createClickHandler;
+var Search = require("./Search.jsx");
 
 var NavBar = React.createClass({
-	displayName: 'NavBar',
+	displayName: "NavBar",
 
 	render: function render() {
 		return React.createElement(
-			'nav',
-			{ className: 'navbar navbar-default navbar-fixed-top' },
+			"nav",
+			{ className: "navbar navbar-default navbar-fixed-top" },
 			React.createElement(
-				'div',
-				{ className: 'container' },
-				React.createElement(NavBarHeader, null),
+				"div",
+				{ className: "container-fluid" },
 				React.createElement(
-					'div',
-					{ id: 'navbar', className: 'collapse navbar-collapse' },
+					NavBarHeader,
+					{ name: "KaraokeTube" },
+					React.createElement(Search, { placeholder: "KaraokeTube | Search", visibility: 'visible-xs-block', hideName: true, style: { margin: '0' }, onSubmit: this.props.onSearchSubmit, onNameInput: this.props.onNameInput, userName: this.props.userName })
+				),
+				React.createElement(
+					NavBarCollapse,
+					null,
 					React.createElement(
-						'ul',
-						{ className: 'nav navbar-nav' },
+						NavBarNav,
+						{ align: 'left' },
 						React.createElement(
-							'li',
-							{ className: this.props.isVideoPlayerActive ? "active" : "", onClick: this.props.toggleVideoPlayer },
+							NavBarDropDown,
+							{ name: "GitHub" },
 							React.createElement(
-								'a',
-								{ href: '#' },
-								'VideoPlayer'
+								"li",
+								{ className: "dropdown-header" },
+								"GitHub Links"
+							),
+							React.createElement(
+								"li",
+								null,
+								React.createElement(
+									"a",
+									{ href: "https://github.com/jacarval/karaoke-tube" },
+									"Code Repository"
+								)
+							),
+							React.createElement(
+								"li",
+								null,
+								React.createElement(
+									"a",
+									{ href: "https://github.com/jacarval/karaoke-tube/issues" },
+									"View/Report Issues"
+								)
 							)
 						),
-						React.createElement(VideoListDropDown, {
-							toggleVideoPlayer: this.props.toggleVideoPlayer,
-							onEmptyTheQueueClick: this.props.onEmptyTheQueueClick,
-							onQueuedVideoPlay: this.props.onQueuedVideoPlay,
-							selectedVideos: this.props.selectedVideos
-						})
+						React.createElement(
+							"li",
+							{ className: this.props.isVideoPlayerActive ? "active" : "", onClick: this.props.toggleVideoPlayer },
+							React.createElement(
+								"a",
+								{ href: "#" },
+								"VideoPlayer"
+							)
+						),
+						React.createElement(
+							"li",
+							{ className: this.props.autoplay ? "active" : "", onClick: this.props.toggleAutoplay },
+							React.createElement(
+								"a",
+								{ href: "#" },
+								"AutoPlay"
+							)
+						)
 					),
-					React.createElement(SearchBox, {
-						onSubmit: this.props.onSearchSubmit,
-						onInput: this.props.onSearchInput
-					}),
-					React.createElement(GitHubDropDown, null),
-					React.createElement(SearchResults, {
-						data: this.props.searchData,
-						onQueueClick: this.props.onSearchResultClick,
-						onPlayClick: this.props.onSearchResultPlayCick
-					})
+					React.createElement(Search, { placeholder: "Enter Song", visibility: 'hidden-xs', onSubmit: this.props.onSearchSubmit, onNameInput: this.props.onNameInput, userName: this.props.userName }),
+					React.createElement(NavBarNav, { align: 'right' })
 				)
 			)
 		);
@@ -24944,236 +24937,199 @@ var NavBar = React.createClass({
 });
 
 var NavBarHeader = React.createClass({
-	displayName: 'NavBarHeader',
+	displayName: "NavBarHeader",
 
 	render: function render() {
 		return React.createElement(
-			'div',
-			{ className: 'navbar-header' },
+			"div",
+			{ className: "navbar-header" },
 			React.createElement(
-				'button',
-				{ type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#navbar', 'aria-expanded': 'false', 'aria-controls': 'navbar' },
-				React.createElement(
-					'span',
-					{ className: 'sr-only' },
-					'Toggle navigation'
-				),
-				React.createElement('span', { className: 'icon-bar' }),
-				React.createElement('span', { className: 'icon-bar' }),
-				React.createElement('span', { className: 'icon-bar' })
+				"a",
+				{ className: "navbar-brand hidden-xs", href: "#" },
+				this.props.name
+			),
+			this.props.children
+		);
+	}
+});
+
+var NavBarCollapse = React.createClass({
+	displayName: "NavBarCollapse",
+
+	render: function render() {
+		return React.createElement(
+			"div",
+			{ className: "collapse navbar-collapse", id: "navbar" },
+			this.props.children
+		);
+	}
+});
+
+var NavBarNav = React.createClass({
+	displayName: "NavBarNav",
+
+	render: function render() {
+		return React.createElement(
+			"ul",
+			{ className: "nav navbar-nav navbar-" + this.props.align },
+			this.props.children
+		);
+	}
+});
+
+var NavBarDropDown = React.createClass({
+	displayName: "NavBarDropDown",
+
+	render: function render() {
+		return React.createElement(
+			"li",
+			{ className: "dropdown" },
+			React.createElement(
+				"a",
+				{ href: "#", className: "dropdown-toggle", "data-toggle": "dropdown", role: "button", "aria-haspopup": "true", "aria-expanded": "false" },
+				this.props.name,
+				React.createElement("span", { className: "caret" })
 			),
 			React.createElement(
-				'a',
-				{ className: 'navbar-brand', href: '#' },
-				'KaraokeTube'
+				"ul",
+				{ className: "dropdown-menu" },
+				this.props.children
 			)
 		);
 	}
 });
 
-var VideoListDropDown = React.createClass({
-	displayName: 'VideoListDropDown',
+// <NavBarDropDown name='Rooms'>
+// 	<li><a href="#">Hello</a></li>
+// </NavBarDropDown>
 
-	renderVideoList: function renderVideoList() {
-		var videos = this.props.selectedVideos;
-		var self = this;
-		var nodes = Object.keys(videos).map(function (storeId) {
-			return React.createElement(
-				'li',
-				{ key: storeId },
-				React.createElement(
-					'a',
-					{ href: '#', onClick: createHandler(videos[storeId], self.props.onQueuedVideoPlay) },
-					videos[storeId].title
-				)
-			);
-		});
-		return nodes;
-	},
+// var NavBarForm = React.createClass({
+// 	render: function() {
+// 		return (
+// 			<form className="navbar-form navbar-left" role="search">
+// 				<div className="form-group">
+// 					<input type="text" className="form-control" placeholder="Name"/>
+// 					<input type="text" className="form-control" placeholder="Search"/>
+// 				</div>
+// 				<button type="submit" className="btn btn-default">Submit</button>
+// 			</form>
+// 		);
+// 	}
+// });
 
-	render: function render() {
-		return React.createElement(
-			'li',
-			{ className: 'dropdown' },
-			React.createElement(
-				'a',
-				{ href: '#', className: 'dropdown-toggle', 'data-toggle': 'dropdown', role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false' },
-				React.createElement('span', { className: 'glyphicon glyphicon-th-list' }),
-				React.createElement('span', { className: 'caret' })
-			),
-			React.createElement(
-				'ul',
-				{ className: 'dropdown-menu' },
-				React.createElement(
-					'li',
-					null,
-					React.createElement(
-						'a',
-						{ href: '#', onClick: this.props.onEmptyTheQueueClick },
-						'Empty the Queue'
-					)
-				),
-				React.createElement('li', { role: 'separator', className: 'divider' }),
-				React.createElement(
-					'li',
-					{ className: 'dropdown-header' },
-					'Click to Play'
-				),
-				this.renderVideoList()
-			)
-		);
-	}
-});
-
-var GitHubDropDown = React.createClass({
-	displayName: 'GitHubDropDown',
-
-	render: function render() {
-		return React.createElement(
-			'ul',
-			{ className: 'nav navbar-nav navbar-right' },
-			React.createElement(
-				'li',
-				{ className: 'dropdown' },
-				React.createElement(
-					'a',
-					{ href: '#', className: 'dropdown-toggle', 'data-toggle': 'dropdown', role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false' },
-					React.createElement('span', { className: 'glyphicon glyphicon-console' }),
-					React.createElement('span', { className: 'caret' })
-				),
-				React.createElement(
-					'ul',
-					{ className: 'dropdown-menu' },
-					React.createElement(
-						'li',
-						{ className: 'dropdown-header' },
-						'GitHub Links'
-					),
-					React.createElement(
-						'li',
-						null,
-						React.createElement(
-							'a',
-							{ href: 'https://github.com/jacarval/karaoke-tube' },
-							'Code Repository'
-						)
-					),
-					React.createElement(
-						'li',
-						null,
-						React.createElement(
-							'a',
-							{ href: 'https://github.com/jacarval/karaoke-tube/issues' },
-							'View/Report Issues'
-						)
-					)
-				)
-			)
-		);
-	}
-});
+// var NavBarToggleButton = React.createClass({
+// 	render: function() {
+// 		return (
+// 			<button style={{marginTop: '11px'}} type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="navbar" aria-expanded="false">
+// 				<span className="sr-only">Toggle navigation</span>
+// 				<span className="icon-bar"></span>
+// 				<span className="icon-bar"></span>
+// 				<span className="icon-bar"></span>
+// 			</button>
+// 		);
+// 	}
+// });
 
 module.exports = NavBar;
-/*<!--/.nav-collapse -->*/
 
-},{"../../resources/misc.js":368,"./SearchBox.jsx":361,"./SearchResults.jsx":362,"react":356}],361:[function(require,module,exports){
-'use strict';
-
-var React = require("react");
-
-var SearchBox = React.createClass({
-	displayName: 'SearchBox',
-
-	handleSubmit: function handleSubmit(e) {
-		e.preventDefault();
-		var songName = React.findDOMNode(this.refs.searchInput).value.trim();
-		var userName = React.findDOMNode(this.refs.nameInput).value.trim().substr(0, 20);
-		// if (!songName || !userName) {
-		// 	return;
-		// }
-		this.props.onSubmit(songName, userName);
-		React.findDOMNode(this.refs.searchInput).value = '';
-		React.findDOMNode(this.refs.nameInput).value = '';
-		return;
-	},
-
-	handleChange: function handleChange() {
-		this.props.onInput(React.findDOMNode(this.refs.searchInput).value);
-	},
-
-	render: function render() {
-		return React.createElement(
-			'form',
-			{ id: 'send', className: 'navbar-form navbar-left', role: 'search', onSubmit: this.handleSubmit },
-			React.createElement(
-				'div',
-				{ className: 'form-group' },
-				React.createElement(
-					'div',
-					{ className: 'input-group' },
-					React.createElement(
-						'span',
-						{ className: 'input-group-addon' },
-						React.createElement('span', { className: 'glyphicon glyphicon-user' })
-					),
-					React.createElement('input', {
-						type: 'text',
-						className: 'form-control',
-						autoComplete: 'off',
-						placeholder: 'Enter Name',
-						ref: 'nameInput'
-					})
-				),
-				React.createElement(
-					'div',
-					{ className: 'input-group' },
-					React.createElement(
-						'span',
-						{ className: 'input-group-addon' },
-						React.createElement('span', { className: 'glyphicon glyphicon-music' })
-					),
-					React.createElement('input', {
-						type: 'text',
-						className: 'form-control',
-						autoComplete: 'off',
-						placeholder: 'Enter Song',
-						ref: 'searchInput',
-						onChange: this.handleChange
-					}),
-					React.createElement(
-						'span',
-						{ className: 'input-group-btn' },
-						React.createElement(
-							'button',
-							{ className: 'btn btn-default', type: 'submit' },
-							React.createElement('span', { className: 'glyphicon glyphicon-search' })
-						)
-					)
-				)
-			)
-		);
-	}
-});
-
-// <div className="checkbox navbar-btn">
-// 	<label ClassName="navbar-link" for="filterUnfulfilled">
-// 		<input type="checkbox" ClassName="autosubmit" id="filterUnfulfilled" value="true"/>
-// 		<span className="text-muted"> + lyrics </span>
-// 	</label>
-// </div>
-
-module.exports = SearchBox;
-
-},{"react":356}],362:[function(require,module,exports){
+},{"./Search.jsx":360,"react":356}],360:[function(require,module,exports){
 "use strict";
 
 var React = require("react");
-var createHandler = require("../../resources/misc.js").createClickHandler;
+
+var Search = React.createClass({
+	displayName: "Search",
+
+	handleSubmit: function handleSubmit(e) {
+		var songName = React.findDOMNode(this.refs.searchInput).value.trim();
+		this.props.onSubmit(songName);
+
+		React.findDOMNode(this.refs.searchInput).value = '';
+
+		e.preventDefault();
+		return;
+	},
+
+	handleNameChange: function handleNameChange(e) {
+		this.props.onNameInput(e.target.value);
+	},
+
+	render: function render() {
+		return React.createElement(
+			"div",
+			{ className: this.props.visibility },
+			React.createElement(
+				"form",
+				{ id: "send", className: "navbar-form navbar-left", style: this.props.style, role: "search", onSubmit: this.handleSubmit },
+				React.createElement(
+					"div",
+					{ className: "form-group" },
+					React.createElement(
+						"div",
+						{ className: "input-group" + (this.props.hideName ? " hidden-xs" : "") },
+						React.createElement(
+							"span",
+							{ className: "input-group-addon" },
+							React.createElement("span", { className: "glyphicon glyphicon-user" })
+						),
+						React.createElement("input", {
+							type: "text",
+							className: "form-control",
+							autoComplete: "off",
+							placeholder: "Enter Name",
+							ref: "nameInput",
+							onChange: this.handleNameChange,
+							value: this.props.userName
+						})
+					),
+					React.createElement(
+						"div",
+						{ className: "input-group" },
+						React.createElement(
+							"span",
+							{ className: "input-group-addon" },
+							React.createElement("span", { className: "glyphicon glyphicon-music" })
+						),
+						React.createElement("input", {
+							type: "text",
+							className: "form-control",
+							autoComplete: "off",
+							autoCorret: "off",
+							spellCheck: "off",
+							autoCapitalize: "off",
+							placeholder: this.props.placeholder,
+							ref: "searchInput"
+						}),
+						React.createElement(
+							"span",
+							{ className: "input-group-btn" },
+							React.createElement(
+								"button",
+								{ className: "btn btn-default", type: "submit" },
+								React.createElement("span", { className: "glyphicon glyphicon-search" }),
+								React.createElement("span", { className: "caret" })
+							)
+						)
+					)
+				)
+			)
+		);
+	}
+});
+
+module.exports = Search;
+
+},{"react":356}],361:[function(require,module,exports){
+"use strict";
+
+var React = require("react");
+var createHandler = require("../resources/misc.js").createClickHandler;
 
 var SearchResults = React.createClass({
 	displayName: "SearchResults",
 
 	render: function render() {
+
 		var self = this;
 		var dataNodes = this.props.data.map(function (item) {
 			return React.createElement(
@@ -25229,34 +25185,19 @@ var SearchResults = React.createClass({
 
 module.exports = SearchResults;
 
-},{"../../resources/misc.js":368,"react":356}],363:[function(require,module,exports){
+},{"../resources/misc.js":368,"react":356}],362:[function(require,module,exports){
 "use strict";
 
 var React = require("react");
-var createHandler = require("../../resources/misc.js").createClickHandler;
+var createHandler = require("../resources/misc.js").createClickHandler;
 
 var VideoList = React.createClass({
 	displayName: "VideoList",
-
-	createRemoveClickHandler: function createRemoveClickHandler(id) {
-		var self = this;
-		return function (e) {
-			self.props.onRemoveClick(id);
-		};
-	},
-
-	createPlayClickHandler: function createPlayClickHandler(id) {
-		var self = this;
-		return function (e) {
-			self.props.onPlayClick(id);
-		};
-	},
 
 	render: function render() {
 		var videos = this.props.selectedVideos;
 		var self = this;
 		var nodes = [];
-		console.log(videos);
 		videos.forEach(function (video, index) {
 			nodes.push(React.createElement(ListItem, {
 				key: index,
@@ -25305,7 +25246,7 @@ var ListItem = React.createClass({
 
 module.exports = VideoList;
 
-},{"../../resources/misc.js":368,"react":356}],364:[function(require,module,exports){
+},{"../resources/misc.js":368,"react":356}],363:[function(require,module,exports){
 "use strict";
 
 var React = require("react");
@@ -25330,11 +25271,55 @@ var VideoPlayer = React.createClass({
 
 module.exports = VideoPlayer;
 
-},{"react":356,"react-youtube":196}],365:[function(require,module,exports){
+},{"react":356,"react-youtube":196}],364:[function(require,module,exports){
+"use strict";
+
+var Fluxxor = require("fluxxor");
+var CONSTANTS = require("./constants");
+
+var actions = {
+  addVideo: function addVideo(video) {
+    this.dispatch(CONSTANTS.ADD_VIDEO, video);
+  },
+
+  addVideoTop: function addVideoTop(video) {
+    this.dispatch(CONSTANTS.ADD_VIDEO_TOP, video);
+  },
+
+  moveVideo: function moveVideo(fromIndex, toIndex) {
+    this.dispatch(CONSTANTS.MOVE_VIDEO, { from: fromIndex, to: toIndex });
+  },
+
+  removeVideo: function removeVideo(index) {
+    this.dispatch(CONSTANTS.REMOVE_VIDEO, index);
+  },
+
+  clearVideos: function clearVideos() {
+    this.dispatch(CONSTANTS.CLEAR_VIDEOS);
+  },
+
+  playVideoByIndex: function playVideoByIndex(index) {
+    this.dispatch(CONSTANTS.PLAY_VIDEO_ID, index);
+  },
+
+  playNextVideo: function playNextVideo() {
+    this.dispatch(CONSTANTS.PLAY_NEXT);
+  },
+
+  hydrate: function hydrate(state) {
+    this.dispatch(CONSTANTS.HYDRATE, state);
+  }
+};
+
+module.exports = actions;
+
+},{"./constants":365,"fluxxor":99}],365:[function(require,module,exports){
 "use strict";
 
 var constants = {
 	ADD_VIDEO: "ADD_VIDEO",
+	ADD_VIDEO_TOP: "ADD_VIDEO_TOP",
+	MOVE_VIDEO: "MOVE_VIDEO",
 	REMOVE_VIDEO: "REMOVE_VIDEO",
 	CLEAR_VIDEOS: "CLEAR_VIDEOS",
 	PLAY_VIDEO_ID: "PLAY_VIDEO_ID",
@@ -25375,9 +25360,9 @@ var FluxMixin = Fluxxor.FluxMixin(React),
 /*
 	React Components
  */
-var NavBar = require('./components/NavBar.jsx');
-var Content = require('./components/Content.jsx');
-var Footer = require('./components/Footer.jsx');
+var NavBar = require('../components/NavBar.jsx');
+var Content = require('../components/Content.jsx');
+var Footer = require('../components/Footer.jsx');
 
 var Application = React.createClass({
 	displayName: "Application",
@@ -25440,23 +25425,47 @@ var Application = React.createClass({
 			self.getFlux().actions.addVideo(video);
 		});
 
+		socket.on('queue:playNext', function (id) {
+			self.getFlux().actions.moveVideo(id, 0);
+		});
+
 		socket.on('alert', function (msg) {
-			alert(msg);
+			console.log(msg);
+			alert('an error occured');
 		});
 	},
 
-	handleSearchSubmit: function handleSearchSubmit(songName, userName) {
+	handleSearchSubmit: function handleSearchSubmit(songName) {
+		var userName = this.state.currentUser;
 		this.setState({ searchData: [] });
-		if (!songName || !userName) {
+		if (!songName) {
+			return;
+		}
+		if (!userName) {
+			this.setState({ currentUser: prompt('Enter a name and try again!') });
 			return;
 		}
 		this.getSearchResultsFromYouTube(songName);
+	},
+
+	handleNameInput: function handleNameInput(userName) {
 		this.setState({ currentUser: userName });
 	},
 
 	addVideoToQueue: function addVideoToQueue(video) {
+		this.setState({ searchData: [] });
 		video.selectedBy = this.state.currentUser;
 		this.getFlux().actions.addVideo(video);
+	},
+
+	addVideoToTopOfQueue: function addVideoToTopOfQueue(video) {
+		this.setState({ searchData: [] });
+		video.selectedBy = this.state.currentUser;
+		this.getFlux().actions.addVideoTop(video);
+	},
+
+	moveVideoToTop: function moveVideoToTop(fromIndex) {
+		this.getFlux().actions.moveVideo(fromIndex, 0);
 	},
 
 	removeVideoFromQueue: function removeVideoFromQueue(index) {
@@ -25484,7 +25493,7 @@ var Application = React.createClass({
 		}
 	},
 
-	toggleAutoPlay: function toggleAutoPlay() {
+	toggleAutoplay: function toggleAutoplay() {
 		if (this.state.autoplay) {
 			this.setState({ autoplay: 0 });
 		} else {
@@ -25498,19 +25507,20 @@ var Application = React.createClass({
 			null,
 			React.createElement(NavBar, {
 				onSearchSubmit: this.handleSearchSubmit,
-				onSearchInput: function (data) {
-					console.log(data);
-				},
-				onSearchResultClick: this.addVideoToQueue,
-				onSearchResultPlayCick: this.playVideo,
-				searchData: this.state.searchData,
+				onNameInput: this.handleNameInput,
+				userName: this.state.currentUser,
 				selectedVideos: this.state.selectedVideos,
 				onQueuedVideoPlay: this.playVideoAndRemoveFromQueue,
 				onEmptyTheQueueClick: this.emptyQueue,
 				toggleVideoPlayer: this.toggleVideoPlayer,
-				isVideoPlayerActive: this.state.showVideo
+				isVideoPlayerActive: this.state.showVideo,
+				toggleAutoplay: this.toggleAutoplay,
+				autoplay: this.state.autoplay
 			}),
 			React.createElement(Content, {
+				onSearchResultAddClick: this.addVideoToQueue,
+				onSearchResultPlayClick: this.addVideoToTopOfQueue,
+				searchData: this.state.searchData,
 				currentVideo: this.state.currentVideo,
 				onVideoEnd: this.playNextVideo,
 				showVideo: this.state.showVideo,
@@ -25529,7 +25539,7 @@ var Application = React.createClass({
 
 React.render(React.createElement(Application, { flux: flux }), document.body);
 
-},{"../resources/misc":368,"./actions":357,"./components/Content.jsx":358,"./components/Footer.jsx":359,"./components/NavBar.jsx":360,"./store":367,"Fluxxor":1,"react":356}],367:[function(require,module,exports){
+},{"../components/Content.jsx":357,"../components/Footer.jsx":358,"../components/NavBar.jsx":359,"../resources/misc":368,"./actions":364,"./store":367,"Fluxxor":1,"react":356}],367:[function(require,module,exports){
 "use strict";
 
 var Fluxxor = require("fluxxor");
@@ -25542,11 +25552,10 @@ var VideoStore = Fluxxor.createStore({
 		this.storeId = 0;
 		this.selectedVideos = [];
 		this.currentVideo = {};
-		this.bindActions(CONSTANTS.ADD_VIDEO, this.onAddVideo, CONSTANTS.REMOVE_VIDEO, this.onRemoveVideo, CONSTANTS.CLEAR_VIDEOS, this.onClearVideos, CONSTANTS.PLAY_VIDEO_ID, this.onPlayVideoByIndex, CONSTANTS.PLAY_NEXT, this.onPlayNextVideo, CONSTANTS.HYDRATE, this.hydrate);
+		this.bindActions(CONSTANTS.ADD_VIDEO, this.onAddVideo, CONSTANTS.ADD_VIDEO_TOP, this.onAddVideoTop, CONSTANTS.MOVE_VIDEO, this.onMoveVideo, CONSTANTS.REMOVE_VIDEO, this.onRemoveVideo, CONSTANTS.CLEAR_VIDEOS, this.onClearVideos, CONSTANTS.PLAY_VIDEO_ID, this.onPlayVideoByIndex, CONSTANTS.PLAY_NEXT, this.onPlayNextVideo, CONSTANTS.HYDRATE, this.hydrate);
 	},
 
 	onAddVideo: function onAddVideo(payload) {
-		console.log('adding video');
 
 		var storeId = this._nextStoreId();
 		var video = {
@@ -25562,8 +25571,33 @@ var VideoStore = Fluxxor.createStore({
 		this._emitChange();
 	},
 
+	onAddVideoTop: function onAddVideoTop(payload) {
+
+		var storeId = this._nextStoreId();
+		var video = {
+			storeId: storeId,
+			videoId: payload.videoId,
+			title: payload.title,
+			thumbnailUrl: payload.thumbnailUrl,
+			selectedBy: payload.selectedBy
+		};
+
+		this.selectedVideos.unshift(video);
+
+		this._emitChange();
+	},
+
+	onMoveVideo: function onMoveVideo(payload) {
+
+		var video = this.selectedVideos[payload.from];
+
+		this.selectedVideos.splice(payload.from, 1);
+		this.selectedVideos.splice(payload.to, 0, video);
+
+		this._emitChange();
+	},
+
 	onRemoveVideo: function onRemoveVideo(index) {
-		console.log("removing video");
 
 		this.selectedVideos.splice(index, 1);
 
@@ -25571,7 +25605,6 @@ var VideoStore = Fluxxor.createStore({
 	},
 
 	onClearVideos: function onClearVideos() {
-		console.log("clearing queue");
 
 		this.selectedVideos = [];
 
@@ -25579,7 +25612,6 @@ var VideoStore = Fluxxor.createStore({
 	},
 
 	onPlayVideoByIndex: function onPlayVideoByIndex(index) {
-		console.log("play video by index");
 
 		this.currentVideo = this.selectedVideos[index];
 		this.selectedVideos.splice(index, 1);
@@ -25588,7 +25620,6 @@ var VideoStore = Fluxxor.createStore({
 	},
 
 	onPlayNextVideo: function onPlayNextVideo() {
-		console.log("play next video");
 
 		this.currentVideo = this.selectedVideos[0];
 		this.selectedVideos.splice(0, 1);
@@ -25602,7 +25633,6 @@ var VideoStore = Fluxxor.createStore({
 	},
 
 	hydrate: function hydrate(state) {
-		console.log('hydrating store');
 
 		this.currentVideo = state.currentVideo;
 		this.selectedVideos = state.selectedVideos;
@@ -25617,7 +25647,6 @@ var VideoStore = Fluxxor.createStore({
 
 	_emitChange: function _emitChange() {
 		var state = { currentVideo: this.currentVideo, selectedVideos: this.selectedVideos };
-		console.log('store update event', state);
 		socket.emit('state:update', state);
 		this.emit("change");
 	}

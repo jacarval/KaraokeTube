@@ -6,6 +6,14 @@ var actions = {
     this.dispatch(CONSTANTS.ADD_VIDEO, video);
   },
 
+  addVideoTop: function(video) {
+    this.dispatch(CONSTANTS.ADD_VIDEO_TOP, video);
+  },
+
+  moveVideo: function(fromIndex, toIndex) {
+    this.dispatch(CONSTANTS.MOVE_VIDEO, {from: fromIndex, to: toIndex});
+  },
+
   removeVideo: function(index) {
     this.dispatch(CONSTANTS.REMOVE_VIDEO, index);
   },
