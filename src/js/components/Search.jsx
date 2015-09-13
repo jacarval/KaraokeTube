@@ -49,6 +49,7 @@ var Search = React.createClass({
 								autoCapitalize="off"
 								placeholder={this.props.placeholder}
 								ref="searchInput"
+								id="searchInput"
 							/>
 							<span className="input-group-btn">
 								<button className="btn btn-default" type="submit">

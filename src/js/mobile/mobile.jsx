@@ -61,6 +61,8 @@ var Application = React.createClass({
 			return;
 		}
 		this.getSearchResultsFromYouTube(songName);
+
+		document.activeElement.blur();	
 	},
 
 	handleNameInput: function(userName) {

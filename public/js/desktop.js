@@ -25098,7 +25098,8 @@ var Search = React.createClass({
 							spellCheck: "off",
 							autoCapitalize: "off",
 							placeholder: this.props.placeholder,
-							ref: "searchInput"
+							ref: "searchInput",
+							id: "searchInput"
 						}),
 						React.createElement(
 							"span",

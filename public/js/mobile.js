@@ -20324,7 +20324,8 @@ var Search = React.createClass({
 							spellCheck: "off",
 							autoCapitalize: "off",
 							placeholder: this.props.placeholder,
-							ref: "searchInput"
+							ref: "searchInput",
+							id: "searchInput"
 						}),
 						React.createElement(
 							"span",
@@ -20412,6 +20413,8 @@ var Application = React.createClass({
 			return;
 		}
 		this.getSearchResultsFromYouTube(songName);
+
+		document.activeElement.blur();
 	},
 
 	handleNameInput: function handleNameInput(userName) {
