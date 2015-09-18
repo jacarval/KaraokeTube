@@ -20350,6 +20350,8 @@ module.exports = Search;
 /*jshint esnext: true */
 "use strict";
 
+if (window.location.host === 'karaoke.recurse.com') window.location.assign("http://karaoketube.herokuapp.com");
+
 window.React = require("react");
 
 var socket = io(window.location.host + '/mobile');
