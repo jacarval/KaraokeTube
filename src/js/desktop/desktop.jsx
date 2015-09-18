@@ -1,4 +1,6 @@
 /*jshint esnext: true */
+if (window.location.host === 'karaoke.recurse.com') window.location.assign("http://karaoketube.herokuapp.com");
+
 var React = require("react");
 var Fluxxor = require("Fluxxor");
 var VideoStore = require("./store");
