@@ -20348,13 +20348,16 @@ module.exports = Search;
 
 },{"react":156}],161:[function(require,module,exports){
 /*jshint esnext: true */
+// if (window.location.host === 'karaoke.recurse.com') window.location.assign("http://karaoketube.herokuapp.com");
+
 "use strict";
 
-if (window.location.host === 'karaoke.recurse.com') window.location.assign("http://karaoketube.herokuapp.com");
+var host = window.location.host === "karaoke.recurse.com" ? "karaoketube.herokuapp.com" : window.location.host;
+console.log(host);
 
 window.React = require("react");
 
-var socket = io(window.location.host + '/mobile');
+var socket = io(host + '/mobile');
 var requestSearchResults = require("../resources/misc.js").requestSearchResults;
 
 /*

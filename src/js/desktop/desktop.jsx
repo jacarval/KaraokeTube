@@ -1,13 +1,15 @@
 /*jshint esnext: true */
-if (window.location.host === 'karaoke.recurse.com') window.location.assign("http://karaoketube.herokuapp.com");
+// if (window.location.host === 'karaoke.recurse.com') window.location.assign("http://karaoketube.herokuapp.com");
 
+var host = (window.location.host === "karaoke.recurse.com" ? "karaoketube.herokuapp.com" : window.location.host);
+console.log(host);
 var React = require("react");
 var Fluxxor = require("Fluxxor");
 var VideoStore = require("./store");
 
 var requestSearchResults = require("../resources/misc").requestSearchResults;
 
-var socket = io(window.location.host + '/desktop');
+var socket = io(host + '/desktop');
 var stores = {VideoStore: new VideoStore()};
 var actions = require("./actions");
 var flux = new Fluxxor.Flux(stores, actions);
