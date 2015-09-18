@@ -1,7 +1,7 @@
 /*jshint esnext: true */
 window.React = require("react");
 
-var socket = io('http://karaoketube.herokuapp.com/mobile');
+var socket = io(window.location.host + '/mobile');
 var requestSearchResults = require("../resources/misc.js").requestSearchResults;
 
 /*

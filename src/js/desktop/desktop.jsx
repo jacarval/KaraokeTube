@@ -5,7 +5,7 @@ var VideoStore = require("./store");
 
 var requestSearchResults = require("../resources/misc").requestSearchResults;
 
-var socket = io('http://karaoketube.herokuapp.com/desktop');
+var socket = io(window.location.host + '/desktop');
 var stores = {VideoStore: new VideoStore()};
 var actions = require("./actions");
 var flux = new Fluxxor.Flux(stores, actions);
