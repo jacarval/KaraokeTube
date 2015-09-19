@@ -18,12 +18,20 @@ var mobile = io.of('/mobile');
 
 mobile.on('connection', function(socket) {
 
-	socket.on('ready', function() {
+	socket.on('ready', function(room) {
 
-		db.getQueueById(1, function(err, row) {
+		socket.join(room);
+		socket.room = room;
+
+		db.getQueueById(room, function(err, row) {
 			if (err) {
 				socket.emit('alert', err);
 				return console.log('error retrieving queue by id', err);
+			}
+
+			if (!row) {
+				socket.emit('alert', 'This room does not exist! Refresh and try again.');	
+				return;
 			}
 
 			var state = new Object();
@@ -36,22 +44,35 @@ mobile.on('connection', function(socket) {
 	});
 
 	socket.on('queue:add', function(video) {
-		desktop.emit('queue:add', video);
+		desktop.to(socket.room).emit('queue:add', video);
 	}); 
 
 	socket.on('queue:playNext', function(id) {
-		desktop.emit('queue:playNext', id);
+		desktop.to(socket.room).emit('queue:playNext', id);
 	}); 
 });
 
 desktop.on('connection', function(socket) {
 
-	socket.on('ready', function() {
+	socket.on('ready', function(room) {
 
-		db.getQueueById(1, function(err, row) {
+		socket.join(room);
+		socket.room = room;
+
+		db.getQueueById(room, function(err, row) {
 			if (err) {
 				socket.emit('alert', err);
 				return console.log('error retrieving queue by id', err);
+			}
+
+			if (!row) {
+				db.createQueue(room, function(err, row) {
+					if (err) {
+						socket.emit('alert', err);
+						return console.log('error creating new queue', err);
+					}
+				});
+				return;
 			}
 
 			var state = new Object();
@@ -65,14 +86,14 @@ desktop.on('connection', function(socket) {
 
 	socket.on('state:update', function(state){
 
-		db.updateQueueById(1, state.currentVideo, state.selectedVideos, function(err, row) {
+		db.updateQueueById(socket.room, state.currentVideo, state.selectedVideos, function(err, row) {
 			if (err) {
 				socket.emit('alert', err);
 				return console.log('error updating queue by id', err);
 			}
 		});
 
-		mobile.emit('state:update', state);
+		mobile.to(socket.room).emit('state:update', state);
 	});
 });
 

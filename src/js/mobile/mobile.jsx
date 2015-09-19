@@ -2,7 +2,8 @@
 // if (window.location.host === 'karaoke.recurse.com') window.location.assign("http://karaoketube.herokuapp.com");
 
 var host = (window.location.host === "karaoke.recurse.com" ? "karaoketube.herokuapp.com" : window.location.host);
-console.log(host);
+var path = window.location.pathname.replace('/','');
+var room = (window.location.host === "karaoke.recurse.com" ? "rc" : (path || prompt('Which room would you like to join?'))).toLowerCase();
 
 window.React = require("react");
 
@@ -30,7 +31,7 @@ var Application = React.createClass({
 	componentDidMount: function(){
 		var self = this;
 
-		socket.emit('ready');
+		socket.emit('ready', room);
 
 		socket.on('state:update', function(state) {
 			self.setState({selectedVideos: state.selectedVideos, currentVideo: state.currentVideo});

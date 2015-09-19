@@ -24788,7 +24788,7 @@ var Footer = React.createClass({
 				React.createElement(
 					"p",
 					{ className: "text-muted" },
-					'[' + videos[id].selectedBy + '] - ' + videos[id].title,
+					'[' + (videos[id].selectedBy || 'None') + '] - ' + (videos[id].title || 'None'),
 					" ",
 					React.createElement("span", { className: "glyphicon glyphicon-chevron-right" })
 				)
@@ -24847,7 +24847,7 @@ var NowPlaying = React.createClass({
 				"p",
 				{ className: "text-muted" },
 				"Now Playing: ",
-				this.props.currentVideo ? '[' + this.props.currentVideo.selectedBy + '] - ' + this.props.currentVideo.title : "None"
+				this.props.currentVideo.title ? '[' + this.props.currentVideo.selectedBy + '] - ' + this.props.currentVideo.title : "None"
 			)
 		);
 	}
@@ -25337,7 +25337,9 @@ module.exports = constants;
 "use strict";
 
 var host = window.location.host === "karaoke.recurse.com" ? "karaoketube.herokuapp.com" : window.location.host;
-console.log(host);
+var path = window.location.pathname.replace('/', '');
+var room = (window.location.host === "karaoke.recurse.com" ? "rc" : path || prompt('Which room would you like to join?')).toLowerCase();
+
 var React = require("react");
 var Fluxxor = require("Fluxxor");
 var VideoStore = require("./store");
@@ -25420,7 +25422,7 @@ var Application = React.createClass({
 	componentDidMount: function componentDidMount() {
 		var self = this;
 
-		socket.emit('ready');
+		socket.emit('ready', room);
 
 		socket.on('state:initialize', function (state) {
 			self.getFlux().actions.hydrate(state);
@@ -25532,7 +25534,8 @@ var Application = React.createClass({
 				selectedVideos: this.state.selectedVideos,
 				onPlayClick: this.playVideoAndRemoveFromQueue,
 				onRemoveClick: this.removeVideoFromQueue,
-				autoplay: this.state.autoplay
+				autoplay: this.state.autoplay,
+				room: room
 			}),
 			React.createElement(Footer, {
 				selectedVideos: this.state.selectedVideos,

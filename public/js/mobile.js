@@ -19884,7 +19884,7 @@ var Footer = React.createClass({
 				React.createElement(
 					"p",
 					{ className: "text-muted" },
-					'[' + videos[id].selectedBy + '] - ' + videos[id].title,
+					'[' + (videos[id].selectedBy || 'None') + '] - ' + (videos[id].title || 'None'),
 					" ",
 					React.createElement("span", { className: "glyphicon glyphicon-chevron-right" })
 				)
@@ -19943,7 +19943,7 @@ var NowPlaying = React.createClass({
 				"p",
 				{ className: "text-muted" },
 				"Now Playing: ",
-				this.props.currentVideo ? '[' + this.props.currentVideo.selectedBy + '] - ' + this.props.currentVideo.title : "None"
+				this.props.currentVideo.title ? '[' + this.props.currentVideo.selectedBy + '] - ' + this.props.currentVideo.title : "None"
 			)
 		);
 	}
@@ -20353,7 +20353,8 @@ module.exports = Search;
 "use strict";
 
 var host = window.location.host === "karaoke.recurse.com" ? "karaoketube.herokuapp.com" : window.location.host;
-console.log(host);
+var path = window.location.pathname.replace('/', '');
+var room = (window.location.host === "karaoke.recurse.com" ? "rc" : path || prompt('Which room would you like to join?')).toLowerCase();
 
 window.React = require("react");
 
@@ -20382,7 +20383,7 @@ var Application = React.createClass({
 	componentDidMount: function componentDidMount() {
 		var self = this;
 
-		socket.emit('ready');
+		socket.emit('ready', room);
 
 		socket.on('state:update', function (state) {
 			self.setState({ selectedVideos: state.selectedVideos, currentVideo: state.currentVideo });

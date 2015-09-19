@@ -2,7 +2,9 @@
 // if (window.location.host === 'karaoke.recurse.com') window.location.assign("http://karaoketube.herokuapp.com");
 
 var host = (window.location.host === "karaoke.recurse.com" ? "karaoketube.herokuapp.com" : window.location.host);
-console.log(host);
+var path = window.location.pathname.replace('/','');
+var room = (window.location.host === "karaoke.recurse.com" ? "rc" : (path || prompt('Which room would you like to join?'))).toLowerCase();
+
 var React = require("react");
 var Fluxxor = require("Fluxxor");
 var VideoStore = require("./store");
@@ -62,7 +64,7 @@ var Application = React.createClass({
 	componentDidMount: function(){
 		var self = this;
 
-		socket.emit('ready');
+		socket.emit('ready', room);
 
 		socket.on('state:initialize', function(state) {
 			self.getFlux().actions.hydrate(state);
@@ -176,6 +178,7 @@ var Application = React.createClass({
 					onPlayClick={this.playVideoAndRemoveFromQueue}
 					onRemoveClick={this.removeVideoFromQueue}
 					autoplay={this.state.autoplay}
+					room={room}
 				/>
 				<Footer 
 					selectedVideos={this.state.selectedVideos}

@@ -18,6 +18,11 @@ module.exports = {
 		query("UPDATE queues SET current=$2,queue=$3 WHERE id=$1", [id, JSON.stringify(current), JSON.stringify(queue)], callback);
 	},
 
+	createQueue: function(id, callback) {
+		console.log('creating a new queue', id);
+		query("INSERT INTO queues VALUES($1,$2,$3)", [id, JSON.stringify({title: 'Never Gonna Give You Up', selectedBy: 'Rick', videoId: 'dQw4w9WgXcQ'}), JSON.stringify([])], callback);
+	}
+
 	// getQueueById: function(id, callback) {
 	// 	console.log('queue request by id');
 	// 	querydb("SELECT * FROM queues WHERE id=$1", [id], callback);
@@ -46,7 +51,7 @@ module.exports = {
 
 // 			if (err) throw err;
 
-// 			client.query("CREATE TABLE IF NOT EXISTS queues(id serial PRIMARY KEY, current text, queue text)");
+// 			client.query("CREATE TABLE IF NOT EXISTS queues(id text PRIMARY KEY, current text, queue text)");
 
 // 		});
 // 	} 

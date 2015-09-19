@@ -7,7 +7,7 @@ var Footer = React.createClass({
 			return (
 				<li key={id}>
 					<p className="text-muted"> 
-						{'['+videos[id].selectedBy+'] - '+videos[id].title} <span className="glyphicon glyphicon-chevron-right"></span>
+						{'['+(videos[id].selectedBy || 'None')+'] - '+(videos[id].title || 'None')} <span className="glyphicon glyphicon-chevron-right"></span>
 					</p>
 				</li>
 			);
@@ -44,7 +44,7 @@ var NowPlaying = React.createClass({
 		return (
 			<li>
 				<p className="text-muted">
-					Now Playing: {this.props.currentVideo ? ('['+this.props.currentVideo.selectedBy+'] - '+this.props.currentVideo.title) : "None"}
+					Now Playing: {this.props.currentVideo.title ? ('['+this.props.currentVideo.selectedBy+'] - '+this.props.currentVideo.title) : "None"}
 				</p>
 			</li>
 		);
