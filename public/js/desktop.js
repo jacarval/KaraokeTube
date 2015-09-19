@@ -24749,7 +24749,7 @@ var Content = React.createClass({
 				React.createElement(
 					"p",
 					null,
-					'To songs add from a mobile device go to karaoketube.herokuapp.com/' + this.props.room
+					'To add songs from a mobile device go to ' + this.props.room
 				)
 			);
 		}
@@ -24846,7 +24846,8 @@ var NowPlaying = React.createClass({
 			React.createElement(
 				"p",
 				{ className: "text-muted" },
-				"Now Playing: ",
+				React.createElement("span", { className: "glyphicon glyphicon-play" }),
+				" Now Playing: ",
 				this.props.currentVideo ? '[' + this.props.currentVideo.selectedBy + '] - ' + this.props.currentVideo.title : "None"
 			)
 		);
@@ -24929,7 +24930,20 @@ var NavBar = React.createClass({
 						)
 					),
 					React.createElement(Search, { placeholder: "Enter Song", visibility: 'hidden-xs', onSubmit: this.props.onSearchSubmit, onNameInput: this.props.onNameInput, userName: this.props.userName }),
-					React.createElement(NavBarNav, { align: 'right' })
+					React.createElement(
+						NavBarNav,
+						{ align: 'right' },
+						React.createElement(
+							"li",
+							null,
+							React.createElement(
+								"a",
+								{ href: "#" },
+								React.createElement("span", { className: "glyphicon glyphicon-phone" }),
+								this.props.room
+							)
+						)
+					)
 				)
 			)
 		);
@@ -25338,7 +25352,7 @@ module.exports = constants;
 
 var host = window.location.host === "karaoke.recurse.com" ? "karaoketube.herokuapp.com" : window.location.host;
 var path = window.location.pathname.replace('/', '');
-var room = (window.location.host === "karaoke.recurse.com" ? "rc" : path || prompt('Which room would you like to join?')).toLowerCase();
+var room = (window.location.host === "karaoke.recurse.com" ? "rc" : path || prompt('Which room would you like to join?') || 'lobby').toLowerCase();
 
 var React = require("react");
 var Fluxxor = require("Fluxxor");
@@ -25347,13 +25361,11 @@ var VideoStore = require("./store");
 var requestSearchResults = require("../resources/misc").requestSearchResults;
 
 var socket = io(host + '/desktop');
-var stores = { VideoStore: new VideoStore() };
+var stores = { VideoStore: new VideoStore(socket) };
 var actions = require("./actions");
 var flux = new Fluxxor.Flux(stores, actions);
 
 window.React = React;
-window.socket = socket;
-window.flux = flux;
 
 flux.on("dispatch", function (type, payload) {
 	if (console && console.log) {
@@ -25522,7 +25534,8 @@ var Application = React.createClass({
 				toggleVideoPlayer: this.toggleVideoPlayer,
 				isVideoPlayerActive: this.state.showVideo,
 				toggleAutoplay: this.toggleAutoplay,
-				autoplay: this.state.autoplay
+				autoplay: this.state.autoplay,
+				room: room === 'rc' ? 'karaoke.recurse.com' : 'karaoketube.herokuapp.com/' + room
 			}),
 			React.createElement(Content, {
 				onSearchResultAddClick: this.addVideoToQueue,
@@ -25535,7 +25548,7 @@ var Application = React.createClass({
 				onPlayClick: this.playVideoAndRemoveFromQueue,
 				onRemoveClick: this.removeVideoFromQueue,
 				autoplay: this.state.autoplay,
-				room: room
+				room: 'karaoketube.herokuapp.com/' + room
 			}),
 			React.createElement(Footer, {
 				selectedVideos: this.state.selectedVideos,
@@ -25555,8 +25568,9 @@ var CONSTANTS = require("./constants");
 
 var VideoStore = Fluxxor.createStore({
 
-	initialize: function initialize() {
+	initialize: function initialize(socket) {
 
+		this.socket = socket;
 		this.storeId = 0;
 		this.selectedVideos = [];
 		this.currentVideo = {};
@@ -25655,7 +25669,7 @@ var VideoStore = Fluxxor.createStore({
 
 	_emitChange: function _emitChange() {
 		var state = { currentVideo: this.currentVideo, selectedVideos: this.selectedVideos };
-		socket.emit('state:update', state);
+		this.socket.emit('state:update', state);
 		this.emit("change");
 	}
 });

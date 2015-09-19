@@ -26,7 +26,7 @@ var NavBar = React.createClass({
 						<Search placeholder="Enter Song" visibility={'hidden-xs'} onSubmit={this.props.onSearchSubmit} onNameInput={this.props.onNameInput} userName={this.props.userName}/>
 						
 						<NavBarNav align={'right'}>
-
+							<li><a href="#"><span className="glyphicon glyphicon-phone"></span>{this.props.room}</a></li>
 						</NavBarNav>
 
 					</NavBarCollapse>

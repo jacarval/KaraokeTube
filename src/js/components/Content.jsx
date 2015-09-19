@@ -28,7 +28,7 @@ var Content = React.createClass({
 			return (	
 				<div className="jumbotron">
 				  <h1>Welcome to KaraokeTube</h1>
-				  <p>{'To songs add from a mobile device go to karaoketube.herokuapp.com/' + this.props.room}</p>
+				  <p>{'To add songs from a mobile device go to ' + this.props.room}</p>
 				</div>
 			)
 		}

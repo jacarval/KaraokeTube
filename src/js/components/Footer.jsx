@@ -44,7 +44,7 @@ var NowPlaying = React.createClass({
 		return (
 			<li>
 				<p className="text-muted">
-					Now Playing: {this.props.currentVideo ? ('['+this.props.currentVideo.selectedBy+'] - '+this.props.currentVideo.title) : "None"}
+					<span className='glyphicon glyphicon-play'></span> Now Playing: {this.props.currentVideo ? ('['+this.props.currentVideo.selectedBy+'] - '+this.props.currentVideo.title) : "None"}
 				</p>
 			</li>
 		);

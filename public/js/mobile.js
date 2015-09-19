@@ -19942,7 +19942,8 @@ var NowPlaying = React.createClass({
 			React.createElement(
 				"p",
 				{ className: "text-muted" },
-				"Now Playing: ",
+				React.createElement("span", { className: "glyphicon glyphicon-play" }),
+				" Now Playing: ",
 				this.props.currentVideo ? '[' + this.props.currentVideo.selectedBy + '] - ' + this.props.currentVideo.title : "None"
 			)
 		);
@@ -20155,7 +20156,20 @@ var NavBar = React.createClass({
 						)
 					),
 					React.createElement(Search, { placeholder: "Enter Song", visibility: 'hidden-xs', onSubmit: this.props.onSearchSubmit, onNameInput: this.props.onNameInput, userName: this.props.userName }),
-					React.createElement(NavBarNav, { align: 'right' })
+					React.createElement(
+						NavBarNav,
+						{ align: 'right' },
+						React.createElement(
+							"li",
+							null,
+							React.createElement(
+								"a",
+								{ href: "#" },
+								React.createElement("span", { className: "glyphicon glyphicon-phone" }),
+								this.props.room
+							)
+						)
+					)
 				)
 			)
 		);
@@ -20354,7 +20368,7 @@ module.exports = Search;
 
 var host = window.location.host === "karaoke.recurse.com" ? "karaoketube.herokuapp.com" : window.location.host;
 var path = window.location.pathname.replace('/', '');
-var room = (window.location.host === "karaoke.recurse.com" ? "rc" : path || prompt('Which room would you like to join?')).toLowerCase();
+var room = (window.location.host === "karaoke.recurse.com" ? "rc" : path || prompt('Which room would you like to join?') || 'lobby').toLowerCase();
 
 window.React = require("react");
 

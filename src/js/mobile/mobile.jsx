@@ -3,7 +3,7 @@
 
 var host = (window.location.host === "karaoke.recurse.com" ? "karaoketube.herokuapp.com" : window.location.host);
 var path = window.location.pathname.replace('/','');
-var room = (window.location.host === "karaoke.recurse.com" ? "rc" : (path || prompt('Which room would you like to join?'))).toLowerCase();
+var room = (window.location.host === "karaoke.recurse.com" ? "rc" : (path || prompt('Which room would you like to join?') || 'lobby')).toLowerCase();
 
 window.React = require("react");
 

@@ -3,8 +3,9 @@ var CONSTANTS = require("./constants");
 
 var VideoStore = Fluxxor.createStore({
 
-	initialize: function() {
+	initialize: function(socket) {
 
+		this.socket = socket;
 		this.storeId = 0;
 		this.selectedVideos = [];
 		this.currentVideo = {};
@@ -112,7 +113,7 @@ var VideoStore = Fluxxor.createStore({
 
 	_emitChange: function() {
 		var state = {currentVideo: this.currentVideo, selectedVideos: this.selectedVideos};
-		socket.emit('state:update', state);
+		this.socket.emit('state:update', state);
 		this.emit("change");
 	}
 });

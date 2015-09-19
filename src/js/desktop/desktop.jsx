@@ -3,7 +3,7 @@
 
 var host = (window.location.host === "karaoke.recurse.com" ? "karaoketube.herokuapp.com" : window.location.host);
 var path = window.location.pathname.replace('/','');
-var room = (window.location.host === "karaoke.recurse.com" ? "rc" : (path || prompt('Which room would you like to join?'))).toLowerCase();
+var room = (window.location.host === "karaoke.recurse.com" ? "rc" : (path || prompt('Which room would you like to join?') || 'lobby')).toLowerCase();
 
 var React = require("react");
 var Fluxxor = require("Fluxxor");
@@ -12,13 +12,11 @@ var VideoStore = require("./store");
 var requestSearchResults = require("../resources/misc").requestSearchResults;
 
 var socket = io(host + '/desktop');
-var stores = {VideoStore: new VideoStore()};
+var stores = {VideoStore: new VideoStore(socket)};
 var actions = require("./actions");
 var flux = new Fluxxor.Flux(stores, actions);
 
 window.React = React;
-window.socket = socket;
-window.flux = flux;
 
 flux.on("dispatch", function(type, payload) {
   if (console && console.log) {
@@ -166,6 +164,7 @@ var Application = React.createClass({
 					isVideoPlayerActive={this.state.showVideo}
 					toggleAutoplay={this.toggleAutoplay}
 					autoplay={this.state.autoplay}
+					room={room === 'rc' ? 'karaoke.recurse.com' : 'karaoketube.herokuapp.com/' + room}
 				/>
 				<Content 
 					onSearchResultAddClick={this.addVideoToQueue}
@@ -178,7 +177,7 @@ var Application = React.createClass({
 					onPlayClick={this.playVideoAndRemoveFromQueue}
 					onRemoveClick={this.removeVideoFromQueue}
 					autoplay={this.state.autoplay}
-					room={room}
+					room={'karaoketube.herokuapp.com/' + room}
 				/>
 				<Footer 
 					selectedVideos={this.state.selectedVideos}
