@@ -19943,7 +19943,7 @@ var NowPlaying = React.createClass({
 				"p",
 				{ className: "text-muted" },
 				"Now Playing: ",
-				this.props.currentVideo.title ? '[' + this.props.currentVideo.selectedBy + '] - ' + this.props.currentVideo.title : "None"
+				this.props.currentVideo ? '[' + this.props.currentVideo.selectedBy + '] - ' + this.props.currentVideo.title : "None"
 			)
 		);
 	}
