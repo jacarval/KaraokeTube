@@ -25047,83 +25047,91 @@ var NavBarDropDown = React.createClass({
 module.exports = NavBar;
 
 },{"./Search.jsx":360,"react":356}],360:[function(require,module,exports){
-"use strict";
+'use strict';
 
 var React = require("react");
 
 var Search = React.createClass({
-	displayName: "Search",
+	displayName: 'Search',
 
 	handleSubmit: function handleSubmit(e) {
 		var songName = React.findDOMNode(this.refs.searchInput).value.trim();
 		this.props.onSubmit(songName);
 
-		React.findDOMNode(this.refs.searchInput).value = 'lyrics ';
+		React.findDOMNode(this.refs.searchInput).value = '';
 
 		e.preventDefault();
 		return;
+	},
+
+	componentDidMount: function componentDidMount() {
+		var input = React.findDOMNode(this.refs.searchInput);
+		input.onfocus = this.setDefaultValue;
 	},
 
 	handleNameChange: function handleNameChange(e) {
 		this.props.onNameInput(e.target.value);
 	},
 
+	setDefaultValue: function setDefaultValue(e) {
+		React.findDOMNode(this.refs.searchInput).value = 'lyrics ';
+	},
+
 	render: function render() {
 		return React.createElement(
-			"div",
+			'div',
 			{ className: this.props.visibility },
 			React.createElement(
-				"form",
-				{ id: "send", className: "navbar-form navbar-left", style: this.props.style, role: "search", onSubmit: this.handleSubmit },
+				'form',
+				{ id: 'send', className: 'navbar-form navbar-left', style: this.props.style, role: 'search', onSubmit: this.handleSubmit },
 				React.createElement(
-					"div",
-					{ className: "form-group" },
+					'div',
+					{ className: 'form-group' },
 					React.createElement(
-						"div",
+						'div',
 						{ className: "input-group" + (this.props.hideName ? " hidden-xs" : "") },
 						React.createElement(
-							"span",
-							{ className: "input-group-addon" },
-							React.createElement("span", { className: "glyphicon glyphicon-user" })
+							'span',
+							{ className: 'input-group-addon' },
+							React.createElement('span', { className: 'glyphicon glyphicon-user' })
 						),
-						React.createElement("input", {
-							type: "text",
-							className: "form-control",
-							autoComplete: "off",
-							placeholder: "Enter Name",
-							ref: "nameInput",
+						React.createElement('input', {
+							type: 'text',
+							className: 'form-control',
+							autoComplete: 'off',
+							placeholder: 'Enter Name',
+							ref: 'nameInput',
 							onChange: this.handleNameChange,
 							value: this.props.userName
 						})
 					),
 					React.createElement(
-						"div",
-						{ className: "input-group" },
+						'div',
+						{ className: 'input-group' },
 						React.createElement(
-							"span",
-							{ className: "input-group-addon" },
-							React.createElement("span", { className: "glyphicon glyphicon-music" })
+							'span',
+							{ className: 'input-group-addon' },
+							React.createElement('span', { className: 'glyphicon glyphicon-music' })
 						),
-						React.createElement("input", {
-							type: "text",
-							defaultValue: "lyrics ",
-							className: "form-control",
-							autoComplete: "off",
-							autoCorret: "off",
-							spellCheck: "off",
-							autoCapitalize: "off",
+						React.createElement('input', {
+							type: 'text',
+							className: 'form-control',
+							autoComplete: 'off',
+							autoCorret: 'off',
+							spellCheck: 'off',
+							autoCapitalize: 'off',
 							placeholder: this.props.placeholder,
-							ref: "searchInput",
-							id: "searchInput"
+							ref: 'searchInput',
+							id: 'searchInput'
 						}),
 						React.createElement(
-							"span",
-							{ className: "input-group-btn" },
+							'span',
+							{ className: 'input-group-btn' },
 							React.createElement(
-								"button",
-								{ className: "btn btn-default", type: "submit" },
-								React.createElement("span", { className: "glyphicon glyphicon-search" }),
-								React.createElement("span", { className: "caret" })
+								'button',
+								{ className: 'btn btn-default', type: 'submit' },
+								React.createElement('span', { className: 'glyphicon glyphicon-search' }),
+								React.createElement('span', { className: 'caret' })
 							)
 						)
 					)

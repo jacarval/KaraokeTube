@@ -5,16 +5,25 @@ var Search = React.createClass({
 		var songName = React.findDOMNode(this.refs.searchInput).value.trim();
 		this.props.onSubmit(songName);
 
-		React.findDOMNode(this.refs.searchInput).value = 'lyrics ';
+		React.findDOMNode(this.refs.searchInput).value = '';
 
 		e.preventDefault();
 		return;
+	},
+
+	componentDidMount: function() {
+		var input = React.findDOMNode(this.refs.searchInput);
+		input.onfocus = this.setDefaultValue;
 	},
 
 	handleNameChange: function(e) {
 		this.props.onNameInput(
 			e.target.value
 		);
+	},
+
+	setDefaultValue: function(e) {
+		React.findDOMNode(this.refs.searchInput).value = 'lyrics ';
 	},
 
 	render: function() {
@@ -42,7 +51,6 @@ var Search = React.createClass({
 							</span>
 							<input 
 								type="text"
-								defaultValue="lyrics "
 								className="form-control" 
 								autoComplete="off"
 								autoCorret="off"
