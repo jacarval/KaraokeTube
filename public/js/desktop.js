@@ -25058,7 +25058,7 @@ var Search = React.createClass({
 		var songName = React.findDOMNode(this.refs.searchInput).value.trim();
 		this.props.onSubmit(songName);
 
-		React.findDOMNode(this.refs.searchInput).value = '';
+		React.findDOMNode(this.refs.searchInput).value = 'lyrics ';
 
 		e.preventDefault();
 		return;
@@ -25106,6 +25106,7 @@ var Search = React.createClass({
 						),
 						React.createElement("input", {
 							type: "text",
+							defaultValue: "lyrics ",
 							className: "form-control",
 							autoComplete: "off",
 							autoCorret: "off",
