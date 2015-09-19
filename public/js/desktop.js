@@ -24749,7 +24749,7 @@ var Content = React.createClass({
 				React.createElement(
 					"p",
 					null,
-					"Add some songs to the queue..."
+					'To songs add from a mobile device go to karaoketube.herokuapp.com/' + this.props.room
 				)
 			);
 		}
