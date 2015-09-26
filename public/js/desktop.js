@@ -25479,7 +25479,7 @@ var Application = React.createClass({
 			$('#footfoot').show();
 		} else {
 			$('#navnav').hide();
-			$('#footfoot').hide();
+			// $('#footfoot').hide();
 		}
 	},
 
