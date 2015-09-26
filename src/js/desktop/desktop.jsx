@@ -94,7 +94,7 @@ var Application = React.createClass({
 			$('#footfoot').show();
 		}
 		else {
-			$('#navnav').hide();
+			// $('#navnav').hide();
 			// $('#footfoot').hide();
 		}
 	},
