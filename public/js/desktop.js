@@ -24758,7 +24758,7 @@ var Content = React.createClass({
 	render: function render() {
 		return React.createElement(
 			"div",
-			{ className: "container" },
+			{ className: "container content" },
 			React.createElement(SearchResults, {
 				data: this.props.searchData,
 				onQueueClick: this.props.onSearchResultAddClick,
@@ -24805,7 +24805,7 @@ var Footer = React.createClass({
 	render: function render() {
 		return React.createElement(
 			"footer",
-			{ className: "footer" },
+			{ className: "footer", id: "footfoot" },
 			React.createElement(
 				"div",
 				{ className: "container" },
@@ -24845,10 +24845,14 @@ var NowPlaying = React.createClass({
 			null,
 			React.createElement(
 				"p",
-				{ className: "text-muted" },
+				null,
 				React.createElement("span", { className: "glyphicon glyphicon-play" }),
-				" Now Playing: ",
-				this.props.currentVideo ? '[' + this.props.currentVideo.selectedBy + '] - ' + this.props.currentVideo.title : "None"
+				React.createElement(
+					"span",
+					{ className: "text-muted" },
+					"Now Playing:"
+				),
+				this.props.currentVideo ? ' [' + this.props.currentVideo.selectedBy + '] - ' + this.props.currentVideo.title : " None"
 			)
 		);
 	}
@@ -24868,7 +24872,7 @@ var NavBar = React.createClass({
 	render: function render() {
 		return React.createElement(
 			"nav",
-			{ className: "navbar navbar-default navbar-fixed-top" },
+			{ id: "navnav", className: "navbar navbar-default navbar-fixed-top" },
 			React.createElement(
 				"div",
 				{ className: "container-fluid" },
@@ -25283,7 +25287,7 @@ var VideoPlayer = React.createClass({
 	render: function render() {
 		return React.createElement(
 			"div",
-			{ className: "embed-responsive embed-responsive-16by9" },
+			{ className: "embed-responsive embed-responsive-16by9 videoplayer" },
 			React.createElement(YouTube, {
 				url: "https://www.youtube.com/watch?v=" + (this.props.currentVideo ? this.props.currentVideo.videoId : 'dQw4w9WgXcQ'),
 				opts: { playerVars: { autoplay: this.props.autoplay } },
@@ -25449,6 +25453,10 @@ var Application = React.createClass({
 			self.getFlux().actions.hydrate(state);
 		});
 
+		socket.on('state:update', function (state) {
+			self.getFlux().actions.hydrate(state);
+		});
+
 		socket.on('queue:add', function (video) {
 			self.getFlux().actions.addVideo(video);
 		});
@@ -25461,6 +25469,18 @@ var Application = React.createClass({
 			console.log(msg);
 			alert('an error occured');
 		});
+
+		document.addEventListener('mousemove', this.onMouseMove);
+	},
+
+	onMouseMove: function onMouseMove(e) {
+		if (e.clientY < 40 || e.clientY > window.innerHeight - 40) {
+			$('#navnav').show();
+			$('#footfoot').show();
+		} else {
+			$('#navnav').hide();
+			$('#footfoot').hide();
+		}
 	},
 
 	handleSearchSubmit: function handleSearchSubmit(songName) {

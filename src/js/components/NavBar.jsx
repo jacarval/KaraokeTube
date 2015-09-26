@@ -4,7 +4,7 @@ var Search = require("./Search.jsx");
 var NavBar = React.createClass({
 	render: function() {
 		return (
-			<nav className="navbar navbar-default navbar-fixed-top">
+			<nav id="navnav" className="navbar navbar-default navbar-fixed-top">
 				<div className="container-fluid">
 
 					<NavBarHeader name='KaraokeTube'>

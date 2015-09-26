@@ -68,6 +68,10 @@ var Application = React.createClass({
 			self.getFlux().actions.hydrate(state);
 		});
 
+		socket.on('state:update', function(state) {
+			self.getFlux().actions.hydrate(state);
+		});
+
 		socket.on('queue:add', function(video) {
 			self.getFlux().actions.addVideo(video);
 		});
@@ -80,6 +84,19 @@ var Application = React.createClass({
 			console.log(msg);
 			alert('an error occured')
 		});
+
+		document.addEventListener('mousemove', this.onMouseMove)
+	},
+
+	onMouseMove: function(e) {
+		if (e.clientY < 40 || e.clientY > window.innerHeight - 40) {
+			$('#navnav').show();
+			$('#footfoot').show();
+		}
+		else {
+			$('#navnav').hide();
+			$('#footfoot').hide();
+		}
 	},
 
 	handleSearchSubmit: function(songName) {

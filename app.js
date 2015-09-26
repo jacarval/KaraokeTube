@@ -86,14 +86,17 @@ desktop.on('connection', function(socket) {
 
 	socket.on('state:update', function(state){
 
+		console.log('state update')
 		db.updateQueueById(socket.room, state.currentVideo, state.selectedVideos, function(err, row) {
 			if (err) {
+				console.log('db update')
 				socket.emit('alert', err);
 				return console.log('error updating queue by id', err);
 			}
 		});
 
 		mobile.to(socket.room).emit('state:update', state);
+		desktop.to(socket.room).emit('state:update', state);
 	});
 });
 

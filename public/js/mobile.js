@@ -19901,7 +19901,7 @@ var Footer = React.createClass({
 	render: function render() {
 		return React.createElement(
 			"footer",
-			{ className: "footer" },
+			{ className: "footer", id: "footfoot" },
 			React.createElement(
 				"div",
 				{ className: "container" },
@@ -19941,10 +19941,14 @@ var NowPlaying = React.createClass({
 			null,
 			React.createElement(
 				"p",
-				{ className: "text-muted" },
+				null,
 				React.createElement("span", { className: "glyphicon glyphicon-play" }),
-				" Now Playing: ",
-				this.props.currentVideo ? '[' + this.props.currentVideo.selectedBy + '] - ' + this.props.currentVideo.title : "None"
+				React.createElement(
+					"span",
+					{ className: "text-muted" },
+					"Now Playing:"
+				),
+				this.props.currentVideo ? ' [' + this.props.currentVideo.selectedBy + '] - ' + this.props.currentVideo.title : " None"
 			)
 		);
 	}
@@ -20094,7 +20098,7 @@ var NavBar = React.createClass({
 	render: function render() {
 		return React.createElement(
 			"nav",
-			{ className: "navbar navbar-default navbar-fixed-top" },
+			{ id: "navnav", className: "navbar navbar-default navbar-fixed-top" },
 			React.createElement(
 				"div",
 				{ className: "container-fluid" },

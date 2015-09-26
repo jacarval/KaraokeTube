@@ -36,7 +36,7 @@ var Content = React.createClass({
 
 	render: function() {
 		return(
-			<div className="container">
+			<div className="container content">
 				<SearchResults
 					data={this.props.searchData}
 					onQueueClick={this.props.onSearchResultAddClick}

@@ -5,7 +5,7 @@ var YouTube = require("react-youtube");
 var VideoPlayer = React.createClass({
 	render: function() {
 		return (
-			<div className="embed-responsive embed-responsive-16by9">
+			<div className="embed-responsive embed-responsive-16by9 videoplayer">
 				<YouTube
 					url={"https://www.youtube.com/watch?v=" + (this.props.currentVideo ? this.props.currentVideo.videoId : 'dQw4w9WgXcQ')}
 					opts={ {playerVars: {autoplay: this.props.autoplay}} }

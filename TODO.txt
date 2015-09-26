@@ -1,0 +1,8 @@
+TODO:
+
+Remove and/or change songs after adding from mobile device
+
+
+BUGS:
+
+name might disappear sometimes after requesting song from mobile device

@@ -23,7 +23,7 @@ var Footer = React.createClass({
 
 	render: function() {
 		return (
-			<footer className="footer">
+			<footer className="footer" id="footfoot">
 				<div className="container">
 					<ul className="list-inline">
 						<NowPlaying currentVideo = {this.props.currentVideo}/>
@@ -43,8 +43,10 @@ var NowPlaying = React.createClass({
 	render: function() {
 		return (
 			<li>
-				<p className="text-muted">
-					<span className='glyphicon glyphicon-play'></span> Now Playing: {this.props.currentVideo ? ('['+this.props.currentVideo.selectedBy+'] - '+this.props.currentVideo.title) : "None"}
+				<p>
+					<span className='glyphicon glyphicon-play'></span> 
+					<span className="text-muted">Now Playing:</span> 
+					{this.props.currentVideo ? (' ['+this.props.currentVideo.selectedBy+'] - '+this.props.currentVideo.title) : " None"}
 				</p>
 			</li>
 		);
