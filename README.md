@@ -1,7 +1,5 @@
 # karaoke-tube
-simple karaoke app using youtube api
 
+Karaoke song queue manager using the YouTube API written with Socket.io, React, Node, Flux, and Postgres hosted on Heroku. Allows kiosk to host a karaoke event and users to add songs to the queue via mobile devices over the web.
 
-TODO
-
-1. Draggable list to sort queue
+http://karaoketube.herokuapp.com
