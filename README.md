@@ -4,4 +4,4 @@ Karaoke song queue manager using the YouTube API written with Socket.io, React, 
 
 http://karaoketube.herokuapp.com
 
-![alt tag](https://raw.githubusercontent.com/jacarval/KaraokeTube/master/readme/iphone5s.png)
+![mobile example](https://raw.githubusercontent.com/jacarval/KaraokeTube/master/readme/iphone5s.png)
