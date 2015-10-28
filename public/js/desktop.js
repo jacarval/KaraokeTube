@@ -499,6 +499,15 @@ var StoreWatchMixin = function() {
   return {
     componentDidMount: function() {
       var flux = this.props.flux || this.context.flux;
+      this.mounted = true;
+
+      // No autobinding in ES6 classes
+      this._setStateFromFlux = function() {
+        if(this.mounted) {
+          this.setState(this.getStateFromFlux());
+        }
+      }.bind(this);
+
       _each(storeNames, function(store) {
         flux.store(store).on("change", this._setStateFromFlux);
       }, this);
@@ -506,15 +515,10 @@ var StoreWatchMixin = function() {
 
     componentWillUnmount: function() {
       var flux = this.props.flux || this.context.flux;
+      this.mounted = false;
       _each(storeNames, function(store) {
         flux.store(store).removeListener("change", this._setStateFromFlux);
       }, this);
-    },
-
-    _setStateFromFlux: function() {
-      if(this.isMounted()) {
-        this.setState(this.getStateFromFlux());
-      }
     },
 
     getInitialState: function() {
@@ -4107,7 +4111,7 @@ module.exports = property;
   return objectPath;
 });
 },{}],97:[function(require,module,exports){
-module.exports = "1.7.1"
+module.exports = "1.7.3"
 },{}],98:[function(require,module,exports){
 // shim for using process in browser
 
@@ -4141,7 +4145,9 @@ function drainQueue() {
         currentQueue = queue;
         queue = [];
         while (++queueIndex < len) {
-            currentQueue[queueIndex].run();
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
         }
         queueIndex = -1;
         len = queue.length;
@@ -4193,7 +4199,6 @@ process.binding = function (name) {
     throw new Error('process.binding is not supported');
 };
 
-// TODO(shtylman)
 process.cwd = function () { return '/' };
 process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
@@ -4627,7 +4632,7 @@ var YouTube = (function (_React$Component) {
   }, {
     key: 'onReset',
     value: function onReset() {
-      if (this._internalPlayer) {
+      if (this._internalPlayer && typeof this._internalPlayer.removeEventListener === 'function') {
         this._internalPlayer.removeEventListener('onReady', this._playerReadyHandle);
         this._internalPlayer.removeEventListener('onError', this._playerErrorHandle);
         this._internalPlayer.removeEventListener('onStateChange', this._stateChangeHandle);
@@ -24920,7 +24925,7 @@ var NavBar = React.createClass({
 							React.createElement(
 								"a",
 								{ href: "#" },
-								"VideoPlayer"
+								this.props.isVideoPlayerActive ? "SongQueue" : "VideoPlayer"
 							)
 						),
 						React.createElement(

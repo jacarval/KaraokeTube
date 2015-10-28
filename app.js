@@ -6,12 +6,18 @@ var db = require('./db');
 
 app.use(express.static(__dirname + '/public'));
 
+app.get('/suggestions', function(req, res){
+	res.render('/desktop');
+});
+
 // Catchall - redirect to mobile or desktop page
 app.get('*', function(req, res){
 
   res.sendFile(__dirname + '/public' + (/Android|iPhone|iPad/.test(req.headers['user-agent']) ? '/mobile.html' : '/desktop.html'));
 
 });
+
+
 
 var desktop = io.of('/desktop');
 var mobile = io.of('/mobile');
