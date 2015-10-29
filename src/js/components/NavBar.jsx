@@ -19,7 +19,7 @@ var NavBar = React.createClass({
 								<li><a href="https://github.com/jacarval/karaoke-tube">Code Repository</a></li>
 								<li><a href="https://github.com/jacarval/karaoke-tube/issues">View/Report Issues</a></li>
 							</NavBarDropDown>
-							<li className={this.props.isVideoPlayerActive ? "active" : ""} onClick={this.props.toggleVideoPlayer}><a href="#">VideoPlayer</a></li>
+							<li className={this.props.isVideoPlayerActive ? "active" : ""} onClick={this.props.toggleVideoPlayer}><a href="#">{this.props.isVideoPlayerActive ?  "SongQueue" : "VideoPlayer"}</a></li>
 							<li className={this.props.autoplay ? "active" : ""} onClick={this.props.toggleAutoplay}><a href="#">AutoPlay</a></li>
 						</NavBarNav>
 						

@@ -51,6 +51,11 @@ code {
   height: 100%;
 }
 
+.video-queue-list .badge:hover {
+  background-color: rgba(174, 41, 37, 1);
+  cursor: pointer;
+}
+
 .search-result-list {
   overflow-x:scroll;
   overflow-y:hidden;
