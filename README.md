@@ -1,4 +1,4 @@
-#Currently working on a new version of this
+#Currently working on a new and improved version of this
 https://github.com/jacarval/karaoketube2
 
 KaraokeTube
